@@ -295,8 +295,6 @@
   line-height: var(--type-subhead-line-height);
   font-weight: 500;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition:
@@ -308,6 +306,12 @@
   content: '';
   position: absolute;
   inset: calc((var(--_height) - 44px) / 2) 0;
+}
+/* Text clips on an inner span so the button's ::before hit area is not clipped. */
+.aurum-segment-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .aurum-segment[aria-checked='true'] {
   font-weight: 600;

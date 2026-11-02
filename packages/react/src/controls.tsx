@@ -224,7 +224,7 @@ export function SegmentedControl<T extends string>({
           className="aurum-segment"
           onClick={() => select(i)}
         >
-          {s.label}
+          <span className="aurum-segment-label">{s.label}</span>
         </button>
       ))}
     </div>
