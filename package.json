@@ -6,8 +6,8 @@
   "packageManager": "pnpm@10.28.0",
   "engines": { "node": ">=22" },
   "scripts": {
-    "tokens": "node tools/build-tokens.mjs",
-    "tokens:check": "node tools/build-tokens.mjs && git diff --exit-code -- packages/react/src/tokens packages/flutter/lib/src/tokens",
+    "tokens": "node tools/tokens/build.mjs",
+    "tokens:check": "node tools/tokens/build.mjs && git diff --exit-code -- packages/react/src/tokens packages/flutter/lib/src/tokens",
     "guard": "node tools/license-guard.mjs",
     "typecheck": "pnpm -r typecheck",
     "build": "pnpm -r build",

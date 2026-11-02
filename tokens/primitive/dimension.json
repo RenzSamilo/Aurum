@@ -2,48 +2,100 @@
   "space": {
     "$type": "dimension",
     "$description": "Spacing scale in px. Name = value.",
-    "2": { "$value": "2px" },
-    "4": { "$value": "4px" },
-    "8": { "$value": "8px" },
-    "12": { "$value": "12px" },
-    "16": { "$value": "16px" },
-    "24": { "$value": "24px" },
-    "32": { "$value": "32px" },
-    "48": { "$value": "48px" },
-    "64": { "$value": "64px" }
-  },
-  "radius": {
-    "$type": "dimension",
-    "$description": "Corner radii. Rendered as continuous (squircle) corners where the platform supports it.",
-    "sm": { "$value": "12px" },
-    "md": { "$value": "18px" },
-    "lg": { "$value": "24px" },
-    "xl": { "$value": "32px" },
-    "pill": { "$value": "999px" }
+    "2": {
+      "$value": "2px"
+    },
+    "4": {
+      "$value": "4px"
+    },
+    "8": {
+      "$value": "8px"
+    },
+    "12": {
+      "$value": "12px"
+    },
+    "16": {
+      "$value": "16px"
+    },
+    "24": {
+      "$value": "24px"
+    },
+    "32": {
+      "$value": "32px"
+    },
+    "48": {
+      "$value": "48px"
+    },
+    "64": {
+      "$value": "64px"
+    }
   },
   "shape": {
-    "smoothing": { "$type": "number", "$value": 0.6, "$description": "Corner smoothing for SVG path generators only. Not a CSS value.", "$extensions": { "aurum": { "source": "proposed" } } }
+    "smoothing": {
+      "$type": "number",
+      "$value": 0.6,
+      "$description": "Corner smoothing for SVG path generators only. Not a CSS value.",
+      "$extensions": {
+        "aurum": {
+          "source": "proposed"
+        }
+      }
+    }
   },
   "size": {
     "$type": "dimension",
-    "target": { "$value": "48px", "$description": "Minimum touch target." },
-    "target-workout": { "$value": "64px", "$description": "Touch target for in-workout controls." },
-    "icon-sm": { "$value": "20px" },
-    "icon-md": { "$value": "24px" },
-    "icon-lg": { "$value": "28px" },
-    "focus-width": { "$value": "2px" },
-    "focus-offset": { "$value": "2px" },
-    "gutter-phone": { "$value": "16px" },
-    "gutter-tablet": { "$value": "24px" },
-    "gutter-desktop": { "$value": "32px" }
+    "target": {
+      "$value": "48px",
+      "$description": "Minimum touch target."
+    },
+    "target-workout": {
+      "$value": "64px",
+      "$description": "Touch target for in-workout controls."
+    },
+    "icon-sm": {
+      "$value": "20px"
+    },
+    "icon-md": {
+      "$value": "24px"
+    },
+    "icon-lg": {
+      "$value": "28px"
+    },
+    "focus-width": {
+      "$value": "2px"
+    },
+    "focus-offset": {
+      "$value": "2px"
+    },
+    "gutter-phone": {
+      "$value": "16px"
+    },
+    "gutter-tablet": {
+      "$value": "24px"
+    },
+    "gutter-desktop": {
+      "$value": "32px"
+    }
   },
   "z": {
     "$type": "number",
-    "content": { "$value": 0 },
-    "navigation": { "$value": 10 },
-    "popover": { "$value": 20 },
-    "scrim": { "$value": 30 },
-    "modal": { "$value": 40 },
-    "toast": { "$value": 50 }
+    "content": {
+      "$value": 0
+    },
+    "navigation": {
+      "$value": 10
+    },
+    "popover": {
+      "$value": 20
+    },
+    "scrim": {
+      "$value": 30
+    },
+    "modal": {
+      "$value": 40
+    },
+    "toast": {
+      "$value": 50
+    }
   }
 }

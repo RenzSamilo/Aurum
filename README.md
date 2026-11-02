@@ -1,6 +1,6 @@
 # Aurum
 
-A design system for calm, precise, tactile interfaces. It takes its principles from Apple's Human Interface Guidelines (continuous corners, spring motion, materials, meaningful haptics) and uses only original or openly licensed assets.
+A base design system for calm, precise, tactile interfaces. Each app re-skins it with one brand file. It takes its principles from Apple's Human Interface Guidelines (continuous corners, spring motion, materials, meaningful haptics) and uses only original or openly licensed assets.
 
 One token source feeds two libraries:
 
@@ -13,10 +13,12 @@ One token source feeds two libraries:
 
 ```
 tokens/
-  primitive/        raw values: colour (OKLCH), space, radius, type, motion, materials, haptics
+  brand/aurum.json  the default brand: accent, neutrals, status hues, fonts, corner scale
+  brand/examples/   sample brands (CI builds them to prove re-skinning works)
+  primitive/        raw values that never change per brand: space, type, motion, materials, haptics
   semantic/         meaning per mode: light, dark, contrast-light, contrast-dark
 tools/
-  build-tokens.mjs  Style Dictionary build -> CSS, TypeScript, Dart
+  tokens/build.mjs  Style Dictionary build -> CSS, TypeScript, Dart; fails on contrast
   license-guard.mjs fails on Apple fonts, SF Symbols or Apple.com brand colours
 packages/
   react/            @aurum/react (tokens.css, tokens.ts, base styles)
@@ -28,7 +30,7 @@ apps/
 Generated files (never edit by hand):
 
 - `packages/react/src/tokens/tokens.css` and `tokens.ts`
-- `packages/flutter/lib/src/tokens/aurum_tokens.g.dart`
+- `packages/flutter/lib/src/tokens/aurum_tokens.g.dart` and `aurum_brand.g.dart`
 
 ## Commands
 
@@ -43,6 +45,23 @@ cd packages/flutter/example && flutter run   # Flutter preview
 ```
 
 Change a value in `tokens/`, run `pnpm tokens`, and both the web preview and the Flutter preview pick it up.
+
+## Make it yours (one file per app)
+
+1. Copy `tokens/brand/aurum.json` into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`.
+2. Build it:
+
+   ```sh
+   node path/to/aurum/tools/tokens/build.mjs --brand my.brand.json \
+     --css src/aurum-tokens.css \
+     --dart lib/my_brand.g.dart
+   ```
+
+3. Web: import your `aurum-tokens.css` after `@aurum/react/aurum.css`. Flutter: `aurumTheme(Brightness.light, brand: myBrand)`.
+
+The build checks every mode (light, dark, both high-contrast) against WCAG and refuses a brand that fails, with the exact pair and ratio. Text roles, spacing, springs, materials and haptics stay the same across brands, so every app feels like Aurum.
+
+A custom font must be a variable font with a `wght` axis, bundled in your app. Set `font.ui` to its family name.
 
 ## Using it
 
@@ -65,15 +84,15 @@ Modes are data attributes on `<html>`: `data-theme`, `data-contrast`, `data-tran
 import 'package:aurum_ui/aurum_ui.dart';
 
 MaterialApp(
-  theme: aurumTheme(Brightness.light),
+  theme: aurumTheme(Brightness.light),            // add brand: myBrand for your app
   darkTheme: aurumTheme(Brightness.dark),
 );
 
 // In a widget
-final c = context.aurum;                      // semantic colours
-AurumType.body.style(color: c.textPrimary);   // Inter with optical size
-AurumMotion.control.description;             // SpringDescription
-RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(AurumRadius.lg));
+final c = context.aurum;                           // semantic colours
+context.aurumText(AurumType.body);                 // brand font, optical size, primary text
+AurumMotion.control.description;                  // SpringDescription
+RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(context.aurumRadii.lg));
 ```
 
 ## Assets and licences
@@ -84,7 +103,7 @@ RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(AurumRadius.lg));
 
 ## Roadmap
 
-- **Phase 0** (this): monorepo, token pipeline, CI, previews.
-- **Phase 1**: Button, Switch, Segmented control, List row + card, Sheet on both platforms; haptics; glass; squircle polyfill for Safari and Firefox.
-- **Phase 2**: v1 components and the first real food-log flow.
+- **Phase 0** (done): monorepo, token pipeline, CI, previews.
+- **Phase 1**: brand layer; Button, Switch, Segmented control, List row + card, Sheet on both platforms; haptics; glass; squircle polyfill for Safari and Firefox.
+- **Phase 2**: v1 components and generic flows (settings, list and detail, form, onboarding).
 - **Phase 3**: pickers, charts, polish.

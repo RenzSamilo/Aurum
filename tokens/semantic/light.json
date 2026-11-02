@@ -16,16 +16,16 @@
       "decorative": { "$value": "{color.warm.88}" },
       "control":    { "$value": "{color.cool.60}" }
     },
-    "accent":    { "$value": "{color.teal.48}" },
+    "accent":    { "$value": "{color.brand-accent.light}" },
     "on-accent": { "$value": "{color.warm.99}" },
-    "danger":    { "$value": "{color.red.48}" },
-    "warning":   { "$value": "{color.amber.50}" },
-    "success":   { "$value": "{color.teal.48}" },
+    "danger":    { "$value": "{color.brand-danger.light}" },
+    "warning":   { "$value": "{color.brand-warning.light}" },
+    "success":   { "$value": "{color.brand-accent.light}" },
     "fill": {
       "hover":   { "$value": "rgb(0 0 0 / 0.04)" },
       "pressed": { "$value": "rgb(0 0 0 / 0.06)" }
     },
-    "focus": { "$value": "{color.teal.48}" },
+    "focus": { "$value": "{color.brand-accent.light}" },
     "scrim": { "$value": "rgb(0 0 0 / 0.32)" }
   },
   "material": {

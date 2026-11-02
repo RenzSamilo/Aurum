@@ -1,24 +1,94 @@
 {
-  "font": {
-    "family": {
-      "$type": "fontFamily",
-      "ui": { "$value": "Inter", "$description": "Inter Variable (OFL). Has an opsz axis with Display designs." },
-      "mono": { "$value": "Geist Mono" }
-    }
-  },
   "type": {
     "$type": "aurumTypography",
     "$description": "Text roles. size and lineHeight in px at a 16px root, weight is a variable-font weight, tracking in em.",
-    "display":  { "$value": { "size": 40, "lineHeight": 48, "weight": 650, "tracking": -0.025 } },
-    "page":     { "$value": { "size": 32, "lineHeight": 40, "weight": 650, "tracking": -0.020 } },
-    "section":  { "$value": { "size": 24, "lineHeight": 32, "weight": 600, "tracking": -0.015 } },
-    "card":     { "$value": { "size": 20, "lineHeight": 28, "weight": 600, "tracking": -0.010 } },
-    "headline": { "$value": { "size": 17, "lineHeight": 24, "weight": 600, "tracking": -0.005 } },
-    "body":     { "$value": { "size": 17, "lineHeight": 24, "weight": 400, "tracking": -0.005 } },
-    "callout":  { "$value": { "size": 16, "lineHeight": 24, "weight": 500, "tracking": 0 } },
-    "subhead":  { "$value": { "size": 15, "lineHeight": 22, "weight": 500, "tracking": 0 } },
-    "footnote": { "$value": { "size": 14, "lineHeight": 20, "weight": 400, "tracking": 0.005 } },
-    "caption":  { "$value": { "size": 12, "lineHeight": 16, "weight": 500, "tracking": 0.010 } },
-    "micro":    { "$value": { "size": 11, "lineHeight": 16, "weight": 500, "tracking": 0.015 } }
+    "display": {
+      "$value": {
+        "size": 40,
+        "lineHeight": 48,
+        "weight": 650,
+        "tracking": -0.025
+      }
+    },
+    "page": {
+      "$value": {
+        "size": 32,
+        "lineHeight": 40,
+        "weight": 650,
+        "tracking": -0.02
+      }
+    },
+    "section": {
+      "$value": {
+        "size": 24,
+        "lineHeight": 32,
+        "weight": 600,
+        "tracking": -0.015
+      }
+    },
+    "card": {
+      "$value": {
+        "size": 20,
+        "lineHeight": 28,
+        "weight": 600,
+        "tracking": -0.01
+      }
+    },
+    "headline": {
+      "$value": {
+        "size": 17,
+        "lineHeight": 24,
+        "weight": 600,
+        "tracking": -0.005
+      }
+    },
+    "body": {
+      "$value": {
+        "size": 17,
+        "lineHeight": 24,
+        "weight": 400,
+        "tracking": -0.005
+      }
+    },
+    "callout": {
+      "$value": {
+        "size": 16,
+        "lineHeight": 24,
+        "weight": 500,
+        "tracking": 0
+      }
+    },
+    "subhead": {
+      "$value": {
+        "size": 15,
+        "lineHeight": 22,
+        "weight": 500,
+        "tracking": 0
+      }
+    },
+    "footnote": {
+      "$value": {
+        "size": 14,
+        "lineHeight": 20,
+        "weight": 400,
+        "tracking": 0.005
+      }
+    },
+    "caption": {
+      "$value": {
+        "size": 12,
+        "lineHeight": 16,
+        "weight": 500,
+        "tracking": 0.01
+      }
+    },
+    "micro": {
+      "$value": {
+        "size": 11,
+        "lineHeight": 16,
+        "weight": 500,
+        "tracking": 0.015
+      }
+    }
   }
 }
