@@ -20,7 +20,7 @@ abstract final class AurumSpace {
 
 abstract final class AurumSize {
   static const double target = 48.0;
-  static const double targetWorkout = 64.0;
+  static const double targetLarge = 64.0;
   static const double iconSm = 20.0;
   static const double iconMd = 24.0;
   static const double iconLg = 28.0;

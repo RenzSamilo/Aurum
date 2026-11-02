@@ -3,6 +3,7 @@
 /* Inter Variable with the optical-size axis (Display designs at large sizes). OFL-1.1. */
 @import '@fontsource-variable/inter/opsz.css';
 @import './tokens/tokens.css';
+@import './controls.css';
 
 html {
   font-family: var(--font-family-ui);
