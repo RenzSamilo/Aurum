@@ -1,0 +1,41 @@
+{
+  "color": {
+    "$type": "color",
+    "surface": {
+      "canvas":   { "$value": "{color.cool.16}" },
+      "card":     { "$value": "{color.cool.20}" },
+      "inset":    { "$value": "{color.cool.24}" },
+      "elevated": { "$value": "{color.cool.28}" }
+    },
+    "text": {
+      "primary":   { "$value": "{color.cool.96}" },
+      "secondary": { "$value": "{color.cool.78}" },
+      "tertiary":  { "$value": "{color.cool.70}" }
+    },
+    "border": {
+      "decorative": { "$value": "{color.cool.32}" },
+      "control":    { "$value": "{color.cool.60}" }
+    },
+    "accent":    { "$value": "{color.teal.79}" },
+    "on-accent": { "$value": "{color.cool.15}" },
+    "danger":    { "$value": "{color.red.78}" },
+    "warning":   { "$value": "{color.amber.82}" },
+    "success":   { "$value": "{color.teal.79}" },
+    "fill": {
+      "hover":   { "$value": "rgb(255 255 255 / 0.05)" },
+      "pressed": { "$value": "rgb(255 255 255 / 0.08)" }
+    },
+    "focus": { "$value": "{color.teal.79}" },
+    "scrim": { "$value": "rgb(0 0 0 / 0.48)" }
+  },
+  "material": {
+    "tint-base": { "$type": "color", "$value": "{color.cool.20}" },
+    "alpha": {
+      "$type": "number",
+      "ultralight": { "$value": 0.64 },
+      "thin":       { "$value": 0.74 },
+      "regular":    { "$value": 0.84 },
+      "thick":      { "$value": 0.94 }
+    }
+  }
+}

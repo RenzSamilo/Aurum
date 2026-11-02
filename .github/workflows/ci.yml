@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tokens-and-web:
+    name: Tokens, license guard, web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Generated tokens are up to date
+        run: pnpm tokens:check
+      - name: No Apple assets or Apple.com colours
+        run: pnpm guard
+      - run: pnpm typecheck
+      - run: pnpm build
+
+  flutter:
+    name: Flutter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.9
+          channel: stable
+          cache: true
+      - name: aurum_ui
+        working-directory: packages/flutter
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
+      - name: example app
+        working-directory: packages/flutter/example
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test

@@ -1,0 +1,282 @@
+/* Docs-only layout. Every colour, size and curve comes from Aurum tokens. */
+
+.page {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: var(--space-48) var(--size-gutter-phone) var(--space-64);
+}
+@media (min-width: 40rem) {
+  .page {
+    padding-inline: var(--size-gutter-desktop);
+  }
+}
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-24);
+  margin-bottom: var(--space-48);
+}
+.masthead h1 {
+  margin: 0;
+}
+.eyebrow {
+  margin: 0 0 var(--space-4);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+.lede {
+  max-width: 36rem;
+  margin: var(--space-8) 0 0;
+  color: var(--color-text-secondary);
+}
+code {
+  font-family: var(--font-family-mono);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: var(--size-target);
+  padding: 0 var(--space-16);
+  border: 1px solid var(--color-border-decorative);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    transform var(--spring-control-duration) var(--spring-control-easing),
+    background-color var(--duration-feedback) var(--ease-standard);
+}
+.toggle:active {
+  transform: scale(var(--press-scale-control));
+}
+.toggle[aria-pressed='true'] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.section {
+  margin-top: var(--space-48);
+}
+.section h2 {
+  margin: 0;
+}
+.note {
+  margin: var(--space-4) 0 var(--space-16);
+  color: var(--color-text-secondary);
+}
+
+.card {
+  --aurum-radius: var(--radius-lg);
+  padding: var(--space-24);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-decorative);
+  box-shadow: var(--shadow-1);
+}
+.card h3 {
+  margin: 0 0 var(--space-12);
+}
+
+.swatch-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-16);
+}
+.swatches {
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.swatches li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+.chip {
+  width: var(--space-32);
+  height: var(--space-32);
+  flex: none;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-decorative);
+}
+@supports (corner-shape: squircle) {
+  .chip {
+    corner-shape: squircle;
+  }
+}
+
+.type-ramp {
+  display: grid;
+  gap: var(--space-12);
+}
+.type-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-16);
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--color-border-decorative);
+}
+.type-row:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.meta {
+  color: var(--color-text-tertiary);
+}
+
+.radii {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--space-16);
+}
+.radius-demo {
+  display: grid;
+  gap: var(--space-12);
+  padding: var(--space-12);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-decorative);
+}
+.radius-inner {
+  aspect-ratio: 4 / 3;
+  background: var(--color-surface-inset);
+}
+.radius-demo code {
+  padding-inline: var(--space-4);
+  color: var(--color-text-secondary);
+}
+
+.springs {
+  display: grid;
+  gap: var(--space-8);
+  padding: var(--space-12);
+}
+.spring-row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 14rem) 1fr;
+  align-items: center;
+  gap: var(--space-16);
+  min-height: var(--size-target);
+  padding: var(--space-8) var(--space-12);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.spring-row:hover {
+  background: var(--color-fill-hover);
+}
+.spring-label {
+  display: grid;
+}
+.track {
+  container-type: inline-size;
+  height: var(--space-32);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-inset);
+}
+.dot {
+  display: block;
+  width: var(--space-32);
+  height: var(--space-32);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  transition-property: transform;
+}
+:root[data-motion='reduced'] .dot {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    transition: none;
+  }
+}
+
+/* An original backdrop so the glass has something to blur. */
+.material-stage {
+  --aurum-radius: var(--radius-xl);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-16);
+  padding: var(--space-32);
+  background:
+    radial-gradient(circle at 15% 30%, oklch(0.78 0.14 175) 0 18%, transparent 19%),
+    radial-gradient(circle at 70% 70%, oklch(0.72 0.16 40) 0 22%, transparent 23%),
+    repeating-linear-gradient(135deg, var(--color-text-primary) 0 2px, transparent 2px 14px),
+    var(--color-surface-inset);
+}
+.glass {
+  --aurum-radius: var(--radius-md);
+  display: grid;
+  gap: var(--space-4);
+  min-height: 6rem;
+  align-content: end;
+  padding: var(--space-16);
+  border: 1px solid oklch(1 0 0 / 0.35);
+  box-shadow: var(--shadow-2);
+}
+.glass[data-level='ultralight'] {
+  background: var(--material-tint-ultralight);
+  backdrop-filter: blur(var(--material-blur-ultralight)) saturate(var(--material-saturation-ultralight));
+}
+.glass[data-level='thin'] {
+  background: var(--material-tint-thin);
+  backdrop-filter: blur(var(--material-blur-thin)) saturate(var(--material-saturation-thin));
+}
+.glass[data-level='regular'] {
+  background: var(--material-tint-regular);
+  backdrop-filter: blur(var(--material-blur-regular)) saturate(var(--material-saturation-regular));
+}
+.glass[data-level='thick'] {
+  background: var(--material-tint-thick);
+  backdrop-filter: blur(var(--material-blur-thick)) saturate(var(--material-saturation-thick));
+}
+
+.haptics {
+  width: 100%;
+  border-collapse: collapse;
+}
+.haptics th,
+.haptics td {
+  padding: var(--space-8) var(--space-12);
+  border-bottom: 1px solid var(--color-border-decorative);
+  text-align: left;
+}
+.haptics th {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+.haptics tr:last-child td {
+  border-bottom: 0;
+}
+.card:has(.haptics) {
+  overflow-x: auto;
+}
+
+.icons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-24);
+}
+.icon-row {
+  display: inline-flex;
+  gap: var(--space-8);
+  color: var(--color-text-primary);
+}

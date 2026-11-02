@@ -1,0 +1,16 @@
+{
+  "haptic": {
+    "$type": "aurumHaptic",
+    "$description": "Haptics by meaning. flutter = haptic_feedback HapticsType name. web = optional navigator.vibrate pattern (Android, opt-in). ios-web = optional ios-haptics call (experimental, opt-in).",
+    "selection-tick":     { "$value": { "flutter": "selection", "web": [8],          "iosWeb": "haptic" } },
+    "selection-frequent": { "$value": { "flutter": "selection", "web": [],           "iosWeb": "none", "throttleMs": 50 } },
+    "impact-light":       { "$value": { "flutter": "light",     "web": [8],          "iosWeb": "haptic" } },
+    "impact-medium":      { "$value": { "flutter": "medium",    "web": [12],         "iosWeb": "haptic" } },
+    "impact-heavy":       { "$value": { "flutter": "heavy",     "web": [],           "iosWeb": "none" } },
+    "impact-soft":        { "$value": { "flutter": "soft",      "web": [],           "iosWeb": "none" } },
+    "impact-rigid":       { "$value": { "flutter": "rigid",     "web": [],           "iosWeb": "none" } },
+    "result-success":     { "$value": { "flutter": "success",   "web": [12],         "iosWeb": "confirm" } },
+    "result-warning":     { "$value": { "flutter": "warning",   "web": [],           "iosWeb": "none" } },
+    "result-error":       { "$value": { "flutter": "error",     "web": [20, 40, 20], "iosWeb": "error" } }
+  }
+}

@@ -1,0 +1,22 @@
+name: aurum_example
+description: Token preview for aurum_ui. Mirrors apps/docs on the web.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  aurum_ui:
+    path: ..
+  phosphor_glyphs: ^2.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

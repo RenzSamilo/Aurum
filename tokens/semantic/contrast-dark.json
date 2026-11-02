@@ -1,0 +1,13 @@
+{
+  "$description": "Increase Contrast, dark. Applied on top of dark.json.",
+  "color": {
+    "$type": "color",
+    "text": {
+      "secondary": { "$value": "{color.cool.86}" },
+      "tertiary":  { "$value": "{color.cool.80}" }
+    },
+    "border": {
+      "control": { "$value": "{color.cool.72}" }
+    }
+  }
+}

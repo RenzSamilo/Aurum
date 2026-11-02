@@ -1,0 +1,25 @@
+{
+  "material": {
+    "$description": "Glass levels. Alpha lives in the semantic mode files because it changes in dark mode.",
+    "blur": {
+      "$type": "dimension",
+      "ultralight": { "$value": "8px" },
+      "thin": { "$value": "16px" },
+      "regular": { "$value": "24px" },
+      "thick": { "$value": "32px" }
+    },
+    "saturation": {
+      "$type": "number",
+      "ultralight": { "$value": 1.1 },
+      "thin": { "$value": 1.1 },
+      "regular": { "$value": 1.1 },
+      "thick": { "$value": 1.0 }
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "1": { "$value": { "offsetX": "0px", "offsetY": "2px", "blur": "8px", "spread": "0px", "color": "rgb(0 0 0 / 0.08)" } },
+    "2": { "$value": { "offsetX": "0px", "offsetY": "8px", "blur": "24px", "spread": "0px", "color": "rgb(0 0 0 / 0.12)" } },
+    "modal": { "$value": { "offsetX": "0px", "offsetY": "16px", "blur": "48px", "spread": "0px", "color": "rgb(0 0 0 / 0.18)" } }
+  }
+}
