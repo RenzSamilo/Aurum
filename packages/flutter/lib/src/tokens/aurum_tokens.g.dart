@@ -141,7 +141,7 @@ abstract final class AurumShadow {
   static const List<BoxShadow> modal = [BoxShadow(offset: Offset(0.0, 16.0), blurRadius: 48.0, spreadRadius: 0.0, color: Color(0x2E000000))];
 }
 
-/// Haptic intents. [type] is the haptic_feedback HapticsType name.
+/// Haptic intents. Play them with AurumHaptics.play(). [type] names the platform haptic.
 enum AurumHaptic {
   selectionTick('selection', 0),
   selectionFrequent('selection', 50),

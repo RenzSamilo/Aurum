@@ -1,7 +1,7 @@
 {
   "haptic": {
     "$type": "aurumHaptic",
-    "$description": "Haptics by meaning. flutter = haptic_feedback HapticsType name. web = optional navigator.vibrate pattern (Android, opt-in). ios-web = optional ios-haptics call (experimental, opt-in).",
+    "$description": "Haptics by meaning. flutter = platform haptic (selection, light, medium, heavy, soft, rigid, success, warning, error). web = optional navigator.vibrate pattern (Android, opt-in). ios-web = optional ios-haptics call (experimental, opt-in).",
     "selection-tick":     { "$value": { "flutter": "selection", "web": [8],          "iosWeb": "haptic" } },
     "selection-frequent": { "$value": { "flutter": "selection", "web": [],           "iosWeb": "none", "throttleMs": 50 } },
     "impact-light":       { "$value": { "flutter": "light",     "web": [8],          "iosWeb": "haptic" } },
