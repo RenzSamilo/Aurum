@@ -183,6 +183,7 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
       style = style.copyWith(fontWeight: FontWeight.w600, fontVariations: [const FontVariation('wght', 600), FontVariation('opsz', style.fontSize!)]);
     }
     return Semantics(
+      container: true,
       inMutuallyExclusiveGroup: true,
       checked: selected,
       button: true,

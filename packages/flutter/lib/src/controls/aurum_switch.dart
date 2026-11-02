@@ -156,6 +156,7 @@ class _AurumSwitchState extends State<AurumSwitch> with SingleTickerProviderStat
     );
 
     final semantics = Semantics(
+      container: true,
       toggled: widget.value,
       enabled: _enabled,
       label: widget.label ?? widget.semanticLabel,

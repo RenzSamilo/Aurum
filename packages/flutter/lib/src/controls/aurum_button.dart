@@ -122,6 +122,7 @@ class _AurumButtonState extends State<AurumButton> {
     }
 
     return Semantics(
+      container: true,
       button: true,
       enabled: _enabled,
       label: widget.semanticLabel,
