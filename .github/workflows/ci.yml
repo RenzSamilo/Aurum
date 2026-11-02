@@ -23,6 +23,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Generated tokens are up to date
         run: pnpm tokens:check
+      - name: Example brand builds and passes contrast
+        run: node tools/tokens/build.mjs --brand tokens/brand/examples/ember.json --css "$RUNNER_TEMP/ember.css" --dart "$RUNNER_TEMP/ember.g.dart"
       - name: No Apple assets or Apple.com colours
         run: pnpm guard
       - run: pnpm typecheck

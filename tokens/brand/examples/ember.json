@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../tools/tokens/brand.schema.json",
+  "name": "Ember",
+  "accent": { "hue": 35, "chroma": 0.14 },
+  "neutral": { "hue": 50, "warmHue": 60, "chroma": 0.6 },
+  "radius": { "scale": 0.75 }
+}

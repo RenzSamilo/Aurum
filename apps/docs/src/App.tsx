@@ -1,5 +1,5 @@
 import { type AurumPreferences, haptic, material, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
-import { Barbell, BowlFood, Drop, Fire, Moon, Sun } from '@phosphor-icons/react';
+import { Bell, Gear, House, MagnifyingGlass, Moon, Sun } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
 const colorGroups: Record<string, string[]> = {
@@ -19,7 +19,7 @@ export function App() {
     <div className="page">
       <header className="masthead">
         <div>
-          <p className="aurum-type-footnote eyebrow">Phase 0 · token preview</p>
+          <p className="aurum-type-footnote eyebrow">Token preview</p>
           <h1 className="aurum-type-display">Aurum</h1>
           <p className="aurum-type-body lede">
             One token source, two libraries. Every value on this page comes from <code>tokens/</code>; the Flutter example app reads
@@ -64,7 +64,7 @@ export function App() {
         <div className="card aurum-squircle type-ramp">
           {Object.entries(type).map(([role, t]) => (
             <div key={role} className="type-row">
-              <span className={`aurum-type-${role}`}>Log breakfast, 412 kcal</span>
+              <span className={`aurum-type-${role}`}>Quarterly review, 3 of 12 done</span>
               <code className="aurum-type-caption meta">
                 {role} · {t.size}/{t.lineHeight} · {t.weight} · {t.tracking}em
               </code>
@@ -136,7 +136,7 @@ export function App() {
 
       <Section title="Icons" note="Phosphor (MIT). Weight follows the text weight next to it.">
         <div className="card aurum-squircle icons">
-          {[BowlFood, Barbell, Drop, Fire].map((Icon, i) => (
+          {[House, MagnifyingGlass, Bell, Gear].map((Icon, i) => (
             <span key={i} className="icon-row">
               <Icon size={24} weight="regular" />
               <Icon size={24} weight="bold" />

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../tools/tokens/brand.schema.json",
+  "name": "Aurum",
+  "accent": { "hue": 175, "chroma": 0.09 },
+  "neutral": { "hue": 225, "warmHue": 90, "chroma": 1 },
+  "danger": { "hue": 25 },
+  "warning": { "hue": 75 },
+  "font": { "ui": "Inter", "mono": "Geist Mono" },
+  "radius": { "scale": 1 }
+}

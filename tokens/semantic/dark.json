@@ -8,7 +8,7 @@
       "elevated": { "$value": "{color.cool.28}" }
     },
     "text": {
-      "primary":   { "$value": "{color.cool.96}" },
+      "primary":   { "$value": "{color.warm.96}" },
       "secondary": { "$value": "{color.cool.78}" },
       "tertiary":  { "$value": "{color.cool.70}" }
     },
@@ -16,16 +16,16 @@
       "decorative": { "$value": "{color.cool.32}" },
       "control":    { "$value": "{color.cool.60}" }
     },
-    "accent":    { "$value": "{color.teal.79}" },
+    "accent":    { "$value": "{color.brand-accent.dark}" },
     "on-accent": { "$value": "{color.cool.15}" },
-    "danger":    { "$value": "{color.red.78}" },
-    "warning":   { "$value": "{color.amber.82}" },
-    "success":   { "$value": "{color.teal.79}" },
+    "danger":    { "$value": "{color.brand-danger.dark}" },
+    "warning":   { "$value": "{color.brand-warning.dark}" },
+    "success":   { "$value": "{color.brand-accent.dark}" },
     "fill": {
       "hover":   { "$value": "rgb(255 255 255 / 0.05)" },
       "pressed": { "$value": "rgb(255 255 255 / 0.08)" }
     },
-    "focus": { "$value": "{color.teal.79}" },
+    "focus": { "$value": "{color.brand-accent.dark}" },
     "scrim": { "$value": "rgb(0 0 0 / 0.48)" }
   },
   "material": {

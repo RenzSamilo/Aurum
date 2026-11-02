@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Aurum brand",
+  "description": "The only file an app changes to make Aurum its own. Everything else stays core.",
+  "type": "object",
+  "required": ["name"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "type": "string", "description": "Used for generated Dart identifiers. Letters, digits and spaces." },
+    "accent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hue": { "type": "number", "minimum": 0, "maximum": 360, "description": "OKLCH hue of the brand colour." },
+        "chroma": { "type": "number", "minimum": 0, "maximum": 0.37, "description": "OKLCH chroma. 0.09 is calm, 0.15+ is vivid." },
+        "lightnessLight": { "type": "number", "minimum": 0, "maximum": 1, "description": "Accent lightness in light mode. Default 0.48." },
+        "lightnessDark": { "type": "number", "minimum": 0, "maximum": 1, "description": "Accent lightness in dark mode. Default 0.79." }
+      }
+    },
+    "neutral": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hue": { "type": "number", "minimum": 0, "maximum": 360, "description": "Hue of text and dark surfaces." },
+        "warmHue": { "type": "number", "minimum": 0, "maximum": 360, "description": "Hue of light surfaces." },
+        "chroma": { "type": "number", "minimum": 0, "maximum": 3, "description": "Tint multiplier. 0 = pure grey, 1 = default, 2 = twice as tinted." }
+      }
+    },
+    "danger": { "type": "object", "additionalProperties": false, "properties": { "hue": { "type": "number", "minimum": 0, "maximum": 360 } } },
+    "warning": { "type": "object", "additionalProperties": false, "properties": { "hue": { "type": "number", "minimum": 0, "maximum": 360 } } },
+    "font": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ui": { "type": "string", "description": "UI font family. Inter ships with Aurum; any other font must be bundled by the app." },
+        "mono": { "type": "string" }
+      }
+    },
+    "radius": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scale": { "type": "number", "minimum": 0, "maximum": 2, "description": "Multiplies every corner radius. 0 = square, 1 = default, 1.5 = softer." }
+      }
+    }
+  }
+}

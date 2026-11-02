@@ -58,13 +58,13 @@ class PreviewPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(AurumSpace.s16, AurumSpace.s32, AurumSpace.s16, AurumSpace.s64),
           children: [
-            Text('Phase 0 · token preview', style: AurumType.footnote.style(color: c.accent)),
+            Text('Token preview', style: context.aurumText(AurumType.footnote, color: c.accent)),
             const SizedBox(height: AurumSpace.s4),
-            Text('Aurum', style: AurumType.display.style(color: c.textPrimary)),
+            Text('Aurum', style: context.aurumText(AurumType.display, color: c.textPrimary)),
             const SizedBox(height: AurumSpace.s8),
             Text(
               'Same tokens as the web preview. Edit tokens/ and run pnpm tokens.',
-              style: AurumType.body.style(color: c.textSecondary),
+              style: context.aurumText(AurumType.body, color: c.textSecondary),
             ),
             const SizedBox(height: AurumSpace.s16),
             Wrap(spacing: AurumSpace.s8, runSpacing: AurumSpace.s8, children: [
@@ -90,14 +90,14 @@ class PreviewPage extends StatelessWidget {
                       decoration: ShapeDecoration(
                         color: color,
                         shape: RoundedSuperellipseBorder(
-                          borderRadius: BorderRadius.circular(AurumRadius.sm),
+                          borderRadius: BorderRadius.circular(context.aurumRadii.sm),
                           side: BorderSide(color: c.borderDecorative),
                         ),
                       ),
                       child: const SizedBox.square(dimension: AurumSpace.s32),
                     ),
                     const SizedBox(width: AurumSpace.s12),
-                    Text(name, style: AurumType.footnote.style(color: c.textPrimary)),
+                    Text(name, style: context.aurumText(AurumType.footnote, color: c.textPrimary)),
                   ]),
                 ),
             ])),
@@ -107,19 +107,19 @@ class PreviewPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: AurumSpace.s4),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('Log breakfast, 412 kcal', style: role.style(color: c.textPrimary, tabularFigures: true)),
+                    Text('Quarterly review, 3 of 12 done', style: context.aurumText(role, tabularFigures: true)),
                     Text('$name · ${role.size.round()}/${role.lineHeight.round()} · ${role.weight.round()}',
-                        style: AurumType.caption.style(color: c.textTertiary)),
+                        style: context.aurumText(AurumType.caption, color: c.textTertiary)),
                   ]),
                 ),
             ])),
             const _Section('Shape'),
             Wrap(spacing: AurumSpace.s16, runSpacing: AurumSpace.s16, children: [
               for (final (name, r) in [
-                ('sm', AurumRadius.sm),
-                ('md', AurumRadius.md),
-                ('lg', AurumRadius.lg),
-                ('xl', AurumRadius.xl),
+                ('sm', context.aurumRadii.sm),
+                ('md', context.aurumRadii.md),
+                ('lg', context.aurumRadii.lg),
+                ('xl', context.aurumRadii.xl),
               ])
                 _RadiusDemo(name: name, radius: r),
             ]),
@@ -131,7 +131,7 @@ class PreviewPage extends StatelessWidget {
             ])),
             const _Section('Icons'),
             _Card(child: Wrap(spacing: AurumSpace.s16, children: [
-              for (final icon in [PhosphorIconsRegular.bowlFood, PhosphorIconsBold.barbell, PhosphorIconsFill.drop, PhosphorIconsRegular.fire])
+              for (final icon in [PhosphorIconsRegular.house, PhosphorIconsBold.magnifyingGlass, PhosphorIconsFill.bell, PhosphorIconsRegular.gear])
                 Icon(icon, size: AurumSize.iconMd, color: c.textPrimary),
             ])),
           ],
@@ -148,7 +148,7 @@ class _Section extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: AurumSpace.s48, bottom: AurumSpace.s16),
-        child: Text(title, style: AurumType.section.style(color: context.aurum.textPrimary)),
+        child: Text(title, style: context.aurumText(AurumType.section, color: context.aurum.textPrimary)),
       );
 }
 
@@ -164,7 +164,7 @@ class _Card extends StatelessWidget {
         color: c.surfaceCard,
         shadows: AurumShadow.level1,
         shape: RoundedSuperellipseBorder(
-          borderRadius: BorderRadius.circular(AurumRadius.lg),
+          borderRadius: BorderRadius.circular(context.aurumRadii.lg),
           side: BorderSide(color: c.borderDecorative),
         ),
       ),
@@ -200,12 +200,12 @@ class _RadiusDemo extends StatelessWidget {
               child: DecoratedBox(
                 decoration: ShapeDecoration(
                   color: c.surfaceInset,
-                  shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(AurumRadius.inner(radius, pad))),
+                  shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(AurumRadii.inner(radius, pad))),
                 ),
               ),
             ),
             const SizedBox(height: AurumSpace.s8),
-            Text('$name · ${radius.round()}', style: AurumType.caption.style(color: c.textSecondary)),
+            Text('$name · ${radius.round()}', style: context.aurumText(AurumType.caption, color: c.textSecondary)),
           ]),
         ),
       ),
@@ -248,16 +248,16 @@ class _SpringRowState extends State<_SpringRow> with SingleTickerProviderStateMi
     final s = widget.spring;
     return InkWell(
       onTap: _toggle,
-      borderRadius: BorderRadius.circular(AurumRadius.sm),
+      borderRadius: BorderRadius.circular(context.aurumRadii.sm),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: AurumSpace.s8),
         child: Row(children: [
           SizedBox(
             width: 120,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(widget.name, style: AurumType.headline.style(color: c.textPrimary)),
+              Text(widget.name, style: context.aurumText(AurumType.headline, color: c.textPrimary)),
               Text('${s.duration.toStringAsFixed(2)}s · bounce ${s.bounce.toStringAsFixed(2)}',
-                  style: AurumType.caption.style(color: c.textTertiary)),
+                  style: context.aurumText(AurumType.caption, color: c.textTertiary)),
             ]),
           ),
           Expanded(
