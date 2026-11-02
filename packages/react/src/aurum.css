@@ -4,6 +4,7 @@
 @import '@fontsource-variable/inter/opsz.css';
 @import './tokens/tokens.css';
 @import './controls.css';
+@import './surfaces.css';
 
 html {
   font-family: var(--font-family-ui);

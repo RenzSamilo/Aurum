@@ -71,6 +71,8 @@ class PreviewPage extends StatelessWidget {
             AurumSwitch(value: moreContrast, label: 'More contrast', onChanged: onContrast),
             const _Section('Controls'),
             const _Card(child: _ControlsDemo()),
+            const _Section('Lists, cards and sheets'),
+            const _SurfacesDemo(),
             const _Section('Colour'),
             _Card(child: Column(children: [
               for (final (name, color) in [
@@ -328,6 +330,62 @@ class _ControlsDemoState extends State<_ControlsDemo> {
           AurumSegment(value: 'month', label: 'Month'),
           AurumSegment(value: 'year', label: 'Year'),
         ],
+      ),
+    ]);
+  }
+}
+
+class _SurfacesDemo extends StatefulWidget {
+  const _SurfacesDemo();
+
+  @override
+  State<_SurfacesDemo> createState() => _SurfacesDemoState();
+}
+
+class _SurfacesDemoState extends State<_SurfacesDemo> {
+  bool _wifi = true;
+  String _language = 'English';
+  int _presses = 0;
+
+  void _pickLanguage() {
+    showAurumSheet<void>(
+      context: context,
+      title: 'Language',
+      builder: (sheet) => AurumListSection(children: [
+        for (final l in const ['English', 'Filipino', 'Español', 'Deutsch'])
+          AurumListRow(
+            title: l,
+            chevron: false,
+            onPressed: () {
+              setState(() => _language = l);
+              Navigator.of(sheet).pop();
+            },
+          ),
+      ]),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.aurum;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, spacing: AurumSpace.s16, children: [
+      AurumListSection(header: 'Account', footer: 'Changes sync to every device you sign in on.', children: [
+        AurumListRow(leading: PhosphorIconsRegular.globe, title: 'Language', value: _language, onPressed: _pickLanguage),
+        AurumListRow(leading: PhosphorIconsRegular.lock, title: 'Privacy', subtitle: 'Who can see your profile', onPressed: () {}),
+        AurumListRow(
+          leading: PhosphorIconsRegular.wifiHigh,
+          title: 'Download over Wi-Fi only',
+          trailing: AurumSwitch(value: _wifi, semanticLabel: 'Download over Wi-Fi only', onChanged: (v) => setState(() => _wifi = v)),
+        ),
+        const AurumListRow(leading: PhosphorIconsRegular.info, title: 'Version', value: '1.0.0'),
+      ]),
+      AurumListSection(children: [AurumListRow(title: 'Sign out', destructive: true, chevron: false, onPressed: () {})]),
+      AurumCard(
+        onPressed: () => setState(() => _presses++),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('Pressable card', style: context.aurumText(AurumType.card)),
+          Text('Pressed $_presses times', style: context.aurumText(AurumType.body, color: c.textSecondary, tabularFigures: true)),
+        ]),
       ),
     ]);
   }

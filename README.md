@@ -95,6 +95,22 @@ AurumMotion.control.description;                  // SpringDescription
 RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(context.aurumRadii.lg));
 ```
 
+## Components
+
+| | Web | Flutter |
+| --- | --- | --- |
+| Button | `<Button>` | `AurumButton` |
+| Switch | `<Switch>` | `AurumSwitch` |
+| Segmented control | `<SegmentedControl>` | `AurumSegmentedControl` |
+| Grouped list | `<ListSection>` + `<ListRow>` | `AurumListSection` + `AurumListRow` |
+| Card | `<Card>` | `AurumCard` |
+| Sheet | `<Sheet>` | `showAurumSheet()` |
+| Glass | `<Glass>` | `AurumGlass` |
+| Continuous corners | `<Squircle>`, `useSquircle()` | `RoundedSuperellipseBorder` |
+| Haptics | `playHaptic(intent)` | `AurumHaptics.play(intent)` |
+
+Every component works with a keyboard and a screen reader, honours reduced motion, and is checked by tests (axe-core on the web, Flutter's accessibility guidelines on mobile).
+
 ## Assets and licences
 
 - Inter Variable 4.1, OFL-1.1 (`packages/flutter/fonts/Inter-OFL.txt`; web via `@fontsource-variable/inter`)
