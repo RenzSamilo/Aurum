@@ -17,8 +17,8 @@ export function Squircle<T extends ElementType = 'div'>({
 }: Polymorphic<T, { radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {}); children?: ReactNode }>) {
   const Tag: ElementType = as ?? 'div';
   const ref = useRef<HTMLElement>(null);
-  useSquircle(ref);
   const value = ['sm', 'md', 'lg', 'xl'].includes(radius) ? `var(--radius-${radius})` : radius;
+  useSquircle(ref, undefined, value);
   return (
     <Tag
       ref={ref}

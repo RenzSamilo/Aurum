@@ -83,12 +83,20 @@ export function supportsNativeSquircle(): boolean {
  * Where corner-shape is missing, the element is clipped with a path that tracks
  * its size. Clipping hides outer box-shadows, so put shadows on a wrapper.
  */
-export function useSquircle(ref: RefObject<HTMLElement | null>, smoothing = shapeSmoothing): void {
+export function useSquircle(
+  ref: RefObject<HTMLElement | null>,
+  smoothing = shapeSmoothing,
+  /** Anything that changes the radius without changing the size, such as a radius prop. */
+  radiusKey?: unknown,
+): void {
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el || supportsNativeSquircle() || typeof ResizeObserver === 'undefined') return;
     const apply = () => {
-      const { width, height } = el.getBoundingClientRect();
+      // Layout size, before transforms: path() coordinates are local to the element,
+      // so a scaled or rotated box must not shrink its own clip.
+      const width = el.offsetWidth;
+      const height = el.offsetHeight;
       // The radius as authored: aurum.css only stretches it when the browser is native.
       const radius = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
       el.style.clipPath = `path("${squirclePath(width, height, radius, smoothing)}")`;
@@ -100,5 +108,5 @@ export function useSquircle(ref: RefObject<HTMLElement | null>, smoothing = shap
       observer.disconnect();
       el.style.clipPath = '';
     };
-  }, [ref, smoothing]);
+  }, [ref, smoothing, radiusKey]);
 }

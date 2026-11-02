@@ -1,4 +1,3 @@
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import '../tokens/aurum_tokens.g.dart';
@@ -17,8 +16,10 @@ abstract final class AurumHaptics {
 
   static final Map<AurumHaptic, Duration> _last = {};
 
-  /// Clock for throttling. Tests can replace it.
-  static Duration Function() clock = () => SchedulerBinding.instance.currentSystemFrameTimeStamp;
+  static final Stopwatch _stopwatch = Stopwatch()..start();
+
+  /// Monotonic clock for throttling, independent of frame scheduling. Tests can replace it.
+  static Duration Function() clock = () => _stopwatch.elapsed;
 
   /// Plays [intent] unless haptics are off or it fired too recently.
   /// Returns whether a haptic was requested from the platform.
