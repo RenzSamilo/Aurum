@@ -102,5 +102,16 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Body'), findsOneWidget);
     });
+
+    testWidgets('sits above the software keyboard', (tester) async {
+      await open(tester);
+      final before = tester.getBottomLeft(find.text('Body')).dy;
+      tester.view.viewInsets = const FakeViewPadding(bottom: 300 * 3);
+      addTearDown(tester.view.resetViewInsets);
+      await tester.pumpAndSettle();
+      final after = tester.getBottomLeft(find.text('Body')).dy;
+      expect(before - after, closeTo(300, 40));
+      expect(after, lessThan(tester.view.physicalSize.height / tester.view.devicePixelRatio - 300));
+    });
   });
 }

@@ -199,7 +199,7 @@ class _AurumSheetState extends State<_AurumSheet> {
 
     final sheet = Container(
       key: _key,
-      constraints: BoxConstraints(maxWidth: 640, maxHeight: media.size.height - media.padding.top - AurumSpace.s16),
+      constraints: BoxConstraints(maxWidth: 640, maxHeight: (media.size.height - media.viewInsets.bottom - media.padding.top - AurumSpace.s16).clamp(0.0, double.infinity)),
       decoration: ShapeDecoration(
         color: c.surfaceCanvas,
         shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.only(topLeft: r, topRight: r)),
@@ -214,7 +214,7 @@ class _AurumSheetState extends State<_AurumSheet> {
         ),
         Flexible(
           child: SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(AurumSpace.s16, AurumSpace.s8, AurumSpace.s16, AurumSpace.s24 + media.padding.bottom),
+            padding: EdgeInsets.fromLTRB(AurumSpace.s16, AurumSpace.s8, AurumSpace.s16, AurumSpace.s24 + (media.viewInsets.bottom > 0 ? 0 : media.padding.bottom)),
             child: Builder(builder: route.builder),
           ),
         ),
@@ -226,7 +226,12 @@ class _AurumSheetState extends State<_AurumSheet> {
       namesRoute: true,
       explicitChildNodes: true,
       label: route.title,
-      child: Align(
+      // Lift the sheet above the software keyboard.
+      child: AnimatedPadding(
+        duration: AurumMotion.press,
+        curve: AurumMotion.easeStandard,
+        padding: EdgeInsets.only(bottom: media.viewInsets.bottom),
+        child: Align(
         alignment: Alignment.bottomCenter,
         child: AnimatedContainer(
           duration: _drag == 0 ? AurumMotion.transition : Duration.zero,
@@ -234,6 +239,7 @@ class _AurumSheetState extends State<_AurumSheet> {
           transform: Matrix4.translationValues(0, _drag, 0),
           child: sheet,
         ),
+      ),
       ),
     );
   }

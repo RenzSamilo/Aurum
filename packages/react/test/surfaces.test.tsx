@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import axe from 'axe-core';
-import { act, createElement as h, useState } from 'react';
+import { act, createElement as h, createRef, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Switch } from '../src/controls';
@@ -116,5 +116,34 @@ describe('Sheet', () => {
     expect(cancel.defaultPrevented).toBe(true);
     expect(dialog.dataset.state).toBe('open');
     expect(host.querySelector('.aurum-sheet-grabber')).toBeNull();
+  });
+  it('cancels a pending close when reopened during the exit transition', async () => {
+    vi.useFakeTimers();
+    try {
+      const props = { onOpenChange: () => {}, title: 'Filters', children: h('p', null, 'Body') };
+      await render(h(Sheet, { ...props, open: true }));
+      const dialog = host.querySelector('dialog')!;
+      (host.querySelector('.aurum-sheet') as HTMLElement).style.transitionDuration = '0.3s';
+      await render(h(Sheet, { ...props, open: false }));
+      expect(dialog.dataset.state).toBe('closing');
+      await render(h(Sheet, { ...props, open: true }));
+      await act(async () => vi.advanceTimersByTime(1000));
+      expect(dialog.open).toBe(true);
+      expect(dialog.dataset.state).toBe('open');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('forwards its ref to the dialog', async () => {
+    const ref = createRef<HTMLDialogElement>();
+    let called: HTMLDialogElement | null = null;
+    await render(h('div', null,
+      h(Sheet, { open: false, onOpenChange: () => {}, title: 'A', ref, children: null }),
+      h(Sheet, { open: false, onOpenChange: () => {}, title: 'B', ref: (el: HTMLDialogElement | null) => { called = el; }, children: null }),
+    ));
+    const dialogs = host.querySelectorAll('dialog');
+    expect(ref.current).toBe(dialogs[0]);
+    expect(called).toBe(dialogs[1]);
   });
 });

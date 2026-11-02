@@ -168,7 +168,7 @@ const CLOSE_FRACTION = 0.3; // of the sheet's height
  * trapped and Escape closes it. Drag the grabber or the title area down to
  * close; a fast flick closes from anywhere in the drag.
  */
-export function Sheet({ open, onOpenChange, title, hideTitle, children, dismissible = true, closeLabel = 'Close', className }: SheetProps) {
+export function Sheet({ open, onOpenChange, title, hideTitle, children, dismissible = true, closeLabel = 'Close', className, ref }: SheetProps) {
   const dialog = useRef<HTMLDialogElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const titleId = useId();
@@ -178,10 +178,14 @@ export function Sheet({ open, onOpenChange, title, hideTitle, children, dismissi
   useEffect(() => {
     const d = dialog.current;
     if (!d) return;
-    if (open && !d.open) {
+    if (open) {
+      // Reopening during the exit transition cancels the pending close.
       setClosing(false);
-      d.showModal();
-      playHaptic('impactLight');
+      if (panel.current) panel.current.style.transform = '';
+      if (!d.open) {
+        d.showModal();
+        playHaptic('impactLight');
+      }
     } else if (!open && d.open) {
       setClosing(true);
     }
@@ -244,7 +248,11 @@ export function Sheet({ open, onOpenChange, title, hideTitle, children, dismissi
 
   return (
     <dialog
-      ref={dialog}
+      ref={(el) => {
+        dialog.current = el;
+        if (typeof ref === 'function') ref(el);
+        else if (ref) (ref as { current: HTMLDialogElement | null }).current = el;
+      }}
       className={cx('aurum-sheet-dialog', className)}
       aria-labelledby={titleId}
       data-state={closing ? 'closing' : open ? 'open' : 'closed'}
