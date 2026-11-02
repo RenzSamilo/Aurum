@@ -3,9 +3,9 @@
     "$type": "color",
     "surface": {
       "canvas":   { "$value": "{color.warm.98}" },
-      "card":     { "$value": "{color.white}" },
+      "card":     { "$value": "{color.warm.99}" },
       "inset":    { "$value": "{color.warm.96}" },
-      "elevated": { "$value": "{color.white}" }
+      "elevated": { "$value": "{color.warm.99}" }
     },
     "text": {
       "primary":   { "$value": "{color.cool.22}" },
@@ -17,6 +17,7 @@
       "control":    { "$value": "{color.cool.60}" }
     },
     "accent":    { "$value": "{color.brand-accent.light}" },
+    "accent-secondary": { "$value": "{color.brand-secondary.light}" },
     "on-accent": { "$value": "{color.warm.99}" },
     "danger":    { "$value": "{color.brand-danger.light}" },
     "warning":   { "$value": "{color.brand-warning.light}" },
@@ -29,7 +30,7 @@
     "scrim": { "$value": "rgb(0 0 0 / 0.32)" }
   },
   "material": {
-    "tint-base": { "$type": "color", "$value": "{color.white}" },
+    "tint-base": { "$type": "color", "$value": "{color.warm.99}" },
     "alpha": {
       "$type": "number",
       "ultralight": { "$value": 0.56 },

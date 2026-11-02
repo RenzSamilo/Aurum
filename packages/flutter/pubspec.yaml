@@ -23,3 +23,8 @@ flutter:
     - family: Inter
       fonts:
         - asset: fonts/InterVariable.ttf
+    # Fraunces 1.000 (OFL-1.1, see fonts/Fraunces-OFL.txt). opsz and wght axes,
+    # Latin subset, SOFT and WONK pinned to 0. Used for title roles.
+    - family: Fraunces
+      fonts:
+        - asset: fonts/FrauncesVariable.ttf

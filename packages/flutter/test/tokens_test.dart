@@ -73,4 +73,12 @@ void main() {
     expect(body.fontFamily, 'packages/aurum_ui/Inter');
     expect(body.color, aurumBrand.light.textPrimary);
   });
+
+  test('title roles use the display serif, the rest the UI font', () {
+    final face = aurumBrand.typeface;
+    expect(face.displayFamily, 'Fraunces');
+    expect(face.style(AurumType.page).fontFamily, 'packages/aurum_ui/Fraunces');
+    expect(face.style(AurumType.body).fontFamily, 'packages/aurum_ui/Inter');
+    expect(const AurumTypeface(family: 'X').style(AurumType.page).fontFamily, 'X');
+  });
 }

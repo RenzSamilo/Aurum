@@ -36,8 +36,10 @@ abstract final class AurumSize {
 /// which applies the brand font.
 @immutable
 class AurumTextRole {
-  const AurumTextRole({required this.size, required this.lineHeight, required this.weight, required this.tracking});
+  const AurumTextRole({required this.size, required this.lineHeight, required this.weight, required this.tracking, this.display = false});
 
+  /// Title roles set in the brand's display font.
+  final bool display;
   final double size;
   final double lineHeight;
   final double weight;
@@ -59,10 +61,10 @@ class AurumTextRole {
 }
 
 abstract final class AurumType {
-  static const display = AurumTextRole(size: 40.0, lineHeight: 48.0, weight: 650.0, tracking: -0.025);
-  static const page = AurumTextRole(size: 32.0, lineHeight: 40.0, weight: 650.0, tracking: -0.02);
-  static const section = AurumTextRole(size: 24.0, lineHeight: 32.0, weight: 600.0, tracking: -0.015);
-  static const card = AurumTextRole(size: 20.0, lineHeight: 28.0, weight: 600.0, tracking: -0.01);
+  static const display = AurumTextRole(size: 40.0, lineHeight: 48.0, weight: 560.0, tracking: -0.01, display: true);
+  static const page = AurumTextRole(size: 32.0, lineHeight: 40.0, weight: 560.0, tracking: -0.01, display: true);
+  static const section = AurumTextRole(size: 24.0, lineHeight: 32.0, weight: 560.0, tracking: -0.01, display: true);
+  static const card = AurumTextRole(size: 20.0, lineHeight: 28.0, weight: 560.0, tracking: -0.01, display: true);
   static const headline = AurumTextRole(size: 17.0, lineHeight: 24.0, weight: 600.0, tracking: -0.005);
   static const body = AurumTextRole(size: 17.0, lineHeight: 24.0, weight: 400.0, tracking: -0.005);
   static const callout = AurumTextRole(size: 16.0, lineHeight: 24.0, weight: 500.0, tracking: 0.0);
@@ -177,6 +179,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
     required this.borderDecorative,
     required this.borderControl,
     required this.accent,
+    required this.accentSecondary,
     required this.onAccent,
     required this.danger,
     required this.warning,
@@ -202,6 +205,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
   final Color borderDecorative;
   final Color borderControl;
   final Color accent;
+  final Color accentSecondary;
   final Color onAccent;
   final Color danger;
   final Color warning;
@@ -228,6 +232,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
     Color? borderDecorative,
     Color? borderControl,
     Color? accent,
+    Color? accentSecondary,
     Color? onAccent,
     Color? danger,
     Color? warning,
@@ -253,6 +258,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
       borderDecorative: borderDecorative ?? this.borderDecorative,
       borderControl: borderControl ?? this.borderControl,
       accent: accent ?? this.accent,
+      accentSecondary: accentSecondary ?? this.accentSecondary,
       onAccent: onAccent ?? this.onAccent,
       danger: danger ?? this.danger,
       warning: warning ?? this.warning,
@@ -283,6 +289,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
       borderDecorative: Color.lerp(borderDecorative, other.borderDecorative, t)!,
       borderControl: Color.lerp(borderControl, other.borderControl, t)!,
       accent: Color.lerp(accent, other.accent, t)!,
+      accentSecondary: Color.lerp(accentSecondary, other.accentSecondary, t)!,
       onAccent: Color.lerp(onAccent, other.onAccent, t)!,
       danger: Color.lerp(danger, other.danger, t)!,
       warning: Color.lerp(warning, other.warning, t)!,
@@ -312,6 +319,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
       other.borderDecorative == borderDecorative &&
       other.borderControl == borderControl &&
       other.accent == accent &&
+      other.accentSecondary == accentSecondary &&
       other.onAccent == onAccent &&
       other.danger == danger &&
       other.warning == warning &&
@@ -327,5 +335,5 @@ class AurumColors extends ThemeExtension<AurumColors> {
       other.materialAlphaThick == materialAlphaThick;
 
   @override
-  int get hashCode => Object.hashAll([surfaceCanvas, surfaceCard, surfaceInset, surfaceElevated, textPrimary, textSecondary, textTertiary, borderDecorative, borderControl, accent, onAccent, danger, warning, success, fillHover, fillPressed, focus, scrim, materialTintBase, materialAlphaUltralight, materialAlphaThin, materialAlphaRegular, materialAlphaThick]);
+  int get hashCode => Object.hashAll([surfaceCanvas, surfaceCard, surfaceInset, surfaceElevated, textPrimary, textSecondary, textTertiary, borderDecorative, borderControl, accent, accentSecondary, onAccent, danger, warning, success, fillHover, fillPressed, focus, scrim, materialTintBase, materialAlphaUltralight, materialAlphaThin, materialAlphaRegular, materialAlphaThick]);
 }
