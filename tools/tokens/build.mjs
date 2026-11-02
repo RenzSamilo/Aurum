@@ -86,7 +86,10 @@ const pascal = (s) => camel(s).replace(/^./, (c) => c.toUpperCase());
 const dims = (prefix) => Object.fromEntries(pick(prefix).map((t) => [t.path.slice(1).join('-'), t.$value]));
 
 const springs = Object.fromEntries(pick('spring').map((t) => [t.path[1], deriveSpring(t.$value)]));
-const types = Object.fromEntries(pick('type').map((t) => [t.path[1], t.$value]));
+/** Core text roles, the same for every brand (Dart AurumType). */
+const coreTypes = Object.fromEntries(pick('type').map((t) => [t.path[1], { ...t.$value }]));
+/** Text roles as this brand renders them (CSS and TS): display overrides applied. */
+const types = structuredClone(coreTypes);
 const haptics = Object.fromEntries(pick('haptic').map((t) => [t.path[1], t.$value]));
 const durations = Object.fromEntries(pick('duration').map((t) => [t.path[1], px(t.$value)]));
 const space = dims('space');
@@ -103,6 +106,20 @@ const ease = base.get('ease-standard').$value;
 const smoothing = base.get('shape-smoothing').$value;
 const fontUi = base.get('font-family-ui').$value;
 const fontMono = base.get('font-family-mono').$value;
+const fontDisplay = base.get('font-family-display').$value;
+/** Title roles that use the display font. */
+const DISPLAY_ROLES = new Set(['display', 'page', 'section', 'card']);
+const bundled = { Inter: 'aurum_ui', Fraunces: 'aurum_ui' };
+// A display font gets its own weight and tracking; serifs rarely suit the UI font's.
+// Flutter applies the same overrides through AurumTypeface at runtime.
+const displayWeight = fontDisplay !== fontUi ? (brand.font.displayWeight ?? null) : null;
+const displayTracking = fontDisplay !== fontUi ? (brand.font.displayTracking ?? null) : null;
+if (fontDisplay !== fontUi) {
+  for (const k of DISPLAY_ROLES) {
+    if (brand.font.displayWeight != null) types[k].weight = brand.font.displayWeight;
+    if (brand.font.displayTracking != null) types[k].tracking = brand.font.displayTracking;
+  }
+}
 const levels = Object.keys(materialBlur);
 
 /** Semantic values of one mode, plus composed material tints. */
@@ -134,6 +151,10 @@ const decl = (obj, indent = '  ') =>
 const block = (sel, obj) => `${sel} {\n${decl(obj)}\n}`;
 const media = (q, sel, obj) => `@media ${q} {\n  ${sel} {\n${decl(obj, '    ')}\n  }\n}`;
 const fontStack = fontUi === 'Inter' ? `"Inter Variable", "Inter", system-ui, sans-serif` : `"${fontUi}", system-ui, sans-serif`;
+const displayStack =
+  fontDisplay === fontUi ? 'var(--font-family-ui)'
+  : fontDisplay === 'Fraunces' ? `"Fraunces Variable", "Fraunces", Georgia, serif`
+  : `"${fontDisplay}", var(--font-family-ui)`;
 
 const cssBase = {
   'color-scheme': 'light',
@@ -149,6 +170,7 @@ const cssBase = {
   ...Object.fromEntries(Object.entries(z).map(([k, v]) => [`z-${k}`, v])),
   'font-family-ui': fontStack,
   'font-family-mono': `"${fontMono}", ui-monospace, monospace`,
+  'font-family-display': displayStack,
   ...Object.fromEntries(
     Object.entries(types).flatMap(([k, t]) => [
       [`type-${k}-size`, rem(t.size)],
@@ -181,7 +203,7 @@ const dark = { 'color-scheme': 'dark', ...diff('light', 'dark') };
 const typeClasses = Object.keys(types)
   .map(
     (k) => `.aurum-type-${k} {
-  font-family: var(--font-family-ui);
+  font-family: var(--font-family-${DISPLAY_ROLES.has(k) ? 'display' : 'ui'});
   font-size: var(--type-${k}-size);
   line-height: var(--type-${k}-line-height);
   font-weight: var(--type-${k}-weight);
@@ -238,7 +260,7 @@ export const radius = ${JSON.stringify(Object.fromEntries(Object.entries(radius)
 export const shapeSmoothing = ${smoothing};
 export const size = ${JSON.stringify(Object.fromEntries(Object.entries(size).map(([k, v]) => [camel(k), px(v)])))} as const;
 export const z = ${JSON.stringify(z)} as const;
-export const font = ${JSON.stringify({ ui: fontUi, mono: fontMono })} as const;
+export const font = ${JSON.stringify({ ui: fontUi, mono: fontMono, display: fontDisplay })} as const;
 
 /** Text roles: px at a 16px root, variable weight, tracking in em. */
 export const type = ${json(types)} as const;
@@ -305,8 +327,10 @@ ${Object.entries(size).map(([k, v]) => `  static const double ${camel(k)} = ${da
 /// which applies the brand font.
 @immutable
 class AurumTextRole {
-  const AurumTextRole({required this.size, required this.lineHeight, required this.weight, required this.tracking});
+  const AurumTextRole({required this.size, required this.lineHeight, required this.weight, required this.tracking, this.display = false});
 
+  /// Title roles set in the brand's display font.
+  final bool display;
   final double size;
   final double lineHeight;
   final double weight;
@@ -314,24 +338,35 @@ class AurumTextRole {
 
   /// Text style with optical size set from [size]. [fontFamily] and
   /// [fontPackage] default to the Inter variable font bundled with aurum_ui.
-  TextStyle style({Color? color, bool tabularFigures = false, String fontFamily = 'Inter', String? fontPackage = 'aurum_ui'}) => TextStyle(
+  /// [weight] and [tracking] override the role's own, e.g. for a display font.
+  TextStyle style({
+    Color? color,
+    bool tabularFigures = false,
+    String fontFamily = 'Inter',
+    String? fontPackage = 'aurum_ui',
+    double? weight,
+    double? tracking,
+  }) {
+    final w = weight ?? this.weight;
+    return TextStyle(
         fontFamily: fontFamily,
         package: fontPackage,
         fontSize: size,
         height: lineHeight / size,
-        letterSpacing: tracking * size,
-        fontWeight: FontWeight.values[((weight / 100).round() - 1).clamp(0, 8)],
-        fontVariations: [FontVariation('wght', weight), FontVariation('opsz', size.clamp(14, 32).toDouble())],
+        letterSpacing: (tracking ?? this.tracking) * size,
+        fontWeight: FontWeight.values[((w / 100).round() - 1).clamp(0, 8)],
+        fontVariations: [FontVariation('wght', w), FontVariation('opsz', size.clamp(14, 32).toDouble())],
         fontFeatures: tabularFigures ? const [FontFeature.tabularFigures()] : null,
         color: color,
       );
+  }
 }
 
 abstract final class AurumType {
-${Object.entries(types).map(([k, t]) => `  static const ${k} = AurumTextRole(size: ${dartNum(t.size)}, lineHeight: ${dartNum(t.lineHeight)}, weight: ${dartNum(t.weight)}, tracking: ${dartNum(t.tracking)});`).join('\n')}
+${Object.entries(coreTypes).map(([k, t]) => `  static const ${k} = AurumTextRole(size: ${dartNum(t.size)}, lineHeight: ${dartNum(t.lineHeight)}, weight: ${dartNum(t.weight)}, tracking: ${dartNum(t.tracking)}${DISPLAY_ROLES.has(k) ? ', display: true' : ''});`).join('\n')}
 
   static const Map<String, AurumTextRole> all = {
-${Object.keys(types).map((k) => `    '${k}': ${k},`).join('\n')}
+${Object.keys(coreTypes).map((k) => `    '${k}': ${k},`).join('\n')}
   };
 }
 
@@ -444,7 +479,14 @@ const AurumBrand ${brandIdent} = AurumBrand(
   contrastLight: ${dartColorsValue('contrastLight')},
   contrastDark: ${dartColorsValue('contrastDark')},
   radii: AurumRadii(${['sm', 'md', 'lg', 'xl'].map((k) => `${k}: ${dartNum(px(radius[k]))}`).join(', ')}),
-  typeface: AurumTypeface(family: '${fontUi.replace(/'/g, "\\'")}', package: ${fontUi === 'Inter' ? "'aurum_ui'" : 'null'}),
+  typeface: AurumTypeface(
+    family: '${fontUi.replace(/'/g, "\\'")}',
+    package: ${bundled[fontUi] ? `'${bundled[fontUi]}'` : 'null'},
+    displayFamily: '${fontDisplay.replace(/'/g, "\\'")}',
+    displayPackage: ${bundled[fontDisplay] ? `'${bundled[fontDisplay]}'` : 'null'},
+    displayWeight: ${displayWeight ?? 'null'},
+    displayTracking: ${displayTracking ?? 'null'},
+  ),
 );
 `;
 

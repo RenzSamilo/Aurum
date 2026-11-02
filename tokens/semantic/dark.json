@@ -17,6 +17,7 @@
       "control":    { "$value": "{color.cool.60}" }
     },
     "accent":    { "$value": "{color.brand-accent.dark}" },
+    "accent-secondary": { "$value": "{color.brand-secondary.dark}" },
     "on-accent": { "$value": "{color.cool.15}" },
     "danger":    { "$value": "{color.brand-danger.dark}" },
     "warning":   { "$value": "{color.brand-warning.dark}" },

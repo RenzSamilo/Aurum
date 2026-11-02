@@ -1,10 +1,11 @@
 {
   "$schema": "../../tools/tokens/brand.schema.json",
   "name": "Aurum",
-  "accent": { "hue": 175, "chroma": 0.09 },
-  "neutral": { "hue": 225, "warmHue": 90, "chroma": 1 },
-  "danger": { "hue": 25 },
-  "warning": { "hue": 75 },
-  "font": { "ui": "Inter", "mono": "Geist Mono" },
+  "accent": { "hue": 152, "chroma": 0.06, "lightnessLight": 0.42, "lightnessDark": 0.74, "chromaDark": 0.045 },
+  "secondary": { "hue": 85, "chroma": 0.09 },
+  "neutral": { "hue": 160, "warmHue": 88, "chroma": 2.2 },
+  "danger": { "hue": 28 },
+  "warning": { "hue": 70 },
+  "font": { "ui": "Inter", "mono": "Geist Mono", "display": "Fraunces", "displayWeight": 560, "displayTracking": -0.01 },
   "radius": { "scale": 1 }
 }

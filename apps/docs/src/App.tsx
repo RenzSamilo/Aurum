@@ -6,7 +6,7 @@ const colorGroups: Record<string, string[]> = {
   Surface: ['surface-canvas', 'surface-card', 'surface-inset', 'surface-elevated'],
   Text: ['text-primary', 'text-secondary', 'text-tertiary'],
   Border: ['border-decorative', 'border-control'],
-  Status: ['accent', 'on-accent', 'success', 'warning', 'danger'],
+  Status: ['accent', 'accent-secondary', 'on-accent', 'success', 'warning', 'danger'],
 };
 
 export function App() {
@@ -63,7 +63,7 @@ export function App() {
         </div>
       </Section>
 
-      <Section title="Type" note="Inter Variable with optical sizing. Size / line height in px, tracking in em.">
+      <Section title="Type" note="Fraunces for titles, Inter for everything else; both with optical sizing. Size / line height in px, tracking in em.">
         <div className="card aurum-squircle type-ramp">
           {Object.entries(type).map(([role, t]) => (
             <div key={role} className="type-row">

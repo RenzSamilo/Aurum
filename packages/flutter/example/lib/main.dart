@@ -58,7 +58,7 @@ class PreviewPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(AurumSpace.s16, AurumSpace.s32, AurumSpace.s16, AurumSpace.s64),
           children: [
-            Text('Token preview', style: context.aurumText(AurumType.footnote, color: c.accent)),
+            Text('Token preview', style: context.aurumText(AurumType.footnote, color: c.accentSecondary)),
             const SizedBox(height: AurumSpace.s4),
             Text('Aurum', style: context.aurumText(AurumType.display, color: c.textPrimary)),
             const SizedBox(height: AurumSpace.s8),
@@ -82,6 +82,7 @@ class PreviewPage extends StatelessWidget {
                 ('textPrimary', c.textPrimary),
                 ('textSecondary', c.textSecondary),
                 ('accent', c.accent),
+                ('accentSecondary', c.accentSecondary),
                 ('warning', c.warning),
                 ('danger', c.danger),
               ])

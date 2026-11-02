@@ -15,7 +15,8 @@
         "hue": { "type": "number", "minimum": 0, "maximum": 360, "description": "OKLCH hue of the brand colour." },
         "chroma": { "type": "number", "minimum": 0, "maximum": 0.37, "description": "OKLCH chroma. 0.09 is calm, 0.15+ is vivid." },
         "lightnessLight": { "type": "number", "minimum": 0, "maximum": 1, "description": "Accent lightness in light mode. Default 0.48." },
-        "lightnessDark": { "type": "number", "minimum": 0, "maximum": 1, "description": "Accent lightness in dark mode. Default 0.79." }
+        "lightnessDark": { "type": "number", "minimum": 0, "maximum": 1, "description": "Accent lightness in dark mode. Default 0.79." },
+        "chromaDark": { "type": "number", "minimum": 0, "maximum": 0.37, "description": "Accent chroma in dark mode. Defaults to chroma; lower it for a muted, antique dark theme." }
       }
     },
     "neutral": {
@@ -27,6 +28,15 @@
         "chroma": { "type": "number", "minimum": 0, "maximum": 3, "description": "Tint multiplier. 0 = pure grey, 1 = default, 2 = twice as tinted." }
       }
     },
+    "secondary": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A second, quieter brand colour for ornament: eyebrows, leading icons, highlights. Gold by default.",
+      "properties": {
+        "hue": { "type": "number", "minimum": 0, "maximum": 360 },
+        "chroma": { "type": "number", "minimum": 0, "maximum": 0.37 }
+      }
+    },
     "danger": { "type": "object", "additionalProperties": false, "properties": { "hue": { "type": "number", "minimum": 0, "maximum": 360 } } },
     "warning": { "type": "object", "additionalProperties": false, "properties": { "hue": { "type": "number", "minimum": 0, "maximum": 360 } } },
     "font": {
@@ -34,7 +44,10 @@
       "additionalProperties": false,
       "properties": {
         "ui": { "type": "string", "description": "UI font family. Inter ships with Aurum; any other font must be bundled by the app." },
-        "mono": { "type": "string" }
+        "mono": { "type": "string" },
+        "display": { "type": "string", "description": "Font for the display, page, section and card titles. Defaults to the UI font. Fraunces ships with Aurum; any other font must be bundled by the app." },
+        "displayWeight": { "type": "number", "minimum": 100, "maximum": 900, "description": "wght for title roles when a display font is set. Serifs usually want less than the UI default." },
+        "displayTracking": { "type": "number", "minimum": -0.1, "maximum": 0.1, "description": "Letter spacing in em for title roles when a display font is set." }
       }
     },
     "radius": {

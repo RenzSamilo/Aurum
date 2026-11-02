@@ -77,7 +77,7 @@ class AurumListRow extends StatefulWidget {
   final String title;
   final String? subtitle;
 
-  /// Icon at the start, shown in the accent colour.
+  /// Icon at the start, shown in the secondary accent colour.
   final IconData? leading;
 
   /// Secondary value at the end, such as the current choice.
@@ -118,7 +118,7 @@ class _AurumListRowState extends State<AurumListRow> {
       ),
       child: Row(children: [
         if (widget.leading != null) ...[
-          SizedBox(width: AurumSize.iconLg, child: Icon(widget.leading, size: AurumSize.iconMd, color: c.accent)),
+          SizedBox(width: AurumSize.iconLg, child: Icon(widget.leading, size: AurumSize.iconMd, color: c.accentSecondary)),
           const SizedBox(width: AurumSpace.s12),
         ],
         Expanded(

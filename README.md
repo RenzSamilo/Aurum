@@ -48,7 +48,7 @@ Change a value in `tokens/`, run `pnpm tokens`, and both the web preview and the
 
 ## Make it yours (one file per app)
 
-1. Copy `tokens/brand/aurum.json` into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`.
+1. Copy `tokens/brand/aurum.json` into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`.
 2. Build it:
 
    ```sh
@@ -61,7 +61,9 @@ Change a value in `tokens/`, run `pnpm tokens`, and both the web preview and the
 
 The build checks every mode (light, dark, both high-contrast) against WCAG and refuses a brand that fails, with the exact pair and ratio. Text roles, spacing, springs, materials and haptics stay the same across brands, so every app feels like Aurum.
 
-A custom font must be a variable font with a `wght` axis, bundled in your app. Set `font.ui` to its family name.
+The default look is **old green**: bottle-green accent on parchment, green-black dark surfaces with a muted sage accent, gilt gold for ornament (`--color-accent-secondary`, `accentSecondary`), and Fraunces serif titles over Inter. `tokens/brand/examples/` has other starting points (Lagoon is the earlier teal, Ember is warm orange).
+
+Fonts: `font.ui` sets the UI font and `font.display` the title font (display, page, section and card roles); `font.displayWeight` and `font.displayTracking` tune titles. Delete `font.display` for an all-sans look. Inter and Fraunces ship with Aurum; any other font must be a variable font with a `wght` axis, bundled in your app.
 
 ## Using it
 
@@ -114,6 +116,7 @@ Every component works with a keyboard and a screen reader, honours reduced motio
 ## Assets and licences
 
 - Inter Variable 4.1, OFL-1.1 (`packages/flutter/fonts/Inter-OFL.txt`; web via `@fontsource-variable/inter`)
+- Fraunces Variable, OFL-1.1 (`packages/flutter/fonts/Fraunces-OFL.txt`; Latin subset with opsz and wght axes; web via `@fontsource-variable/fraunces`)
 - Phosphor icons, MIT (`@phosphor-icons/react`, `phosphor_glyphs` on Flutter)
 - No SF Pro, SF Symbols, New York, Apple artwork or Apple.com colours. CI enforces this with `pnpm guard`.
 

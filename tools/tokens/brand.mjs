@@ -9,9 +9,10 @@ import { oklch } from './color.mjs';
 const DEFAULTS = {
   accent: { hue: 175, chroma: 0.09, lightnessLight: 0.48, lightnessDark: 0.79 },
   neutral: { hue: 225, warmHue: 90, chroma: 1 },
+  secondary: { hue: 85, chroma: 0.09 },
   danger: { hue: 25 },
   warning: { hue: 75 },
-  font: { ui: 'Inter', mono: 'Geist Mono' },
+  font: { ui: 'Inter', mono: 'Geist Mono', display: null },
   radius: { scale: 1 },
 };
 
@@ -37,7 +38,7 @@ export async function loadBrand(path) {
 
 /** DTCG tokens for colour, radius and font, ready to merge into Style Dictionary. */
 export function brandTokens(brand) {
-  const { accent, neutral, danger, warning, font, radius } = brand;
+  const { accent, secondary, neutral, danger, warning, font, radius } = brand;
   const value = ($value) => ({ $value });
   const steps = (list, hue) => Object.fromEntries(list.map(([n, l, c]) => [n, value(oklch(l, c * neutral.chroma, hue))]));
   return {
@@ -48,7 +49,11 @@ export function brandTokens(brand) {
       cool: steps(COOL, neutral.hue),
       'brand-accent': {
         light: value(oklch(accent.lightnessLight, accent.chroma, accent.hue)),
-        dark: value(oklch(accent.lightnessDark, accent.chroma, accent.hue)),
+        dark: value(oklch(accent.lightnessDark, accent.chromaDark ?? accent.chroma, accent.hue)),
+      },
+      'brand-secondary': {
+        light: value(oklch(0.5, secondary.chroma, secondary.hue)),
+        dark: value(oklch(0.82, secondary.chroma, secondary.hue)),
       },
       'brand-danger': { light: value(oklch(0.48, 0.17, danger.hue)), dark: value(oklch(0.78, 0.12, danger.hue)) },
       'brand-warning': { light: value(oklch(0.5, 0.1, warning.hue)), dark: value(oklch(0.82, 0.1, warning.hue + 10)) },
@@ -60,7 +65,7 @@ export function brandTokens(brand) {
       pill: value('999px'),
     },
     font: {
-      family: { $type: 'fontFamily', ui: value(font.ui), mono: value(font.mono) },
+      family: { $type: 'fontFamily', ui: value(font.ui), mono: value(font.mono), display: value(font.display ?? font.ui) },
     },
   };
 }

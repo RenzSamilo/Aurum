@@ -134,7 +134,7 @@ a.aurum-row:active {
   width: var(--size-icon-lg);
   height: var(--size-icon-lg);
   font-size: var(--size-icon-md);
-  color: var(--color-accent);
+  color: var(--color-accent-secondary);
 }
 .aurum-row-leading > svg {
   width: 1em;
