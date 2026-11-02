@@ -37,7 +37,7 @@ void main() {
       for (final s in [c.surfaceCanvas, c.surfaceCard, c.surfaceInset, c.surfaceElevated]) {
         expect(_ratio(c.textPrimary, s), greaterThanOrEqualTo(4.5));
         expect(_ratio(c.textSecondary, s), greaterThanOrEqualTo(4.5));
-        expect(_ratio(c.accent, s), greaterThanOrEqualTo(3));
+        expect(_ratio(c.accent, s), greaterThanOrEqualTo(4.5));
       }
       expect(_ratio(c.onAccent, c.accent), greaterThanOrEqualTo(4.5));
     }
