@@ -21,23 +21,57 @@ body {
   letter-spacing: var(--type-body-tracking);
 }
 
-/* Numbers that change (calories, timers, macros) never shift width. */
+/* Numbers that change (counters, timers, prices) never shift width. */
 .aurum-numeric {
   font-variant-numeric: tabular-nums;
 }
 
-/* Continuous corners. Chromium 139+ draws them natively; other browsers keep the
-   circular radius until the Safari/Firefox polyfill lands in Phase 1. */
+/* Continuous corners. Chromium 139+ draws them natively. In other browsers,
+   <Squircle> or useSquircle() clips the element to the same shape. */
 .aurum-squircle {
   border-radius: var(--aurum-radius, var(--radius-lg));
 }
-@supports (corner-shape: squircle) {
+@supports (corner-shape: superellipse(2)) {
   .aurum-squircle {
-    corner-shape: squircle;
+    border-radius: calc(var(--aurum-radius, var(--radius-lg)) * var(--shape-radius-scale));
+    corner-shape: superellipse(var(--shape-superellipse));
   }
 }
 
 :focus-visible {
   outline: var(--size-focus-width) solid var(--color-focus);
   outline-offset: var(--size-focus-offset);
+}
+
+/* Glass: a translucent material over content. Levels: ultralight, thin, regular, thick.
+   Reduced transparency (system or data-transparency="reduced") turns it solid. */
+.aurum-glass {
+  --aurum-glass-tint: var(--material-tint-regular);
+  --aurum-glass-blur: var(--material-blur-regular);
+  --aurum-glass-saturation: var(--material-saturation-regular);
+  background: var(--aurum-glass-tint);
+  -webkit-backdrop-filter: blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation));
+  backdrop-filter: blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation));
+  border: 1px solid var(--color-border-decorative);
+}
+.aurum-glass[data-level='ultralight'] {
+  --aurum-glass-tint: var(--material-tint-ultralight);
+  --aurum-glass-blur: var(--material-blur-ultralight);
+  --aurum-glass-saturation: var(--material-saturation-ultralight);
+}
+.aurum-glass[data-level='thin'] {
+  --aurum-glass-tint: var(--material-tint-thin);
+  --aurum-glass-blur: var(--material-blur-thin);
+  --aurum-glass-saturation: var(--material-saturation-thin);
+}
+.aurum-glass[data-level='thick'] {
+  --aurum-glass-tint: var(--material-tint-thick);
+  --aurum-glass-blur: var(--material-blur-thick);
+  --aurum-glass-saturation: var(--material-saturation-thick);
+}
+/* No backdrop-filter support: a solid surface reads better than see-through without blur. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .aurum-glass {
+    background: var(--color-surface-elevated);
+  }
 }

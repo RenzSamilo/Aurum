@@ -140,6 +140,11 @@ const cssBase = {
   ...Object.fromEntries(Object.entries(space).map(([k, v]) => [`space-${k}`, v])),
   ...Object.fromEntries(Object.entries(radius).map(([k, v]) => [`radius-${k}`, v])),
   'shape-smoothing': smoothing,
+  // Native corner-shape that matches the smoothed path (see squircle.ts): stretch the
+  // radius by (1 + smoothing), then pick the superellipse that meets the circular arc's
+  // midpoint on the diagonal. CSS superellipse(K) has exponent 2^K.
+  'shape-radius-scale': 1 + smoothing,
+  'shape-superellipse': +Math.log2(-1 / Math.log2(1 - (1 - Math.SQRT1_2) / (1 + smoothing))).toFixed(3),
   ...Object.fromEntries(Object.entries(size).map(([k, v]) => [`size-${k}`, v])),
   ...Object.fromEntries(Object.entries(z).map(([k, v]) => [`z-${k}`, v])),
   'font-family-ui': fontStack,
@@ -368,7 +373,7 @@ abstract final class AurumShadow {
 ${Object.entries(shadows).map(([k, v]) => `  static const List<BoxShadow> ${/^\d/.test(k) ? `level${k}` : k} = [${dartShadow(v)}];`).join('\n')}
 }
 
-/// Haptic intents. [type] is the haptic_feedback HapticsType name.
+/// Haptic intents. Play them with AurumHaptics.play(). [type] names the platform haptic.
 enum AurumHaptic {
 ${Object.entries(haptics).map(([k, v]) => `  ${camel(k)}('${v.flutter}', ${v.throttleMs ?? 0}),`).join('\n')};
 

@@ -20,6 +20,8 @@
   --radius-xl: 32px;
   --radius-pill: 999px;
   --shape-smoothing: 0.6;
+  --shape-radius-scale: 1.6;
+  --shape-superellipse: 1.777;
   --size-target: 48px;
   --size-target-workout: 64px;
   --size-icon-sm: 20px;

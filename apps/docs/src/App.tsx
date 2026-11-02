@@ -1,4 +1,4 @@
-import { type AurumPreferences, haptic, material, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
+import { type AurumPreferences, Glass, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
 import { Bell, Gear, House, MagnifyingGlass, Moon, Sun } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
@@ -50,7 +50,7 @@ export function App() {
               <ul className="swatches">
                 {names.map((n) => (
                   <li key={n}>
-                    <span className="chip" style={{ background: `var(--color-${n})` }} />
+                    <span className="chip aurum-squircle" style={{ background: `var(--color-${n})`, ["--aurum-radius" as string]: "var(--radius-sm)" }} />
                     <code className="aurum-type-footnote">--color-{n}</code>
                   </li>
                 ))}
@@ -99,15 +99,15 @@ export function App() {
       <Section title="Materials" note="Glass for floating controls only. Solid surfaces replaces it with an opaque fill.">
         <div className="material-stage aurum-squircle">
           {(Object.keys(material.blur) as (keyof typeof material.blur)[]).map((level) => (
-            <div key={level} className="glass aurum-squircle" data-level={level}>
+            <Glass key={level} className="glass" level={level} radius="md">
               <span className="aurum-type-subhead">{level}</span>
               <code className="aurum-type-caption">blur {material.blur[level]}px</code>
-            </div>
+            </Glass>
           ))}
         </div>
       </Section>
 
-      <Section title="Haptics" note="By meaning. Flutter plays them natively; on the web they are opt-in.">
+      <Section title="Haptics" note="By meaning. Tap Play on an Android phone or an iPhone (Safari 18+) to feel each one.">
         <div className="card aurum-squircle">
           <table className="haptics aurum-type-footnote">
             <thead>
@@ -116,6 +116,9 @@ export function App() {
                 <th>Flutter</th>
                 <th>Android web (ms)</th>
                 <th>iPhone web</th>
+                <th>
+                  <span className="visually-hidden">Try it</span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -127,6 +130,11 @@ export function App() {
                   <td>{h.flutter}</td>
                   <td className="aurum-numeric">{h.web.length ? h.web.join(', ') : 'none'}</td>
                   <td>{h.iosWeb}</td>
+                  <td>
+                    <button type="button" className="toggle" onClick={() => playHaptic(k as HapticIntent)}>
+                      Play
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

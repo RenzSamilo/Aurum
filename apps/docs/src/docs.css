@@ -112,11 +112,6 @@ code {
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border-decorative);
 }
-@supports (corner-shape: squircle) {
-  .chip {
-    corner-shape: squircle;
-  }
-}
 
 .type-ramp {
   display: grid;
@@ -223,7 +218,6 @@ code {
     var(--color-surface-inset);
 }
 .glass {
-  --aurum-radius: var(--radius-md);
   display: grid;
   gap: var(--space-4);
   min-height: 6rem;
@@ -231,22 +225,6 @@ code {
   padding: var(--space-16);
   border: 1px solid oklch(1 0 0 / 0.35);
   box-shadow: var(--shadow-2);
-}
-.glass[data-level='ultralight'] {
-  background: var(--material-tint-ultralight);
-  backdrop-filter: blur(var(--material-blur-ultralight)) saturate(var(--material-saturation-ultralight));
-}
-.glass[data-level='thin'] {
-  background: var(--material-tint-thin);
-  backdrop-filter: blur(var(--material-blur-thin)) saturate(var(--material-saturation-thin));
-}
-.glass[data-level='regular'] {
-  background: var(--material-tint-regular);
-  backdrop-filter: blur(var(--material-blur-regular)) saturate(var(--material-saturation-regular));
-}
-.glass[data-level='thick'] {
-  background: var(--material-tint-thick);
-  backdrop-filter: blur(var(--material-blur-thick)) saturate(var(--material-saturation-thick));
 }
 
 .haptics {
@@ -279,4 +257,12 @@ code {
   display: inline-flex;
   gap: var(--space-8);
   color: var(--color-text-primary);
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
