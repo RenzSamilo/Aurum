@@ -1,5 +1,5 @@
-import { type AurumPreferences, Button, Glass, SegmentedControl, Switch, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
-import { Bell, Gear, House, MagnifyingGlass, Moon, Plus, Sun, Trash } from '@phosphor-icons/react';
+import { type AurumPreferences, Button, Card, Glass, ListRow, ListSection, Sheet, SegmentedControl, Switch, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
+import { Bell, Gear, Globe, House, Lock, MagnifyingGlass, Moon, Plus, Sun, Trash, WifiHigh } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
 const colorGroups: Record<string, string[]> = {
@@ -43,6 +43,7 @@ export function App() {
       </header>
 
       <Controls />
+      <Surfaces />
 
       <Section title="Colour" note="Semantic roles in OKLCH. Toggle dark and contrast above.">
         <div className="swatch-groups">
@@ -222,6 +223,64 @@ function Controls() {
           />
         </div>
       </div>
+    </Section>
+  );
+}
+
+function Surfaces() {
+  const [sheet, setSheet] = useState(false);
+  const [wifi, setWifi] = useState(true);
+  const [presses, setPresses] = useState(0);
+  return (
+    <Section title="Lists, cards and sheets" note="Grouped rows with inset separators, cards that press, and a sheet you can drag down to close.">
+      <div className="controls-grid">
+        <div className="control-stack">
+          <ListSection header="Account" footer="Changes sync to every device you sign in on.">
+            <ListRow leading={<Globe />} title="Language" value="English" onPress={() => setSheet(true)} />
+            <ListRow leading={<Lock />} title="Privacy" subtitle="Who can see your profile" href="#privacy" />
+            <ListRow
+              leading={<WifiHigh />}
+              title="Download over Wi-Fi only"
+              trailing={<Switch checked={wifi} onCheckedChange={setWifi} aria-label="Download over Wi-Fi only" />}
+            />
+            <ListRow leading={<Bell />} title="Version" value="1.0.0" />
+          </ListSection>
+          <ListSection>
+            <ListRow title="Sign out" destructive chevron={false} onPress={() => {}} />
+          </ListSection>
+        </div>
+        <div className="control-stack">
+          <Card>
+            <p className="aurum-type-footnote meta" style={{ margin: 0 }}>
+              Static card
+            </p>
+            <p className="aurum-type-card" style={{ margin: 'var(--space-4) 0 0' }}>
+              Quarterly review
+            </p>
+            <p className="aurum-type-body" style={{ margin: 'var(--space-4) 0 0', color: 'var(--color-text-secondary)' }}>
+              3 of 12 items done
+            </p>
+          </Card>
+          <Card onPress={() => setPresses((n) => n + 1)} aria-label={`Pressable card, pressed ${presses} times`}>
+            <p className="aurum-type-card" style={{ margin: 0 }}>
+              Pressable card
+            </p>
+            <p className="aurum-type-body aurum-numeric" style={{ margin: 'var(--space-4) 0 0', color: 'var(--color-text-secondary)' }}>
+              Pressed {presses} times
+            </p>
+          </Card>
+          <Button variant="tinted" onClick={() => setSheet(true)}>
+            Open sheet
+          </Button>
+        </div>
+      </div>
+      <Sheet open={sheet} onOpenChange={setSheet} title="Language">
+        <ListSection>
+          {['English', 'Filipino', 'Español', 'Deutsch', '日本語'].map((l) => (
+            <ListRow key={l} title={l} chevron={false} onPress={() => setSheet(false)} />
+          ))}
+        </ListSection>
+      </Sheet>
     </Section>
   );
 }
