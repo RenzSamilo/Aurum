@@ -1,0 +1,31 @@
+{
+  "spring": {
+    "$type": "aurumSpring",
+    "$description": "Springs as mass/stiffness/damping (web physics, Flutter SpringDescription). duration/bounce are derived at build time and match SwiftUI and Flutter withDurationAndBounce.",
+    "control": { "$value": { "mass": 1, "stiffness": 400, "damping": 36 }, "$description": "Buttons, switches, segmented thumb.", "$extensions": { "aurum": { "source": "proposed" } } },
+    "surface": { "$value": { "mass": 1, "stiffness": 240, "damping": 30 }, "$description": "Sheets, cards, navigation.", "$extensions": { "aurum": { "source": "proposed" } } },
+    "reward":  { "$value": { "mass": 1, "stiffness": 300, "damping": 24 }, "$description": "Milestones only. Optional.", "$extensions": { "aurum": { "source": "proposed" } } }
+  },
+  "duration": {
+    "$type": "duration",
+    "press": { "$value": "80ms" },
+    "hover": { "$value": "120ms" },
+    "feedback": { "$value": "160ms" },
+    "transition": { "$value": "240ms" },
+    "presentation": { "$value": "320ms" },
+    "reduced-fade": { "$value": "150ms", "$description": "Replaces spatial motion when Reduce Motion is on." }
+  },
+  "ease": {
+    "standard": { "$type": "cubicBezier", "$value": [0.2, 0, 0, 1] }
+  },
+  "press": {
+    "$type": "number",
+    "scale-control": { "$value": 0.97 },
+    "scale-card": { "$value": 0.99 }
+  },
+  "gesture": {
+    "$type": "number",
+    "rubber-band-limit": { "$value": 80, "$description": "px. f(d) = L*d/(L+|d|)." },
+    "projection-deceleration": { "$value": 0.998, "$description": "Flick projection: distance = -0.001 * v / ln(rate)." }
+  }
+}

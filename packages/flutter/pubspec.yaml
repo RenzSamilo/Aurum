@@ -1,0 +1,25 @@
+name: aurum_ui
+description: Aurum design system for Flutter. Tokens, theme and (from Phase 1) widgets, generated from the same source as @aurum/react.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  phosphor_glyphs: ^2.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  fonts:
+    # Inter Variable 4.1 (OFL-1.1, see fonts/Inter-OFL.txt). wght and opsz axes.
+    - family: Inter
+      fonts:
+        - asset: fonts/InterVariable.ttf

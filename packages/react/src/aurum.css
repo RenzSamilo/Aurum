@@ -1,0 +1,43 @@
+/* Aurum base styles. Import once at the app root: import '@aurum/react/aurum.css'. */
+
+/* Inter Variable with the optical-size axis (Display designs at large sizes). OFL-1.1. */
+@import '@fontsource-variable/inter/opsz.css';
+@import './tokens/tokens.css';
+
+html {
+  font-family: var(--font-family-ui);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: var(--color-surface-canvas);
+  color: var(--color-text-primary);
+}
+
+body {
+  margin: 0;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line-height);
+  letter-spacing: var(--type-body-tracking);
+}
+
+/* Numbers that change (calories, timers, macros) never shift width. */
+.aurum-numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Continuous corners. Chromium 139+ draws them natively; other browsers keep the
+   circular radius until the Safari/Firefox polyfill lands in Phase 1. */
+.aurum-squircle {
+  border-radius: var(--aurum-radius, var(--radius-lg));
+}
+@supports (corner-shape: squircle) {
+  .aurum-squircle {
+    corner-shape: squircle;
+  }
+}
+
+:focus-visible {
+  outline: var(--size-focus-width) solid var(--color-focus);
+  outline-offset: var(--size-focus-offset);
+}
