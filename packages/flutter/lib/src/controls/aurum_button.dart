@@ -114,7 +114,7 @@ class _AurumButtonState extends State<AurumButton> {
       constraints: BoxConstraints(minHeight: height, minWidth: iconOnly ? height : 0),
       padding: EdgeInsets.symmetric(horizontal: iconOnly ? 0 : hPad),
       decoration: ShapeDecoration(shape: shape, color: Color.alphaBlend(fg.withValues(alpha: overlay), bg)),
-      child: Center(widthFactor: widget.fullWidth ? null : 1, child: content),
+      child: Center(widthFactor: widget.fullWidth ? null : 1, heightFactor: 1, child: content),
     );
     if (widget.size == AurumButtonSize.sm) {
       // Keep a 48 hit area (Android's minimum; iOS asks for 44) around the 32 visual.
@@ -126,6 +126,8 @@ class _AurumButtonState extends State<AurumButton> {
       enabled: _enabled,
       label: widget.semanticLabel,
       excludeSemantics: widget.semanticLabel != null,
+      // Excluding descendants drops the gesture's tap action, so restore it here.
+      onTap: _enabled && widget.semanticLabel != null ? _activate : null,
       child: FocusableActionDetector(
         enabled: _enabled,
         mouseCursor: _enabled ? SystemMouseCursors.click : SystemMouseCursors.basic,

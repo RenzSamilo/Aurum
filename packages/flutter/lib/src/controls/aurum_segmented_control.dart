@@ -112,46 +112,62 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
     final thumbColor = dark ? c.borderDecorative : c.surfaceElevated;
     final enabled = widget.onChanged != null;
 
+    // The track stays compact; the tap targets extend above and below it to 48.
+    final trackHeight = height + 2 * pad;
+    final hitHeight = trackHeight < AurumSize.target ? AurumSize.target : trackHeight;
+
     return Focus(
       canRequestFocus: enabled,
       onKeyEvent: _onKey,
       onFocusChange: (v) => setState(() => _focused = v),
       child: Opacity(
         opacity: enabled ? 1 : 0.4,
-        child: Container(
-          padding: const EdgeInsets.all(pad),
-          decoration: ShapeDecoration(
-            color: c.surfaceInset,
-            shape: RoundedSuperellipseBorder(
-              borderRadius: BorderRadius.circular(r),
-              side: _focused ? BorderSide(color: c.focus, width: AurumSize.focusWidth, strokeAlign: BorderSide.strokeAlignOutside) : BorderSide.none,
-            ),
-          ),
-          child: LayoutBuilder(builder: (context, box) {
-            final w = box.maxWidth.isFinite ? box.maxWidth / n : null;
-            return Stack(children: [
-              if (w != null)
-                AnimatedBuilder(
-                  animation: _pos,
-                  builder: (context, _) => PositionedDirectional(
-                    start: _pos.value * w,
-                    top: 0,
-                    bottom: 0,
-                    width: w,
-                    child: DecoratedBox(
-                      decoration: ShapeDecoration(
-                        color: thumbColor,
-                        shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(r - pad)),
-                        shadows: const [BoxShadow(color: Color(0x14000000), blurRadius: 6, offset: Offset(0, 2))],
-                      ),
+        child: SizedBox(
+          height: hitHeight,
+          child: Stack(alignment: Alignment.center, children: [
+            Positioned.fill(
+              child: Center(
+                child: Container(
+                  height: trackHeight,
+                  padding: const EdgeInsets.all(pad),
+                  decoration: ShapeDecoration(
+                    color: c.surfaceInset,
+                    shape: RoundedSuperellipseBorder(
+                      borderRadius: BorderRadius.circular(r),
+                      side: _focused ? BorderSide(color: c.focus, width: AurumSize.focusWidth, strokeAlign: BorderSide.strokeAlignOutside) : BorderSide.none,
                     ),
                   ),
+                  child: LayoutBuilder(builder: (context, box) {
+                    final w = box.maxWidth / n;
+                    return Stack(children: [
+                      AnimatedBuilder(
+                        animation: _pos,
+                        builder: (context, _) => PositionedDirectional(
+                          start: _pos.value * w,
+                          top: 0,
+                          bottom: 0,
+                          width: w,
+                          child: DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: thumbColor,
+                              shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(r - pad)),
+                              shadows: const [BoxShadow(color: Color(0x14000000), blurRadius: 6, offset: Offset(0, 2))],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]);
+                  }),
                 ),
-              Row(children: [
-                for (var i = 0; i < n; i++) Expanded(child: _segment(context, i, height)),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: pad),
+              child: Row(children: [
+                for (var i = 0; i < n; i++) Expanded(child: _segment(context, i, hitHeight)),
               ]),
-            ]);
-          }),
+            ),
+          ]),
         ),
       ),
     );
@@ -183,7 +199,7 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
         child: MouseRegion(
           cursor: active ? SystemMouseCursors.click : SystemMouseCursors.basic,
           child: AnimatedScale(
-            scale: _pressed == i ? AurumMotion.pressScaleControl : 1,
+            scale: _pressed == i && AurumMotion.control.shouldAnimate(context) ? AurumMotion.pressScaleControl : 1,
             duration: AurumMotion.press,
             curve: AurumMotion.easeStandard,
             child: SizedBox(

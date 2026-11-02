@@ -47,13 +47,40 @@ void main() {
         AurumButton(label: 'Small', size: AurumButtonSize.sm, onPressed: () {}),
         AurumButton(icon: Icons.settings, semanticLabel: 'Settings', variant: AurumButtonVariant.gray, onPressed: () {}),
         AurumButton(label: 'Large', size: AurumButtonSize.lg, fullWidth: true, onPressed: () {}),
+        AurumSegmentedControl<int>(value: 0, small: true, onChanged: (_) {}, segments: const [
+          AurumSegment(value: 0, label: 'One'),
+          AurumSegment(value: 1, label: 'Two'),
+        ]),
       ])));
+      expect(tester.getSemantics(find.bySemanticsLabel('Settings')), isSemantics(isButton: true, hasTapAction: true));
       await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
       await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
       await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
       await expectLater(tester, meetsGuideline(textContrastGuideline));
       handle.dispose();
     });
+  });
+
+  testWidgets('button keeps its own height inside a tall parent', (tester) async {
+    await tester.pumpWidget(host(SizedBox(height: 300, child: Row(children: [AurumButton(label: 'Save', onPressed: () {})]))));
+    expect(tester.getSize(find.byType(AurumButton)).height, AurumSize.target);
+  });
+
+  testWidgets('segment presses do not scale with animations off', (tester) async {
+    await tester.pumpWidget(MediaQuery(
+      data: const MediaQueryData(disableAnimations: true),
+      child: host(SizedBox(
+        width: 300,
+        child: AurumSegmentedControl<int>(value: 0, onChanged: (_) {}, segments: const [
+          AurumSegment(value: 0, label: 'One'),
+          AurumSegment(value: 1, label: 'Two'),
+        ]),
+      )),
+    ));
+    final gesture = await tester.startGesture(tester.getCenter(find.text('Two')));
+    await tester.pump();
+    expect(tester.widget<AnimatedScale>(find.ancestor(of: find.text('Two'), matching: find.byType(AnimatedScale))).scale, 1);
+    await gesture.up();
   });
 
   group('AurumSwitch', () {

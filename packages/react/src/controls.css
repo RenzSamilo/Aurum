@@ -303,11 +303,11 @@
     transform var(--spring-control-duration) var(--spring-control-easing),
     font-weight var(--duration-press) var(--ease-standard);
 }
-/* Keep a 44px hit area on the 36px track. */
+/* Keep a 44px hit area on the 36px and 28px tracks. */
 .aurum-segment::before {
   content: '';
   position: absolute;
-  inset: -4px 0;
+  inset: calc((var(--_height) - 44px) / 2) 0;
 }
 .aurum-segment[aria-checked='true'] {
   font-weight: 600;
