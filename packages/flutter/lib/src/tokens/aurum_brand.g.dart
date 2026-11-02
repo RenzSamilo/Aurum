@@ -118,5 +118,7 @@ const AurumBrand aurumBrand = AurumBrand(
     package: 'aurum_ui',
     displayFamily: 'Fraunces',
     displayPackage: 'aurum_ui',
+    displayWeight: 560,
+    displayTracking: -0.01,
   ),
 );

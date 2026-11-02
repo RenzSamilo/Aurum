@@ -47,24 +47,35 @@ class AurumTextRole {
 
   /// Text style with optical size set from [size]. [fontFamily] and
   /// [fontPackage] default to the Inter variable font bundled with aurum_ui.
-  TextStyle style({Color? color, bool tabularFigures = false, String fontFamily = 'Inter', String? fontPackage = 'aurum_ui'}) => TextStyle(
+  /// [weight] and [tracking] override the role's own, e.g. for a display font.
+  TextStyle style({
+    Color? color,
+    bool tabularFigures = false,
+    String fontFamily = 'Inter',
+    String? fontPackage = 'aurum_ui',
+    double? weight,
+    double? tracking,
+  }) {
+    final w = weight ?? this.weight;
+    return TextStyle(
         fontFamily: fontFamily,
         package: fontPackage,
         fontSize: size,
         height: lineHeight / size,
-        letterSpacing: tracking * size,
-        fontWeight: FontWeight.values[((weight / 100).round() - 1).clamp(0, 8)],
-        fontVariations: [FontVariation('wght', weight), FontVariation('opsz', size.clamp(14, 32).toDouble())],
+        letterSpacing: (tracking ?? this.tracking) * size,
+        fontWeight: FontWeight.values[((w / 100).round() - 1).clamp(0, 8)],
+        fontVariations: [FontVariation('wght', w), FontVariation('opsz', size.clamp(14, 32).toDouble())],
         fontFeatures: tabularFigures ? const [FontFeature.tabularFigures()] : null,
         color: color,
       );
+  }
 }
 
 abstract final class AurumType {
-  static const display = AurumTextRole(size: 40.0, lineHeight: 48.0, weight: 560.0, tracking: -0.01, display: true);
-  static const page = AurumTextRole(size: 32.0, lineHeight: 40.0, weight: 560.0, tracking: -0.01, display: true);
-  static const section = AurumTextRole(size: 24.0, lineHeight: 32.0, weight: 560.0, tracking: -0.01, display: true);
-  static const card = AurumTextRole(size: 20.0, lineHeight: 28.0, weight: 560.0, tracking: -0.01, display: true);
+  static const display = AurumTextRole(size: 40.0, lineHeight: 48.0, weight: 650.0, tracking: -0.025, display: true);
+  static const page = AurumTextRole(size: 32.0, lineHeight: 40.0, weight: 650.0, tracking: -0.02, display: true);
+  static const section = AurumTextRole(size: 24.0, lineHeight: 32.0, weight: 600.0, tracking: -0.015, display: true);
+  static const card = AurumTextRole(size: 20.0, lineHeight: 28.0, weight: 600.0, tracking: -0.01, display: true);
   static const headline = AurumTextRole(size: 17.0, lineHeight: 24.0, weight: 600.0, tracking: -0.005);
   static const body = AurumTextRole(size: 17.0, lineHeight: 24.0, weight: 400.0, tracking: -0.005);
   static const callout = AurumTextRole(size: 16.0, lineHeight: 24.0, weight: 500.0, tracking: 0.0);

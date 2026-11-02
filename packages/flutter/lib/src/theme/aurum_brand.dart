@@ -84,7 +84,8 @@ class AurumRadii extends ThemeExtension<AurumRadii> {
   }
 
   @override
-  bool operator ==(Object other) => other is AurumRadii && other.sm == sm && other.md == md && other.lg == lg && other.xl == xl;
+  bool operator ==(Object other) =>
+      other is AurumRadii && other.sm == sm && other.md == md && other.lg == lg && other.xl == xl;
 
   @override
   int get hashCode => Object.hash(sm, md, lg, xl);
@@ -96,26 +97,56 @@ class AurumRadii extends ThemeExtension<AurumRadii> {
 /// the app itself.
 @immutable
 class AurumTypeface extends ThemeExtension<AurumTypeface> {
-  const AurumTypeface({required this.family, this.package, String? displayFamily, this.displayPackage})
-      : displayFamily = displayFamily ?? family;
+  /// Without a [displayFamily], titles use the UI font and its package.
+  const AurumTypeface({
+    required this.family,
+    this.package,
+    String? displayFamily,
+    String? displayPackage,
+    this.displayWeight,
+    this.displayTracking,
+  }) : displayFamily = displayFamily ?? family,
+       displayPackage = displayFamily == null ? package : displayPackage;
 
   final String family;
   final String? package;
   final String displayFamily;
   final String? displayPackage;
 
+  /// wght for title roles, replacing the role's own. Null keeps it.
+  final double? displayWeight;
+
+  /// Letter spacing in em for title roles. Null keeps the role's own.
+  final double? displayTracking;
+
   /// A [TextStyle] for [role] in this typeface.
   TextStyle style(AurumTextRole role, {Color? color, bool tabularFigures = false}) => role.display
-      ? role.style(color: color, tabularFigures: tabularFigures, fontFamily: displayFamily, fontPackage: displayPackage)
+      ? role.style(
+          color: color,
+          tabularFigures: tabularFigures,
+          fontFamily: displayFamily,
+          fontPackage: displayPackage,
+          weight: displayWeight,
+          tracking: displayTracking,
+        )
       : role.style(color: color, tabularFigures: tabularFigures, fontFamily: family, fontPackage: package);
 
   @override
-  AurumTypeface copyWith({String? family, String? package, String? displayFamily, String? displayPackage}) => AurumTypeface(
-        family: family ?? this.family,
-        package: package ?? this.package,
-        displayFamily: displayFamily ?? this.displayFamily,
-        displayPackage: displayPackage ?? this.displayPackage,
-      );
+  AurumTypeface copyWith({
+    String? family,
+    String? package,
+    String? displayFamily,
+    String? displayPackage,
+    double? displayWeight,
+    double? displayTracking,
+  }) => AurumTypeface(
+    family: family ?? this.family,
+    package: package ?? this.package,
+    displayFamily: displayFamily ?? this.displayFamily,
+    displayPackage: displayPackage ?? this.displayPackage,
+    displayWeight: displayWeight ?? this.displayWeight,
+    displayTracking: displayTracking ?? this.displayTracking,
+  );
 
   @override
   AurumTypeface lerp(covariant ThemeExtension<AurumTypeface>? other, double t) =>
@@ -127,8 +158,10 @@ class AurumTypeface extends ThemeExtension<AurumTypeface> {
       other.family == family &&
       other.package == package &&
       other.displayFamily == displayFamily &&
-      other.displayPackage == displayPackage;
+      other.displayPackage == displayPackage &&
+      other.displayWeight == displayWeight &&
+      other.displayTracking == displayTracking;
 
   @override
-  int get hashCode => Object.hash(family, package, displayFamily, displayPackage);
+  int get hashCode => Object.hash(family, package, displayFamily, displayPackage, displayWeight, displayTracking);
 }

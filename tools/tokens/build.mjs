@@ -86,7 +86,10 @@ const pascal = (s) => camel(s).replace(/^./, (c) => c.toUpperCase());
 const dims = (prefix) => Object.fromEntries(pick(prefix).map((t) => [t.path.slice(1).join('-'), t.$value]));
 
 const springs = Object.fromEntries(pick('spring').map((t) => [t.path[1], deriveSpring(t.$value)]));
-const types = Object.fromEntries(pick('type').map((t) => [t.path[1], { ...t.$value }]));
+/** Core text roles, the same for every brand (Dart AurumType). */
+const coreTypes = Object.fromEntries(pick('type').map((t) => [t.path[1], { ...t.$value }]));
+/** Text roles as this brand renders them (CSS and TS): display overrides applied. */
+const types = structuredClone(coreTypes);
 const haptics = Object.fromEntries(pick('haptic').map((t) => [t.path[1], t.$value]));
 const durations = Object.fromEntries(pick('duration').map((t) => [t.path[1], px(t.$value)]));
 const space = dims('space');
@@ -108,6 +111,9 @@ const fontDisplay = base.get('font-family-display').$value;
 const DISPLAY_ROLES = new Set(['display', 'page', 'section', 'card']);
 const bundled = { Inter: 'aurum_ui', Fraunces: 'aurum_ui' };
 // A display font gets its own weight and tracking; serifs rarely suit the UI font's.
+// Flutter applies the same overrides through AurumTypeface at runtime.
+const displayWeight = fontDisplay !== fontUi ? (brand.font.displayWeight ?? null) : null;
+const displayTracking = fontDisplay !== fontUi ? (brand.font.displayTracking ?? null) : null;
 if (fontDisplay !== fontUi) {
   for (const k of DISPLAY_ROLES) {
     if (brand.font.displayWeight != null) types[k].weight = brand.font.displayWeight;
@@ -332,24 +338,35 @@ class AurumTextRole {
 
   /// Text style with optical size set from [size]. [fontFamily] and
   /// [fontPackage] default to the Inter variable font bundled with aurum_ui.
-  TextStyle style({Color? color, bool tabularFigures = false, String fontFamily = 'Inter', String? fontPackage = 'aurum_ui'}) => TextStyle(
+  /// [weight] and [tracking] override the role's own, e.g. for a display font.
+  TextStyle style({
+    Color? color,
+    bool tabularFigures = false,
+    String fontFamily = 'Inter',
+    String? fontPackage = 'aurum_ui',
+    double? weight,
+    double? tracking,
+  }) {
+    final w = weight ?? this.weight;
+    return TextStyle(
         fontFamily: fontFamily,
         package: fontPackage,
         fontSize: size,
         height: lineHeight / size,
-        letterSpacing: tracking * size,
-        fontWeight: FontWeight.values[((weight / 100).round() - 1).clamp(0, 8)],
-        fontVariations: [FontVariation('wght', weight), FontVariation('opsz', size.clamp(14, 32).toDouble())],
+        letterSpacing: (tracking ?? this.tracking) * size,
+        fontWeight: FontWeight.values[((w / 100).round() - 1).clamp(0, 8)],
+        fontVariations: [FontVariation('wght', w), FontVariation('opsz', size.clamp(14, 32).toDouble())],
         fontFeatures: tabularFigures ? const [FontFeature.tabularFigures()] : null,
         color: color,
       );
+  }
 }
 
 abstract final class AurumType {
-${Object.entries(types).map(([k, t]) => `  static const ${k} = AurumTextRole(size: ${dartNum(t.size)}, lineHeight: ${dartNum(t.lineHeight)}, weight: ${dartNum(t.weight)}, tracking: ${dartNum(t.tracking)}${DISPLAY_ROLES.has(k) ? ', display: true' : ''});`).join('\n')}
+${Object.entries(coreTypes).map(([k, t]) => `  static const ${k} = AurumTextRole(size: ${dartNum(t.size)}, lineHeight: ${dartNum(t.lineHeight)}, weight: ${dartNum(t.weight)}, tracking: ${dartNum(t.tracking)}${DISPLAY_ROLES.has(k) ? ', display: true' : ''});`).join('\n')}
 
   static const Map<String, AurumTextRole> all = {
-${Object.keys(types).map((k) => `    '${k}': ${k},`).join('\n')}
+${Object.keys(coreTypes).map((k) => `    '${k}': ${k},`).join('\n')}
   };
 }
 
@@ -467,6 +484,8 @@ const AurumBrand ${brandIdent} = AurumBrand(
     package: ${bundled[fontUi] ? `'${bundled[fontUi]}'` : 'null'},
     displayFamily: '${fontDisplay.replace(/'/g, "\\'")}',
     displayPackage: ${bundled[fontDisplay] ? `'${bundled[fontDisplay]}'` : 'null'},
+    displayWeight: ${displayWeight ?? 'null'},
+    displayTracking: ${displayTracking ?? 'null'},
   ),
 );
 `;

@@ -80,5 +80,16 @@ void main() {
     expect(face.style(AurumType.page).fontFamily, 'packages/aurum_ui/Fraunces');
     expect(face.style(AurumType.body).fontFamily, 'packages/aurum_ui/Inter');
     expect(const AurumTypeface(family: 'X').style(AurumType.page).fontFamily, 'X');
+    // No display font: titles keep the UI font's package and the role's weight.
+    final inter = const AurumTypeface(family: 'Inter', package: 'aurum_ui').style(AurumType.page);
+    expect(inter.fontFamily, 'packages/aurum_ui/Inter');
+    expect(inter.fontVariations!.first.value, AurumType.page.weight);
+  });
+
+  test('display weight and tracking come from the brand, not the core roles', () {
+    final page = aurumBrand.typeface.style(AurumType.page);
+    expect(page.fontVariations!.first.value, 560);
+    expect(page.letterSpacing, closeTo(-0.01 * AurumType.page.size, 1e-9));
+    expect(AurumType.page.weight, 650);
   });
 }
