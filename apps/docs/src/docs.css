@@ -266,3 +266,22 @@ code {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: var(--space-16);
+}
+.control-stack {
+  display: grid;
+  align-content: start;
+  gap: var(--space-16);
+}
+.control-stack h3 {
+  margin: 0;
+}
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+}

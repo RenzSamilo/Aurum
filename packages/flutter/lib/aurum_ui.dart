@@ -4,6 +4,10 @@
 /// `pnpm tokens` at the repo root. Never edit `*.g.dart` files by hand.
 library;
 
+export 'src/controls/aurum_button.dart';
+export 'src/controls/aurum_pressable.dart';
+export 'src/controls/aurum_segmented_control.dart';
+export 'src/controls/aurum_switch.dart';
 export 'src/foundations/aurum_glass.dart';
 export 'src/foundations/aurum_haptics.dart';
 export 'src/foundations/aurum_springs.dart';

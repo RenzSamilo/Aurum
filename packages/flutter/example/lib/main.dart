@@ -67,10 +67,10 @@ class PreviewPage extends StatelessWidget {
               style: context.aurumText(AurumType.body, color: c.textSecondary),
             ),
             const SizedBox(height: AurumSpace.s16),
-            Wrap(spacing: AurumSpace.s8, runSpacing: AurumSpace.s8, children: [
-              FilterChip(label: const Text('Dark'), selected: dark, onSelected: onDark),
-              FilterChip(label: const Text('More contrast'), selected: moreContrast, onSelected: onContrast),
-            ]),
+            AurumSwitch(value: dark, label: 'Dark', onChanged: onDark),
+            AurumSwitch(value: moreContrast, label: 'More contrast', onChanged: onContrast),
+            const _Section('Controls'),
+            const _Card(child: _ControlsDemo()),
             const _Section('Colour'),
             _Card(child: Column(children: [
               for (final (name, color) in [
@@ -286,5 +286,49 @@ class _SpringRowState extends State<_SpringRow> with SingleTickerProviderStateMi
         ]),
       ),
     );
+  }
+}
+
+class _ControlsDemo extends StatefulWidget {
+  const _ControlsDemo();
+
+  @override
+  State<_ControlsDemo> createState() => _ControlsDemoState();
+}
+
+class _ControlsDemoState extends State<_ControlsDemo> {
+  bool _notify = true;
+  bool _sync = false;
+  String _range = 'week';
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, spacing: AurumSpace.s12, children: [
+      Wrap(spacing: AurumSpace.s8, runSpacing: AurumSpace.s8, children: [
+        AurumButton(label: 'Continue', onPressed: () {}),
+        AurumButton(label: 'Share', variant: AurumButtonVariant.tinted, onPressed: () {}),
+        AurumButton(label: 'Cancel', variant: AurumButtonVariant.gray, onPressed: () {}),
+        AurumButton(label: 'Learn more', variant: AurumButtonVariant.plain, onPressed: () {}),
+      ]),
+      Wrap(spacing: AurumSpace.s8, runSpacing: AurumSpace.s8, crossAxisAlignment: WrapCrossAlignment.center, children: [
+        AurumButton(label: 'New', icon: PhosphorIconsBold.plus, size: AurumButtonSize.sm, capsule: true, onPressed: () {}),
+        AurumButton(label: 'Delete', icon: PhosphorIconsRegular.trash, destructive: true, variant: AurumButtonVariant.tinted, onPressed: () {}),
+        AurumButton(icon: PhosphorIconsRegular.gear, semanticLabel: 'Settings', variant: AurumButtonVariant.gray, onPressed: () {}),
+        const AurumButton(label: 'Disabled', onPressed: null),
+      ]),
+      AurumButton(label: 'Get started', size: AurumButtonSize.lg, fullWidth: true, haptic: AurumHaptic.impactMedium, onPressed: () {}),
+      AurumSwitch(value: _notify, label: 'Notifications', description: 'A summary each morning', onChanged: (v) => setState(() => _notify = v)),
+      AurumSwitch(value: _sync, label: 'Sync over mobile data', onChanged: (v) => setState(() => _sync = v)),
+      AurumSegmentedControl<String>(
+        value: _range,
+        onChanged: (v) => setState(() => _range = v),
+        segments: const [
+          AurumSegment(value: 'day', label: 'Day'),
+          AurumSegment(value: 'week', label: 'Week'),
+          AurumSegment(value: 'month', label: 'Month'),
+          AurumSegment(value: 'year', label: 'Year'),
+        ],
+      ),
+    ]);
   }
 }

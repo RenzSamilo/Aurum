@@ -48,9 +48,9 @@
       "$value": "48px",
       "$description": "Minimum touch target."
     },
-    "target-workout": {
+    "target-large": {
       "$value": "64px",
-      "$description": "Touch target for in-workout controls."
+      "$description": "Touch target for primary actions used on the move or with gloves."
     },
     "icon-sm": {
       "$value": "20px"

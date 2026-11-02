@@ -4,7 +4,7 @@ export const brandName = "Aurum";
 export const space = {"2":2,"4":4,"8":8,"12":12,"16":16,"24":24,"32":32,"48":48,"64":64} as const;
 export const radius = {"sm":12,"md":18,"lg":24,"xl":32,"pill":999} as const;
 export const shapeSmoothing = 0.6;
-export const size = {"target":48,"targetWorkout":64,"iconSm":20,"iconMd":24,"iconLg":28,"focusWidth":2,"focusOffset":2,"gutterPhone":16,"gutterTablet":24,"gutterDesktop":32} as const;
+export const size = {"target":48,"targetLarge":64,"iconSm":20,"iconMd":24,"iconLg":28,"focusWidth":2,"focusOffset":2,"gutterPhone":16,"gutterTablet":24,"gutterDesktop":32} as const;
 export const z = {"content":0,"navigation":10,"popover":20,"scrim":30,"modal":40,"toast":50} as const;
 export const font = {"ui":"Inter","mono":"Geist Mono"} as const;
 

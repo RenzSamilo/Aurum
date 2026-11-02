@@ -1,5 +1,5 @@
-import { type AurumPreferences, Glass, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
-import { Bell, Gear, House, MagnifyingGlass, Moon, Sun } from '@phosphor-icons/react';
+import { type AurumPreferences, Button, Glass, SegmentedControl, Switch, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
+import { Bell, Gear, House, MagnifyingGlass, Moon, Plus, Sun, Trash } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
 const colorGroups: Record<string, string[]> = {
@@ -41,6 +41,8 @@ export function App() {
           </Toggle>
         </div>
       </header>
+
+      <Controls />
 
       <Section title="Colour" note="Semantic roles in OKLCH. Toggle dark and contrast above.">
         <div className="swatch-groups">
@@ -154,6 +156,73 @@ export function App() {
         </div>
       </Section>
     </div>
+  );
+}
+
+function Controls() {
+  const [notify, setNotify] = useState(true);
+  const [sync, setSync] = useState(false);
+  const [range, setRange] = useState<'day' | 'week' | 'month' | 'year'>('week');
+  const [view, setView] = useState<'list' | 'grid'>('list');
+  return (
+    <Section title="Controls" note="Press and hold to feel the spring. Every control works with a keyboard and a screen reader.">
+      <div className="controls-grid">
+        <div className="card aurum-squircle control-stack">
+          <h3 className="aurum-type-headline">Button</h3>
+          <div className="control-row">
+            <Button>Continue</Button>
+            <Button variant="tinted">Share</Button>
+            <Button variant="gray">Cancel</Button>
+            <Button variant="plain">Learn more</Button>
+          </div>
+          <div className="control-row">
+            <Button size="sm" capsule icon={<Plus weight="bold" />}>
+              New
+            </Button>
+            <Button size="sm" variant="tinted" capsule>
+              Edit
+            </Button>
+            <Button variant="tinted" destructive icon={<Trash />}>
+              Delete
+            </Button>
+            <Button variant="gray" icon={<Gear />} aria-label="Settings" />
+            <Button disabled>Disabled</Button>
+          </div>
+          <Button size="lg" fullWidth haptic="impactMedium">
+            Get started
+          </Button>
+        </div>
+        <div className="card aurum-squircle control-stack">
+          <h3 className="aurum-type-headline">Switch</h3>
+          <Switch checked={notify} onCheckedChange={setNotify} label="Notifications" description="A summary each morning" />
+          <Switch checked={sync} onCheckedChange={setSync} label="Sync over mobile data" />
+          <Switch checked={false} onCheckedChange={() => {}} label="Requires an account" disabled />
+          <h3 className="aurum-type-headline">Segmented control</h3>
+          <SegmentedControl
+            aria-label="Range"
+            value={range}
+            onValueChange={setRange}
+            segments={[
+              { value: 'day', label: 'Day' },
+              { value: 'week', label: 'Week' },
+              { value: 'month', label: 'Month' },
+              { value: 'year', label: 'Year' },
+            ]}
+          />
+          <SegmentedControl
+            aria-label="Layout"
+            size="sm"
+            style={{ width: 'fit-content' }}
+            value={view}
+            onValueChange={setView}
+            segments={[
+              { value: 'list', label: 'List' },
+              { value: 'grid', label: 'Grid' },
+            ]}
+          />
+        </div>
+      </div>
+    </Section>
   );
 }
 
