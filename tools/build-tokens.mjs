@@ -222,8 +222,8 @@ const typeClasses = Object.keys(types)
 
 const css = `/* ${HEADER} */
 
-/* Modes: data-theme="light|dark", data-contrast="more|normal", data-transparency="reduced",
-   data-motion="reduced" on <html>. Without attributes, the system preference applies. */
+/* Modes: data-theme="light|dark", data-contrast="more|normal", data-transparency="reduced|normal",
+   data-motion="reduced|normal" on <html>. Without attributes, the system preference applies. */
 
 ${block(':root', { 'color-scheme': 'light', ...cssBase, ...sem.light }).replace('--color-scheme', 'color-scheme')}
 
@@ -244,11 +244,11 @@ ${media('(prefers-color-scheme: dark)', ':root[data-contrast="more"]:not([data-t
 ${block(':root[data-contrast="more"][data-theme="dark"]', diff('dark', 'contrastDark'))}
 
 /* Safari and Firefox ignore this query, so the in-app setting (data-transparency) is required. */
-${media('(prefers-reduced-transparency: reduce)', ':root', reducedTransparency)}
+${media('(prefers-reduced-transparency: reduce)', ':root:not([data-transparency="normal"])', reducedTransparency)}
 
 ${block(':root[data-transparency="reduced"]', reducedTransparency)}
 
-${media('(prefers-reduced-motion: reduce)', ':root', reducedMotion)}
+${media('(prefers-reduced-motion: reduce)', ':root:not([data-motion="normal"])', reducedMotion)}
 
 ${block(':root[data-motion="reduced"]', reducedMotion)}
 

@@ -9,8 +9,8 @@
 export interface AurumPreferences {
   theme?: 'light' | 'dark';
   contrast?: 'more' | 'normal';
-  transparency?: 'reduced';
-  motion?: 'reduced';
+  transparency?: 'reduced' | 'normal';
+  motion?: 'reduced' | 'normal';
 }
 
 export function setAurumPreferences(prefs: AurumPreferences, root: HTMLElement = document.documentElement): void {
