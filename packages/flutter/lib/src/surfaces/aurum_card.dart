@@ -14,6 +14,7 @@ class AurumCard extends StatefulWidget {
     this.semanticLabel,
     this.padding = const EdgeInsets.all(AurumSpace.s24),
     this.lifted = true,
+    this.color,
   });
 
   final Widget child;
@@ -25,6 +26,10 @@ class AurumCard extends StatefulWidget {
 
   /// Lifted cards cast a soft shadow; flat cards use a hairline border only.
   final bool lifted;
+
+  /// Fill, e.g. a tint of the accent. Defaults to the card surface. Keep text
+  /// on it at 4.5:1; light tints with primary text are safe.
+  final Color? color;
 
   @override
   State<AurumCard> createState() => _AurumCardState();
@@ -42,16 +47,17 @@ class _AurumCardState extends State<AurumCard> {
   @override
   Widget build(BuildContext context) {
     final c = context.aurum;
+    final fill = widget.color ?? c.surfaceCard;
     final r = BorderRadius.circular(context.aurumRadii.lg);
     final interactive = widget.onPressed != null;
     final card = DecoratedBox(
       decoration: ShapeDecoration(
-        color: _hovered || _pressed ? Color.alphaBlend(c.textPrimary.withValues(alpha: _pressed ? 0.05 : 0.03), c.surfaceCard) : c.surfaceCard,
+        color: _hovered || _pressed ? Color.alphaBlend(c.textPrimary.withValues(alpha: _pressed ? 0.05 : 0.03), fill) : fill,
         shape: RoundedSuperellipseBorder(
           borderRadius: r,
           side: _focused
               ? BorderSide(color: c.focus, width: AurumSize.focusWidth, strokeAlign: BorderSide.strokeAlignOutside)
-              : BorderSide(color: c.borderDecorative),
+              : widget.color == null ? BorderSide(color: c.borderDecorative) : BorderSide.none,
         ),
         shadows: widget.lifted ? AurumShadow.level1 : null,
       ),

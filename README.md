@@ -110,6 +110,12 @@ RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(context.aurumRadii
 | Glass | `<Glass>` | `AurumGlass` |
 | Continuous corners | `<Squircle>`, `useSquircle()` | `RoundedSuperellipseBorder` |
 | Haptics | `playHaptic(intent)` | `AurumHaptics.play(intent)` |
+| Text field | (next) | `AurumTextField` |
+| Avatar, badge | (next) | `AurumAvatar`, `AurumBadge` |
+| Top bar, back button | (next) | `AurumTopBar`, `AurumBackButton` |
+| Tab bar | (next) | `AurumTabBar` |
+
+The Flutter example app has **Sample screens**: an assistant app (home, chat, plans) and a money app (home, add money, profile), built only from these parts to test the template on real layouts.
 
 Every component works with a keyboard and a screen reader, honours reduced motion, and is checked by tests (axe-core on the web, Flutter's accessibility guidelines on mobile).
 

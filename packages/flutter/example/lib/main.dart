@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:phosphor_glyphs/phosphor_glyphs.dart';
 
+import 'screens/gallery.dart';
+
 void main() => runApp(const AurumPreviewApp());
 
 class AurumPreviewApp extends StatefulWidget {
@@ -69,74 +71,110 @@ class PreviewPage extends StatelessWidget {
             const SizedBox(height: AurumSpace.s16),
             AurumSwitch(value: dark, label: 'Dark', onChanged: onDark),
             AurumSwitch(value: moreContrast, label: 'More contrast', onChanged: onContrast),
+            const SizedBox(height: AurumSpace.s24),
+            const SampleScreensSection(),
             const _Section('Controls'),
             const _Card(child: _ControlsDemo()),
             const _Section('Lists, cards and sheets'),
             const _SurfacesDemo(),
             const _Section('Colour'),
-            _Card(child: Column(children: [
-              for (final (name, color) in [
-                ('surfaceCanvas', c.surfaceCanvas),
-                ('surfaceCard', c.surfaceCard),
-                ('surfaceInset', c.surfaceInset),
-                ('textPrimary', c.textPrimary),
-                ('textSecondary', c.textSecondary),
-                ('accent', c.accent),
-                ('accentSecondary', c.accentSecondary),
-                ('warning', c.warning),
-                ('danger', c.danger),
-              ])
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AurumSpace.s4),
-                  child: Row(children: [
-                    DecoratedBox(
-                      decoration: ShapeDecoration(
-                        color: color,
-                        shape: RoundedSuperellipseBorder(
-                          borderRadius: BorderRadius.circular(context.aurumRadii.sm),
-                          side: BorderSide(color: c.borderDecorative),
-                        ),
+            _Card(
+              child: Column(
+                children: [
+                  for (final (name, color) in [
+                    ('surfaceCanvas', c.surfaceCanvas),
+                    ('surfaceCard', c.surfaceCard),
+                    ('surfaceInset', c.surfaceInset),
+                    ('textPrimary', c.textPrimary),
+                    ('textSecondary', c.textSecondary),
+                    ('accent', c.accent),
+                    ('accentSecondary', c.accentSecondary),
+                    ('warning', c.warning),
+                    ('danger', c.danger),
+                  ])
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: AurumSpace.s4),
+                      child: Row(
+                        children: [
+                          DecoratedBox(
+                            decoration: ShapeDecoration(
+                              color: color,
+                              shape: RoundedSuperellipseBorder(
+                                borderRadius: BorderRadius.circular(context.aurumRadii.sm),
+                                side: BorderSide(color: c.borderDecorative),
+                              ),
+                            ),
+                            child: const SizedBox.square(dimension: AurumSpace.s32),
+                          ),
+                          const SizedBox(width: AurumSpace.s12),
+                          Text(name, style: context.aurumText(AurumType.footnote, color: c.textPrimary)),
+                        ],
                       ),
-                      child: const SizedBox.square(dimension: AurumSpace.s32),
                     ),
-                    const SizedBox(width: AurumSpace.s12),
-                    Text(name, style: context.aurumText(AurumType.footnote, color: c.textPrimary)),
-                  ]),
-                ),
-            ])),
+                ],
+              ),
+            ),
             const _Section('Type'),
-            _Card(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              for (final MapEntry(key: name, value: role) in AurumType.all.entries)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AurumSpace.s4),
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('Quarterly review, 3 of 12 done', style: context.aurumText(role, tabularFigures: true)),
-                    Text('$name · ${role.size.round()}/${role.lineHeight.round()} · ${role.weight.round()}',
-                        style: context.aurumText(AurumType.caption, color: c.textTertiary)),
-                  ]),
-                ),
-            ])),
+            _Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final MapEntry(key: name, value: role) in AurumType.all.entries)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: AurumSpace.s4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Quarterly review, 3 of 12 done', style: context.aurumText(role, tabularFigures: true)),
+                          Text(
+                            '$name · ${role.size.round()}/${role.lineHeight.round()} · ${role.weight.round()}',
+                            style: context.aurumText(AurumType.caption, color: c.textTertiary),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
             const _Section('Shape'),
-            Wrap(spacing: AurumSpace.s16, runSpacing: AurumSpace.s16, children: [
-              for (final (name, r) in [
-                ('sm', context.aurumRadii.sm),
-                ('md', context.aurumRadii.md),
-                ('lg', context.aurumRadii.lg),
-                ('xl', context.aurumRadii.xl),
-              ])
-                _RadiusDemo(name: name, radius: r),
-            ]),
+            Wrap(
+              spacing: AurumSpace.s16,
+              runSpacing: AurumSpace.s16,
+              children: [
+                for (final (name, r) in [
+                  ('sm', context.aurumRadii.sm),
+                  ('md', context.aurumRadii.md),
+                  ('lg', context.aurumRadii.lg),
+                  ('xl', context.aurumRadii.xl),
+                ])
+                  _RadiusDemo(name: name, radius: r),
+              ],
+            ),
             const _Section('Motion'),
-            const _Card(child: Column(children: [
-              _SpringRow(name: 'control', spring: AurumMotion.control),
-              _SpringRow(name: 'surface', spring: AurumMotion.surface),
-              _SpringRow(name: 'reward', spring: AurumMotion.reward),
-            ])),
+            const _Card(
+              child: Column(
+                children: [
+                  _SpringRow(name: 'control', spring: AurumMotion.control),
+                  _SpringRow(name: 'surface', spring: AurumMotion.surface),
+                  _SpringRow(name: 'reward', spring: AurumMotion.reward),
+                ],
+              ),
+            ),
             const _Section('Icons'),
-            _Card(child: Wrap(spacing: AurumSpace.s16, children: [
-              for (final icon in [PhosphorIconsRegular.house, PhosphorIconsBold.magnifyingGlass, PhosphorIconsFill.bell, PhosphorIconsRegular.gear])
-                Icon(icon, size: AurumSize.iconMd, color: c.textPrimary),
-            ])),
+            _Card(
+              child: Wrap(
+                spacing: AurumSpace.s16,
+                children: [
+                  for (final icon in [
+                    PhosphorIconsRegular.house,
+                    PhosphorIconsBold.magnifyingGlass,
+                    PhosphorIconsFill.bell,
+                    PhosphorIconsRegular.gear,
+                  ])
+                    Icon(icon, size: AurumSize.iconMd, color: c.textPrimary),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -150,9 +188,9 @@ class _Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: AurumSpace.s48, bottom: AurumSpace.s16),
-        child: Text(title, style: context.aurumText(AurumType.section, color: context.aurum.textPrimary)),
-      );
+    padding: const EdgeInsets.only(top: AurumSpace.s48, bottom: AurumSpace.s16),
+    child: Text(title, style: context.aurumText(AurumType.section, color: context.aurum.textPrimary)),
+  );
 }
 
 class _Card extends StatelessWidget {
@@ -197,19 +235,24 @@ class _RadiusDemo extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(pad),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            AspectRatio(
-              aspectRatio: 4 / 3,
-              child: DecoratedBox(
-                decoration: ShapeDecoration(
-                  color: c.surfaceInset,
-                  shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(AurumRadii.inner(radius, pad))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AspectRatio(
+                aspectRatio: 4 / 3,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: c.surfaceInset,
+                    shape: RoundedSuperellipseBorder(
+                      borderRadius: BorderRadius.circular(AurumRadii.inner(radius, pad)),
+                    ),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: AurumSpace.s8),
-            Text('$name · ${radius.round()}', style: context.aurumText(AurumType.caption, color: c.textSecondary)),
-          ]),
+              const SizedBox(height: AurumSpace.s8),
+              Text('$name · ${radius.round()}', style: context.aurumText(AurumType.caption, color: c.textSecondary)),
+            ],
+          ),
         ),
       ),
     );
@@ -254,39 +297,48 @@ class _SpringRowState extends State<_SpringRow> with SingleTickerProviderStateMi
       borderRadius: BorderRadius.circular(context.aurumRadii.sm),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: AurumSpace.s8),
-        child: Row(children: [
-          SizedBox(
-            width: 120,
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(widget.name, style: context.aurumText(AurumType.headline, color: c.textPrimary)),
-              Text('${s.duration.toStringAsFixed(2)}s · bounce ${s.bounce.toStringAsFixed(2)}',
-                  style: context.aurumText(AurumType.caption, color: c.textTertiary)),
-            ]),
-          ),
-          Expanded(
-            child: LayoutBuilder(builder: (context, box) {
-              const dot = AurumSpace.s32;
-              return Container(
-                height: dot,
-                decoration: ShapeDecoration(color: c.surfaceInset, shape: const StadiumBorder()),
-                child: AnimatedBuilder(
-                  animation: _c,
-                  builder: (context, _) => Transform.translate(
-                    offset: Offset(_c.value * (box.maxWidth - dot), 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        width: dot,
-                        height: dot,
-                        decoration: ShapeDecoration(color: c.accent, shape: const CircleBorder()),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 120,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.name, style: context.aurumText(AurumType.headline, color: c.textPrimary)),
+                  Text(
+                    '${s.duration.toStringAsFixed(2)}s · bounce ${s.bounce.toStringAsFixed(2)}',
+                    style: context.aurumText(AurumType.caption, color: c.textTertiary),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  const dot = AurumSpace.s32;
+                  return Container(
+                    height: dot,
+                    decoration: ShapeDecoration(color: c.surfaceInset, shape: const StadiumBorder()),
+                    child: AnimatedBuilder(
+                      animation: _c,
+                      builder: (context, _) => Transform.translate(
+                        offset: Offset(_c.value * (box.maxWidth - dot), 0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            width: dot,
+                            height: dot,
+                            decoration: ShapeDecoration(color: c.accent, shape: const CircleBorder()),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              );
-            }),
-          ),
-        ]),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -306,33 +358,74 @@ class _ControlsDemoState extends State<_ControlsDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, spacing: AurumSpace.s12, children: [
-      Wrap(spacing: AurumSpace.s8, runSpacing: AurumSpace.s8, children: [
-        AurumButton(label: 'Continue', onPressed: () {}),
-        AurumButton(label: 'Share', variant: AurumButtonVariant.tinted, onPressed: () {}),
-        AurumButton(label: 'Cancel', variant: AurumButtonVariant.gray, onPressed: () {}),
-        AurumButton(label: 'Learn more', variant: AurumButtonVariant.plain, onPressed: () {}),
-      ]),
-      Wrap(spacing: AurumSpace.s8, runSpacing: AurumSpace.s8, crossAxisAlignment: WrapCrossAlignment.center, children: [
-        AurumButton(label: 'New', icon: PhosphorIconsBold.plus, size: AurumButtonSize.sm, capsule: true, onPressed: () {}),
-        AurumButton(label: 'Delete', icon: PhosphorIconsRegular.trash, destructive: true, variant: AurumButtonVariant.tinted, onPressed: () {}),
-        AurumButton(icon: PhosphorIconsRegular.gear, semanticLabel: 'Settings', variant: AurumButtonVariant.gray, onPressed: () {}),
-        const AurumButton(label: 'Disabled', onPressed: null),
-      ]),
-      AurumButton(label: 'Get started', size: AurumButtonSize.lg, fullWidth: true, haptic: AurumHaptic.impactMedium, onPressed: () {}),
-      AurumSwitch(value: _notify, label: 'Notifications', description: 'A summary each morning', onChanged: (v) => setState(() => _notify = v)),
-      AurumSwitch(value: _sync, label: 'Sync over mobile data', onChanged: (v) => setState(() => _sync = v)),
-      AurumSegmentedControl<String>(
-        value: _range,
-        onChanged: (v) => setState(() => _range = v),
-        segments: const [
-          AurumSegment(value: 'day', label: 'Day'),
-          AurumSegment(value: 'week', label: 'Week'),
-          AurumSegment(value: 'month', label: 'Month'),
-          AurumSegment(value: 'year', label: 'Year'),
-        ],
-      ),
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: AurumSpace.s12,
+      children: [
+        Wrap(
+          spacing: AurumSpace.s8,
+          runSpacing: AurumSpace.s8,
+          children: [
+            AurumButton(label: 'Continue', onPressed: () {}),
+            AurumButton(label: 'Share', variant: AurumButtonVariant.tinted, onPressed: () {}),
+            AurumButton(label: 'Cancel', variant: AurumButtonVariant.gray, onPressed: () {}),
+            AurumButton(label: 'Learn more', variant: AurumButtonVariant.plain, onPressed: () {}),
+          ],
+        ),
+        Wrap(
+          spacing: AurumSpace.s8,
+          runSpacing: AurumSpace.s8,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            AurumButton(
+              label: 'New',
+              icon: PhosphorIconsBold.plus,
+              size: AurumButtonSize.sm,
+              capsule: true,
+              onPressed: () {},
+            ),
+            AurumButton(
+              label: 'Delete',
+              icon: PhosphorIconsRegular.trash,
+              destructive: true,
+              variant: AurumButtonVariant.tinted,
+              onPressed: () {},
+            ),
+            AurumButton(
+              icon: PhosphorIconsRegular.gear,
+              semanticLabel: 'Settings',
+              variant: AurumButtonVariant.gray,
+              onPressed: () {},
+            ),
+            const AurumButton(label: 'Disabled', onPressed: null),
+          ],
+        ),
+        AurumButton(
+          label: 'Get started',
+          size: AurumButtonSize.lg,
+          fullWidth: true,
+          haptic: AurumHaptic.impactMedium,
+          onPressed: () {},
+        ),
+        AurumSwitch(
+          value: _notify,
+          label: 'Notifications',
+          description: 'A summary each morning',
+          onChanged: (v) => setState(() => _notify = v),
+        ),
+        AurumSwitch(value: _sync, label: 'Sync over mobile data', onChanged: (v) => setState(() => _sync = v)),
+        AurumSegmentedControl<String>(
+          value: _range,
+          onChanged: (v) => setState(() => _range = v),
+          segments: const [
+            AurumSegment(value: 'day', label: 'Day'),
+            AurumSegment(value: 'week', label: 'Week'),
+            AurumSegment(value: 'month', label: 'Month'),
+            AurumSegment(value: 'year', label: 'Year'),
+          ],
+        ),
+      ],
+    );
   }
 }
 
@@ -352,42 +445,74 @@ class _SurfacesDemoState extends State<_SurfacesDemo> {
     showAurumSheet<void>(
       context: context,
       title: 'Language',
-      builder: (sheet) => AurumListSection(children: [
-        for (final l in const ['English', 'Filipino', 'Español', 'Deutsch'])
-          AurumListRow(
-            title: l,
-            chevron: false,
-            onPressed: () {
-              setState(() => _language = l);
-              Navigator.of(sheet).pop();
-            },
-          ),
-      ]),
+      builder: (sheet) => AurumListSection(
+        children: [
+          for (final l in const ['English', 'Filipino', 'Español', 'Deutsch'])
+            AurumListRow(
+              title: l,
+              chevron: false,
+              onPressed: () {
+                setState(() => _language = l);
+                Navigator.of(sheet).pop();
+              },
+            ),
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final c = context.aurum;
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, spacing: AurumSpace.s16, children: [
-      AurumListSection(header: 'Account', footer: 'Changes sync to every device you sign in on.', children: [
-        AurumListRow(leading: PhosphorIconsRegular.globe, title: 'Language', value: _language, onPressed: _pickLanguage),
-        AurumListRow(leading: PhosphorIconsRegular.lock, title: 'Privacy', subtitle: 'Who can see your profile', onPressed: () {}),
-        AurumListRow(
-          leading: PhosphorIconsRegular.wifiHigh,
-          title: 'Download over Wi-Fi only',
-          trailing: AurumSwitch(value: _wifi, semanticLabel: 'Download over Wi-Fi only', onChanged: (v) => setState(() => _wifi = v)),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: AurumSpace.s16,
+      children: [
+        AurumListSection(
+          header: 'Account',
+          footer: 'Changes sync to every device you sign in on.',
+          children: [
+            AurumListRow(
+              leading: PhosphorIconsRegular.globe,
+              title: 'Language',
+              value: _language,
+              onPressed: _pickLanguage,
+            ),
+            AurumListRow(
+              leading: PhosphorIconsRegular.lock,
+              title: 'Privacy',
+              subtitle: 'Who can see your profile',
+              onPressed: () {},
+            ),
+            AurumListRow(
+              leading: PhosphorIconsRegular.wifiHigh,
+              title: 'Download over Wi-Fi only',
+              trailing: AurumSwitch(
+                value: _wifi,
+                semanticLabel: 'Download over Wi-Fi only',
+                onChanged: (v) => setState(() => _wifi = v),
+              ),
+            ),
+            const AurumListRow(leading: PhosphorIconsRegular.info, title: 'Version', value: '1.0.0'),
+          ],
         ),
-        const AurumListRow(leading: PhosphorIconsRegular.info, title: 'Version', value: '1.0.0'),
-      ]),
-      AurumListSection(children: [AurumListRow(title: 'Sign out', destructive: true, chevron: false, onPressed: () {})]),
-      AurumCard(
-        onPressed: () => setState(() => _presses++),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Pressable card', style: context.aurumText(AurumType.card)),
-          Text('Pressed $_presses times', style: context.aurumText(AurumType.body, color: c.textSecondary, tabularFigures: true)),
-        ]),
-      ),
-    ]);
+        AurumListSection(
+          children: [AurumListRow(title: 'Sign out', destructive: true, chevron: false, onPressed: () {})],
+        ),
+        AurumCard(
+          onPressed: () => setState(() => _presses++),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Pressable card', style: context.aurumText(AurumType.card)),
+              Text(
+                'Pressed $_presses times',
+                style: context.aurumText(AurumType.body, color: c.textSecondary, tabularFigures: true),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
