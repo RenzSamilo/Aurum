@@ -761,36 +761,18 @@ class _CourseCover extends StatelessWidget {
                             _Meta(PhosphorIconsRegular.videoCamera, '16'),
                           ],
                         ),
-                        const SizedBox(height: AurumSpace.s12),
-                        AurumGlass(
-                          level: AurumMaterialLevel.clear,
-                          radius: 24,
-                          padding: const EdgeInsets.fromLTRB(
-                            AurumSpace.s4,
-                            AurumSpace.s4,
-                            AurumSpace.s4,
-                            AurumSpace.s4,
-                          ),
-                          child: Row(
-                            children: [
-                              AurumGlass(
-                                level: AurumMaterialLevel.clear,
-                                radius: 16,
-                                padding: const EdgeInsets.symmetric(horizontal: AurumSpace.s12, vertical: 6),
-                                child: Text('$index of 5', style: context.aurumText(AurumType.caption)),
-                              ),
-                              const Spacer(),
-                              Flexible(
-                                flex: 4,
-                                child: AurumButton(
-                                  label: 'Continue',
-                                  variant: AurumButtonVariant.plain,
-                                  size: AurumButtonSize.sm,
-                                  onPressed: () {},
-                                ),
-                              ),
-                            ],
-                          ),
+                        const SizedBox(height: AurumSpace.s8),
+                        Row(
+                          children: [
+                            AurumGlass(
+                              level: AurumMaterialLevel.clear,
+                              radius: 16,
+                              padding: const EdgeInsets.symmetric(horizontal: AurumSpace.s12, vertical: 6),
+                              child: Text('$index of 5', style: context.aurumText(AurumType.caption)),
+                            ),
+                            const Spacer(),
+                            _ContinueLink(onPressed: () {}),
+                          ],
                         ),
                       ],
                     ),
@@ -1247,5 +1229,53 @@ class _SessionCard extends StatelessWidget {
       ),
     );
     return later ? Opacity(opacity: 0.55, child: card) : card;
+  }
+}
+
+/// "Continue ›": a text action with a trailing caret, for the corner of a cover.
+class _ContinueLink extends StatefulWidget {
+  const _ContinueLink({required this.onPressed});
+  final VoidCallback onPressed;
+
+  @override
+  State<_ContinueLink> createState() => _ContinueLinkState();
+}
+
+class _ContinueLinkState extends State<_ContinueLink> {
+  bool _pressed = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final c = context.aurum;
+    return Semantics(
+      button: true,
+      label: 'Continue course',
+      excludeSemantics: true,
+      onTap: widget.onPressed,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (_) => setState(() => _pressed = true),
+        onTapUp: (_) => setState(() => _pressed = false),
+        onTapCancel: () => setState(() => _pressed = false),
+        onTap: widget.onPressed,
+        child: AurumPressScale(
+          pressed: _pressed,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: AurumSize.target),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(start: AurumSpace.s8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Continue', style: context.aurumText(AurumType.subhead, color: c.textPrimary)),
+                  const SizedBox(width: AurumSpace.s4),
+                  Icon(PhosphorIconsBold.caretRight, size: 14, color: c.textPrimary),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
