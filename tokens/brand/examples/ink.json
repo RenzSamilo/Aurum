@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../tools/tokens/brand.schema.json",
+  "name": "Ink",
+  "accent": { "hue": 258, "chroma": 0.05, "lightnessLight": 0.36, "lightnessDark": 0.78, "chromaDark": 0.04 },
+  "secondary": { "hue": 86, "chroma": 0.08 },
+  "neutral": { "hue": 258, "warmHue": 87, "chroma": 1.2 },
+  "font": { "ui": "Inter", "mono": "Geist Mono", "display": "Fraunces", "displayWeight": 560, "displayTracking": -0.01 }
+}

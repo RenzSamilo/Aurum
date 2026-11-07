@@ -1,3 +1,4 @@
+import 'package:aurum_example/brands/sapphire.g.dart';
 import 'package:aurum_example/main.dart';
 import 'package:aurum_example/screens/assistant.dart';
 import 'package:aurum_example/screens/money.dart';
@@ -15,8 +16,20 @@ void main() {
     expect(Theme.of(tester.element(find.text('Aurum'))).brightness, Brightness.dark);
   });
 
+  testWidgets('palette picker re-themes the app', (tester) async {
+    await tester.pumpWidget(const AurumPreviewApp());
+    await tester.ensureVisible(find.text('Sapphire'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Sapphire'));
+    await tester.pumpAndSettle();
+    final colors = Theme.of(tester.element(find.text('Sapphire'))).extension<AurumColors>()!;
+    expect(colors.accent, isIn([sapphireBrand.light.accent, sapphireBrand.dark.accent]));
+  });
+
   testWidgets('preview opens a sample screen', (tester) async {
     await tester.pumpWidget(const AurumPreviewApp());
+    await tester.ensureVisible(find.text('Assistant: plans'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Assistant: plans'));
     await tester.pumpAndSettle();
     expect(find.text('Sage+ plans'), findsOneWidget);

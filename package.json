@@ -4,15 +4,18 @@
   "description": "Aurum design system: one token source, a React library and a Flutter library.",
   "type": "module",
   "packageManager": "pnpm@10.28.0",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "tokens": "node tools/tokens/build.mjs",
-    "tokens:check": "node tools/tokens/build.mjs && git diff --exit-code -- packages/react/src/tokens packages/flutter/lib/src/tokens",
+    "tokens:check": "node tools/tokens/build.mjs && node tools/tokens/build-examples.mjs && git diff --exit-code -- packages/react/src/tokens packages/flutter/lib/src/tokens packages/flutter/example/lib/brands",
     "guard": "node tools/license-guard.mjs",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "build": "pnpm -r build",
-    "dev": "pnpm --filter @aurum/docs dev"
+    "dev": "pnpm --filter @aurum/docs dev",
+    "brands": "node tools/tokens/build-examples.mjs"
   },
   "devDependencies": {
     "style-dictionary": "5.7.1"

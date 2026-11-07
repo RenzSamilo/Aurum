@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:phosphor_glyphs/phosphor_glyphs.dart';
 
+import 'brands/brands.g.dart';
 import 'screens/gallery.dart';
+import 'screens/palette_picker.dart';
 
 void main() => runApp(const AurumPreviewApp());
 
@@ -17,6 +19,7 @@ class AurumPreviewApp extends StatefulWidget {
 class _AurumPreviewAppState extends State<AurumPreviewApp> {
   ThemeMode _mode = ThemeMode.system;
   bool _moreContrast = false;
+  AurumBrand _brand = exampleBrands.first;
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +29,13 @@ class _AurumPreviewAppState extends State<AurumPreviewApp> {
       title: 'Aurum',
       debugShowCheckedModeBanner: false,
       themeMode: _mode,
-      theme: aurumTheme(Brightness.light, highContrast: contrast),
-      darkTheme: aurumTheme(Brightness.dark, highContrast: contrast),
+      theme: aurumTheme(Brightness.light, highContrast: contrast, brand: _brand),
+      darkTheme: aurumTheme(Brightness.dark, highContrast: contrast, brand: _brand),
       home: PreviewPage(
         dark: _mode == ThemeMode.dark,
         moreContrast: _moreContrast,
+        brand: _brand,
+        onBrand: (b) => setState(() => _brand = b),
         onDark: (v) => setState(() => _mode = v ? ThemeMode.dark : ThemeMode.light),
         onContrast: (v) => setState(() => _moreContrast = v),
       ),
@@ -45,10 +50,14 @@ class PreviewPage extends StatelessWidget {
     required this.moreContrast,
     required this.onDark,
     required this.onContrast,
+    this.brand,
+    this.onBrand,
   });
 
   final bool dark;
   final bool moreContrast;
+  final AurumBrand? brand;
+  final ValueChanged<AurumBrand>? onBrand;
   final ValueChanged<bool> onDark;
   final ValueChanged<bool> onContrast;
 
@@ -71,6 +80,10 @@ class PreviewPage extends StatelessWidget {
             const SizedBox(height: AurumSpace.s16),
             AurumSwitch(value: dark, label: 'Dark', onChanged: onDark),
             AurumSwitch(value: moreContrast, label: 'More contrast', onChanged: onContrast),
+            if (onBrand != null) ...[
+              const SizedBox(height: AurumSpace.s16),
+              PalettePicker(brands: exampleBrands, selected: brand ?? exampleBrands.first, onSelected: onBrand!),
+            ],
             const SizedBox(height: AurumSpace.s24),
             const SampleScreensSection(),
             const _Section('Controls'),

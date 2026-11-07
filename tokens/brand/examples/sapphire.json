@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../tools/tokens/brand.schema.json",
+  "name": "Sapphire",
+  "accent": { "hue": 262, "chroma": 0.12, "lightnessLight": 0.42, "lightnessDark": 0.76, "chromaDark": 0.08 },
+  "secondary": { "hue": 84, "chroma": 0.1 },
+  "neutral": { "hue": 262, "warmHue": 84, "chroma": 1.8 },
+  "font": { "ui": "Inter", "mono": "Geist Mono", "display": "Fraunces", "displayWeight": 560, "displayTracking": -0.01 }
+}
