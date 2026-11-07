@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../tools/tokens/brand.schema.json",
+  "name": "Cognac",
+  "accent": { "hue": 57, "chroma": 0.13, "lightnessLight": 0.5, "lightnessDark": 0.78, "chromaDark": 0.1 },
+  "secondary": { "hue": 204, "chroma": 0.06 },
+  "neutral": { "hue": 60, "warmHue": 82, "chroma": 2.2 },
+  "font": { "ui": "Inter", "mono": "Geist Mono", "display": "Fraunces", "displayWeight": 560, "displayTracking": -0.01 }
+}

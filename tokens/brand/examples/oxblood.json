@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../tools/tokens/brand.schema.json",
+  "name": "Oxblood",
+  "accent": { "hue": 9, "chroma": 0.08, "lightnessLight": 0.38, "lightnessDark": 0.76, "chromaDark": 0.06 },
+  "secondary": { "hue": 132, "chroma": 0.04 },
+  "neutral": { "hue": 20, "warmHue": 79, "chroma": 1.6 },
+  "danger": { "hue": 35 },
+  "font": { "ui": "Inter", "mono": "Geist Mono", "display": "Fraunces", "displayWeight": 560, "displayTracking": -0.01 }
+}
