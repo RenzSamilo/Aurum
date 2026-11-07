@@ -771,7 +771,7 @@ class _CourseCover extends StatelessWidget {
                               child: Text('$index of 5', style: context.aurumText(AurumType.caption)),
                             ),
                             const Spacer(),
-                            _ContinueLink(onPressed: () {}),
+                            Flexible(child: _ContinueLink(onPressed: () {})),
                           ],
                         ),
                       ],
@@ -1267,7 +1267,14 @@ class _ContinueLinkState extends State<_ContinueLink> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Continue', style: context.aurumText(AurumType.subhead, color: c.textPrimary)),
+                  Flexible(
+                    child: Text(
+                      'Continue',
+                      style: context.aurumText(AurumType.subhead, color: c.textPrimary),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                   const SizedBox(width: AurumSpace.s4),
                   Icon(PhosphorIconsBold.caretRight, size: 14, color: c.textPrimary),
                 ],
