@@ -359,6 +359,8 @@ class MoneyAdd extends StatefulWidget {
 }
 
 class _MoneyAddState extends State<MoneyAdd> {
+  /// Gap plus ring around the selected card.
+  static const double _ring = 5;
   int _card = 0;
 
   @override
@@ -375,11 +377,11 @@ class _MoneyAddState extends State<MoneyAdd> {
             Semantics(header: true, child: Text('Select card', style: context.aurumText(AurumType.card))),
             const SizedBox(height: AurumSpace.s12),
             SizedBox(
-              height: BankCard.height + 8,
+              height: BankCard.height + _ring * 2,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 clipBehavior: Clip.none,
-                padding: const EdgeInsets.all(4),
+                padding: EdgeInsets.zero,
                 itemCount: cards.length,
                 separatorBuilder: (_, _) => const SizedBox(width: AurumSpace.s12),
                 itemBuilder: (context, i) {
@@ -394,20 +396,39 @@ class _MoneyAddState extends State<MoneyAdd> {
                         if (i != _card) AurumHaptics.play(AurumHaptic.selectionTick);
                         setState(() => _card = i);
                       },
-                      child: AnimatedContainer(
-                        duration: AurumMotion.feedback,
-                        curve: AurumMotion.easeStandard,
-                        decoration: ShapeDecoration(
-                          shape: RoundedSuperellipseBorder(
-                            borderRadius: BorderRadius.circular(context.aurumRadii.lg + 4),
-                            side: BorderSide(
-                              color: selected ? c.textPrimary : const Color(0x00000000),
-                              width: 2,
-                              strokeAlign: BorderSide.strokeAlignOutside,
+                      // Selection: an accent ring with a gap, so it reads as a halo
+                      // around the card rather than an outline on it, plus a check.
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          AnimatedContainer(
+                            duration: AurumMotion.feedback,
+                            curve: AurumMotion.easeStandard,
+                            padding: const EdgeInsets.all(_ring),
+                            decoration: ShapeDecoration(
+                              shape: RoundedSuperellipseBorder(
+                                borderRadius: BorderRadius.circular(context.aurumRadii.lg + _ring),
+                                side: BorderSide(color: selected ? c.accent : const Color(0x00000000), width: 2),
+                              ),
                             ),
+                            child: BankCard(kind: kind, last4: last4, dark: dark),
                           ),
-                        ),
-                        child: BankCard(kind: kind, last4: last4, dark: dark),
+                          if (selected)
+                            PositionedDirectional(
+                              top: -2,
+                              end: -2,
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: c.accent,
+                                  border: Border.all(color: c.surfaceCanvas, width: 2),
+                                ),
+                                child: Icon(PhosphorIconsBold.check, size: 12, color: c.onAccent),
+                              ),
+                            ),
+                        ],
                       ),
                     ),
                   );
