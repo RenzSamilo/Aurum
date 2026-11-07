@@ -33,6 +33,7 @@
     "tint-base": { "$type": "color", "$value": "{color.warm.99}" },
     "alpha": {
       "$type": "number",
+      "clear":      { "$value": 0.22 },
       "ultralight": { "$value": 0.56 },
       "thin":       { "$value": 0.68 },
       "regular":    { "$value": 0.80 },

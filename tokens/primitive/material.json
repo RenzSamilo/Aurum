@@ -1,8 +1,9 @@
 {
   "material": {
-    "$description": "Glass levels. Alpha lives in the semantic mode files because it changes in dark mode.",
+    "$description": "Glass levels. clear is for small controls floating over imagery or video: mostly see-through, with a strong saturation lift so it reads as glass. Alpha lives in the semantic mode files because it changes in dark mode.",
     "blur": {
       "$type": "dimension",
+      "clear": { "$value": "12px" },
       "ultralight": { "$value": "8px" },
       "thin": { "$value": "16px" },
       "regular": { "$value": "24px" },
@@ -10,6 +11,7 @@
     },
     "saturation": {
       "$type": "number",
+      "clear": { "$value": 1.6 },
       "ultralight": { "$value": 1.1 },
       "thin": { "$value": 1.1 },
       "regular": { "$value": 1.1 },

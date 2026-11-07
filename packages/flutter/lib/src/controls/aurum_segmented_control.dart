@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../foundations/aurum_glass.dart';
 import '../foundations/aurum_haptics.dart';
 import '../foundations/aurum_springs.dart';
 import '../theme/aurum_theme.dart';
@@ -10,8 +11,8 @@ import '../tokens/aurum_tokens.g.dart';
 @immutable
 class AurumSegment<T> {
   const AurumSegment({required this.value, this.label, this.icon, this.semanticLabel, this.enabled = true})
-      : assert(label != null || icon != null),
-        assert(label != null || semanticLabel != null, 'Icon-only segments need a semanticLabel.');
+    : assert(label != null || icon != null),
+      assert(label != null || semanticLabel != null, 'Icon-only segments need a semanticLabel.');
 
   final T value;
   final String? label;
@@ -30,6 +31,7 @@ class AurumSegmentedControl<T> extends StatefulWidget {
     required this.value,
     required this.onChanged,
     this.small = false,
+    this.glass = false,
   }) : assert(segments.length >= 2 && segments.length <= 5, 'Use 2 to 5 segments.');
 
   final List<AurumSegment<T>> segments;
@@ -40,6 +42,10 @@ class AurumSegmentedControl<T> extends StatefulWidget {
 
   /// 28 tall instead of 36.
   final bool small;
+
+  /// A capsule of clear glass with a glass thumb, for a control that floats
+  /// over imagery or a coloured backdrop.
+  final bool glass;
 
   @override
   State<AurumSegmentedControl<T>> createState() => _AurumSegmentedControlState<T>();
@@ -80,7 +86,10 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
   KeyEventResult _onKey(FocusNode node, KeyEvent e) {
     if (e is! KeyDownEvent && e is! KeyRepeatEvent) return KeyEventResult.ignored;
     final rtl = Directionality.of(context) == TextDirection.rtl;
-    final enabled = [for (var i = 0; i < widget.segments.length; i++) if (widget.segments[i].enabled) i];
+    final enabled = [
+      for (var i = 0; i < widget.segments.length; i++)
+        if (widget.segments[i].enabled) i,
+    ];
     if (enabled.isEmpty) return KeyEventResult.ignored;
     final at = enabled.indexOf(_index);
     int? next;
@@ -90,8 +99,8 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
     final step = k == LogicalKeyboardKey.arrowRight || k == LogicalKeyboardKey.arrowDown
         ? 1
         : k == LogicalKeyboardKey.arrowLeft || k == LogicalKeyboardKey.arrowUp
-            ? -1
-            : 0;
+        ? -1
+        : 0;
     if (step != 0) {
       final dir = (k == LogicalKeyboardKey.arrowLeft || k == LogicalKeyboardKey.arrowRight) && rtl ? -step : step;
       next = enabled[(at + dir + enabled.length) % enabled.length];
@@ -104,16 +113,22 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
   @override
   Widget build(BuildContext context) {
     final c = context.aurum;
-    final r = context.aurumRadii.sm;
     final n = widget.segments.length;
     final height = widget.small ? 28.0 : 36.0;
-    const pad = 2.0;
+    final glass = widget.glass;
+    final pad = glass ? 4.0 : 2.0;
+    final r = glass ? height / 2 + pad : context.aurumRadii.sm;
     final dark = Theme.of(context).brightness == Brightness.dark;
-    final thumbColor = dark ? c.borderDecorative : c.surfaceElevated;
+    final thumbColor = glass
+        ? (dark ? const Color(0x2EFFFFFF) : const Color(0xB3FFFFFF))
+        : (dark ? c.borderDecorative : c.surfaceElevated);
     final enabled = widget.onChanged != null;
 
     // The track stays compact; the tap targets extend above and below it to 48.
     final trackHeight = height + 2 * pad;
+    final focusSide = _focused
+        ? BorderSide(color: c.focus, width: AurumSize.focusWidth, strokeAlign: BorderSide.strokeAlignOutside)
+        : BorderSide.none;
     final hitHeight = trackHeight < AurumSize.target ? AurumSize.target : trackHeight;
 
     return Focus(
@@ -124,50 +139,59 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
         opacity: enabled ? 1 : 0.4,
         child: SizedBox(
           height: hitHeight,
-          child: Stack(alignment: Alignment.center, children: [
-            Positioned.fill(
-              child: Center(
-                child: Container(
-                  height: trackHeight,
-                  padding: const EdgeInsets.all(pad),
-                  decoration: ShapeDecoration(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Positioned.fill(
+                child: Center(
+                  child: _Track(
+                    glass: glass,
+                    height: trackHeight,
+                    pad: pad,
+                    radius: r,
                     color: c.surfaceInset,
-                    shape: RoundedSuperellipseBorder(
-                      borderRadius: BorderRadius.circular(r),
-                      side: _focused ? BorderSide(color: c.focus, width: AurumSize.focusWidth, strokeAlign: BorderSide.strokeAlignOutside) : BorderSide.none,
+                    focus: focusSide,
+                    child: LayoutBuilder(
+                      builder: (context, box) {
+                        final w = box.maxWidth / n;
+                        return Stack(
+                          children: [
+                            AnimatedBuilder(
+                              animation: _pos,
+                              builder: (context, _) => PositionedDirectional(
+                                start: _pos.value * w,
+                                top: 0,
+                                bottom: 0,
+                                width: w,
+                                child: DecoratedBox(
+                                  decoration: ShapeDecoration(
+                                    color: thumbColor,
+                                    shape: RoundedSuperellipseBorder(
+                                      borderRadius: BorderRadius.circular(r - pad),
+                                      side: glass
+                                          ? BorderSide(color: Colors.white.withValues(alpha: dark ? 0.16 : 0.9))
+                                          : BorderSide.none,
+                                    ),
+                                    shadows: const [
+                                      BoxShadow(color: Color(0x14000000), blurRadius: 6, offset: Offset(0, 2)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
-                  child: LayoutBuilder(builder: (context, box) {
-                    final w = box.maxWidth / n;
-                    return Stack(children: [
-                      AnimatedBuilder(
-                        animation: _pos,
-                        builder: (context, _) => PositionedDirectional(
-                          start: _pos.value * w,
-                          top: 0,
-                          bottom: 0,
-                          width: w,
-                          child: DecoratedBox(
-                            decoration: ShapeDecoration(
-                              color: thumbColor,
-                              shape: RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(r - pad)),
-                              shadows: const [BoxShadow(color: Color(0x14000000), blurRadius: 6, offset: Offset(0, 2))],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ]);
-                  }),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: pad),
-              child: Row(children: [
-                for (var i = 0; i < n; i++) Expanded(child: _segment(context, i, hitHeight)),
-              ]),
-            ),
-          ]),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: pad),
+                child: Row(children: [for (var i = 0; i < n; i++) Expanded(child: _segment(context, i, hitHeight))]),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -180,7 +204,10 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
     final active = widget.onChanged != null && s.enabled;
     var style = context.aurumText(AurumType.subhead, color: s.enabled ? c.textPrimary : c.textTertiary);
     if (selected) {
-      style = style.copyWith(fontWeight: FontWeight.w600, fontVariations: [const FontVariation('wght', 600), FontVariation('opsz', style.fontSize!)]);
+      style = style.copyWith(
+        fontWeight: FontWeight.w600,
+        fontVariations: [const FontVariation('wght', 600), FontVariation('opsz', style.fontSize!)],
+      );
     }
     return Semantics(
       container: true,
@@ -206,15 +233,63 @@ class _AurumSegmentedControlState<T> extends State<AurumSegmentedControl<T>> wit
             child: SizedBox(
               height: height,
               child: Center(
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  if (s.icon != null) Icon(s.icon, size: style.fontSize! * 1.2, color: style.color),
-                  if (s.icon != null && s.label != null) const SizedBox(width: AurumSpace.s4),
-                  if (s.label != null) Flexible(child: Text(s.label!, style: style, maxLines: 1, overflow: TextOverflow.ellipsis)),
-                ]),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (s.icon != null) Icon(s.icon, size: style.fontSize! * 1.2, color: style.color),
+                    if (s.icon != null && s.label != null) const SizedBox(width: AurumSpace.s4),
+                    if (s.label != null)
+                      Flexible(
+                        child: Text(s.label!, style: style, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// The segmented control's track: an inset fill, or a clear-glass capsule.
+class _Track extends StatelessWidget {
+  const _Track({
+    required this.glass,
+    required this.height,
+    required this.pad,
+    required this.radius,
+    required this.color,
+    required this.focus,
+    required this.child,
+  });
+
+  final bool glass;
+  final double height;
+  final double pad;
+  final double radius;
+  final Color color;
+  final BorderSide focus;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final shape = RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(radius), side: focus);
+    if (!glass) {
+      return Container(
+        height: height,
+        padding: EdgeInsets.all(pad),
+        decoration: ShapeDecoration(color: color, shape: shape),
+        child: child,
+      );
+    }
+    return DecoratedBox(
+      position: DecorationPosition.foreground,
+      decoration: ShapeDecoration(shape: shape),
+      child: SizedBox(
+        height: height,
+        child: AurumGlass(level: AurumMaterialLevel.clear, radius: radius, padding: EdgeInsets.all(pad), child: child),
       ),
     );
   }

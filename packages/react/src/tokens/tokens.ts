@@ -122,8 +122,8 @@ export const press = {"scaleControl":0.97,"scaleCard":0.99} as const;
 export const gesture = {"rubberBandLimit":80,"projectionDeceleration":0.998} as const;
 
 export const material = {
-  blur: {"ultralight":8,"thin":16,"regular":24,"thick":32},
-  saturation: {"ultralight":1.1,"thin":1.1,"regular":1.1,"thick":1},
+  blur: {"clear":12,"ultralight":8,"thin":16,"regular":24,"thick":32},
+  saturation: {"clear":1.6,"ultralight":1.1,"thin":1.1,"regular":1.1,"thick":1},
 } as const;
 export type MaterialLevel = keyof typeof material.blur;
 
