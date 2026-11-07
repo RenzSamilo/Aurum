@@ -1,6 +1,7 @@
 import 'package:aurum_example/brands/sapphire.g.dart';
 import 'package:aurum_example/main.dart';
 import 'package:aurum_example/screens/assistant.dart';
+import 'package:aurum_example/screens/course.dart';
 import 'package:aurum_example/screens/money.dart';
 import 'package:aurum_example/screens/palette_picker.dart';
 import 'package:aurum_example/brands/brands.g.dart';
@@ -63,6 +64,9 @@ void main() {
     'money home': () => const MoneyApp(),
     'money add': () => const MoneyAdd(),
     'money profile': () => const MoneyApp(initialTab: 4),
+    'course detail': () => const CourseDetail(),
+    'course home': () => const CourseHome(),
+    'course schedule': () => const CourseSchedule(),
   };
   for (final size in [const Size(360, 740), const Size(800, 1280)]) {
     for (final b in Brightness.values) {

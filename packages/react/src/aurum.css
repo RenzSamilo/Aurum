@@ -47,7 +47,7 @@ body {
   outline-offset: var(--size-focus-offset);
 }
 
-/* Glass: a translucent material over content. Levels: ultralight, thin, regular, thick.
+/* Glass: a translucent material over content. Levels: clear, ultralight, thin, regular, thick.
    Reduced transparency (system or data-transparency="reduced") turns it solid. */
 .aurum-glass {
   --aurum-glass-tint: var(--material-tint-regular);
@@ -57,6 +57,11 @@ body {
   -webkit-backdrop-filter: blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation));
   backdrop-filter: blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation));
   border: 1px solid var(--color-border-decorative);
+}
+.aurum-glass[data-level='clear'] {
+  --aurum-glass-tint: var(--material-tint-clear);
+  --aurum-glass-blur: var(--material-blur-clear);
+  --aurum-glass-saturation: var(--material-saturation-clear);
 }
 .aurum-glass[data-level='ultralight'] {
   --aurum-glass-tint: var(--material-tint-ultralight);

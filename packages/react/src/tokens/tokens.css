@@ -100,10 +100,12 @@
   --spring-reward-duration: 597ms;
   --press-scale-control: 0.97;
   --press-scale-card: 0.99;
+  --material-blur-clear: 12px;
   --material-blur-ultralight: 8px;
   --material-blur-thin: 16px;
   --material-blur-regular: 24px;
   --material-blur-thick: 32px;
+  --material-saturation-clear: 1.6;
   --material-saturation-ultralight: 1.1;
   --material-saturation-thin: 1.1;
   --material-saturation-regular: 1.1;
@@ -131,10 +133,12 @@
   --color-focus: oklch(0.42 0.06 152);
   --color-scrim: rgb(0 0 0 / 0.32);
   --material-tint-base: oklch(0.99 0.011 88);
+  --material-alpha-clear: 0.22;
   --material-alpha-ultralight: 0.56;
   --material-alpha-thin: 0.68;
   --material-alpha-regular: 0.8;
   --material-alpha-thick: 0.92;
+  --material-tint-clear: oklch(0.99 0.011 88 / 0.22);
   --material-tint-ultralight: oklch(0.99 0.011 88 / 0.56);
   --material-tint-thin: oklch(0.99 0.011 88 / 0.68);
   --material-tint-regular: oklch(0.99 0.011 88 / 0.8);
@@ -163,10 +167,12 @@
     --color-focus: oklch(0.74 0.045 152);
     --color-scrim: rgb(0 0 0 / 0.48);
     --material-tint-base: oklch(0.2 0.022 160);
+    --material-alpha-clear: 0.26;
     --material-alpha-ultralight: 0.64;
     --material-alpha-thin: 0.74;
     --material-alpha-regular: 0.84;
     --material-alpha-thick: 0.94;
+    --material-tint-clear: oklch(0.2 0.022 160 / 0.26);
     --material-tint-ultralight: oklch(0.2 0.022 160 / 0.64);
     --material-tint-thin: oklch(0.2 0.022 160 / 0.74);
     --material-tint-regular: oklch(0.2 0.022 160 / 0.84);
@@ -195,10 +201,12 @@
   --color-focus: oklch(0.74 0.045 152);
   --color-scrim: rgb(0 0 0 / 0.48);
   --material-tint-base: oklch(0.2 0.022 160);
+  --material-alpha-clear: 0.26;
   --material-alpha-ultralight: 0.64;
   --material-alpha-thin: 0.74;
   --material-alpha-regular: 0.84;
   --material-alpha-thick: 0.94;
+  --material-tint-clear: oklch(0.2 0.022 160 / 0.26);
   --material-tint-ultralight: oklch(0.2 0.022 160 / 0.64);
   --material-tint-thin: oklch(0.2 0.022 160 / 0.74);
   --material-tint-regular: oklch(0.2 0.022 160 / 0.84);
@@ -252,10 +260,12 @@
 /* Safari and Firefox ignore this query, so the in-app setting (data-transparency) is required. */
 @media (prefers-reduced-transparency: reduce) {
   :root:not([data-transparency="normal"]) {
+    --material-blur-clear: 0px;
     --material-blur-ultralight: 0px;
     --material-blur-thin: 0px;
     --material-blur-regular: 0px;
     --material-blur-thick: 0px;
+    --material-tint-clear: var(--color-surface-elevated);
     --material-tint-ultralight: var(--color-surface-elevated);
     --material-tint-thin: var(--color-surface-elevated);
     --material-tint-regular: var(--color-surface-elevated);
@@ -264,10 +274,12 @@
 }
 
 :root[data-transparency="reduced"] {
+  --material-blur-clear: 0px;
   --material-blur-ultralight: 0px;
   --material-blur-thin: 0px;
   --material-blur-regular: 0px;
   --material-blur-thick: 0px;
+  --material-tint-clear: var(--color-surface-elevated);
   --material-tint-ultralight: var(--color-surface-elevated);
   --material-tint-thin: var(--color-surface-elevated);
   --material-tint-regular: var(--color-surface-elevated);

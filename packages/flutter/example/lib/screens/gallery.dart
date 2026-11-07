@@ -4,6 +4,7 @@ import 'package:phosphor_glyphs/phosphor_glyphs.dart';
 
 import 'assistant.dart';
 import 'common.dart';
+import 'course.dart';
 import 'money.dart';
 
 /// Sample screens built only from Aurum parts, to test the template on real
@@ -14,7 +15,7 @@ class SampleScreensSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) => AurumListSection(
     header: 'Sample screens',
-    footer: 'Two small apps built only from Aurum parts.',
+    footer: 'Three small apps built only from Aurum parts. The course app tests glass; it looks best in Amethyst.',
     children: [
       AurumListRow(
         leading: PhosphorIconsRegular.leaf,
@@ -45,6 +46,21 @@ class SampleScreensSection extends StatelessWidget {
         leading: PhosphorIconsRegular.user,
         title: 'Money: profile',
         onPressed: () => openPage(context, const MoneyApp(initialTab: 4)),
+      ),
+      AurumListRow(
+        leading: PhosphorIconsRegular.playCircle,
+        title: 'Course: detail',
+        onPressed: () => openPage(context, const CourseDetail()),
+      ),
+      AurumListRow(
+        leading: PhosphorIconsRegular.house,
+        title: 'Course: my courses',
+        onPressed: () => openPage(context, const CourseHome()),
+      ),
+      AurumListRow(
+        leading: PhosphorIconsRegular.calendarBlank,
+        title: 'Course: schedule',
+        onPressed: () => openPage(context, const CourseSchedule()),
       ),
     ],
   );

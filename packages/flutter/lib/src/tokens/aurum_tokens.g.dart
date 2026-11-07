@@ -138,10 +138,12 @@ abstract final class AurumMotion {
 }
 
 abstract final class AurumMaterial {
+  static const double blurClear = 12.0;
   static const double blurUltralight = 8.0;
   static const double blurThin = 16.0;
   static const double blurRegular = 24.0;
   static const double blurThick = 32.0;
+  static const double saturationClear = 1.6;
   static const double saturationUltralight = 1.1;
   static const double saturationThin = 1.1;
   static const double saturationRegular = 1.1;
@@ -200,6 +202,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
     required this.focus,
     required this.scrim,
     required this.materialTintBase,
+    required this.materialAlphaClear,
     required this.materialAlphaUltralight,
     required this.materialAlphaThin,
     required this.materialAlphaRegular,
@@ -226,6 +229,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
   final Color focus;
   final Color scrim;
   final Color materialTintBase;
+  final double materialAlphaClear;
   final double materialAlphaUltralight;
   final double materialAlphaThin;
   final double materialAlphaRegular;
@@ -253,6 +257,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
     Color? focus,
     Color? scrim,
     Color? materialTintBase,
+    double? materialAlphaClear,
     double? materialAlphaUltralight,
     double? materialAlphaThin,
     double? materialAlphaRegular,
@@ -279,6 +284,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
       focus: focus ?? this.focus,
       scrim: scrim ?? this.scrim,
       materialTintBase: materialTintBase ?? this.materialTintBase,
+      materialAlphaClear: materialAlphaClear ?? this.materialAlphaClear,
       materialAlphaUltralight: materialAlphaUltralight ?? this.materialAlphaUltralight,
       materialAlphaThin: materialAlphaThin ?? this.materialAlphaThin,
       materialAlphaRegular: materialAlphaRegular ?? this.materialAlphaRegular,
@@ -310,6 +316,7 @@ class AurumColors extends ThemeExtension<AurumColors> {
       focus: Color.lerp(focus, other.focus, t)!,
       scrim: Color.lerp(scrim, other.scrim, t)!,
       materialTintBase: Color.lerp(materialTintBase, other.materialTintBase, t)!,
+      materialAlphaClear: lerpDouble(materialAlphaClear, other.materialAlphaClear, t)!,
       materialAlphaUltralight: lerpDouble(materialAlphaUltralight, other.materialAlphaUltralight, t)!,
       materialAlphaThin: lerpDouble(materialAlphaThin, other.materialAlphaThin, t)!,
       materialAlphaRegular: lerpDouble(materialAlphaRegular, other.materialAlphaRegular, t)!,
@@ -340,11 +347,12 @@ class AurumColors extends ThemeExtension<AurumColors> {
       other.focus == focus &&
       other.scrim == scrim &&
       other.materialTintBase == materialTintBase &&
+      other.materialAlphaClear == materialAlphaClear &&
       other.materialAlphaUltralight == materialAlphaUltralight &&
       other.materialAlphaThin == materialAlphaThin &&
       other.materialAlphaRegular == materialAlphaRegular &&
       other.materialAlphaThick == materialAlphaThick;
 
   @override
-  int get hashCode => Object.hashAll([surfaceCanvas, surfaceCard, surfaceInset, surfaceElevated, textPrimary, textSecondary, textTertiary, borderDecorative, borderControl, accent, accentSecondary, onAccent, danger, warning, success, fillHover, fillPressed, focus, scrim, materialTintBase, materialAlphaUltralight, materialAlphaThin, materialAlphaRegular, materialAlphaThick]);
+  int get hashCode => Object.hashAll([surfaceCanvas, surfaceCard, surfaceInset, surfaceElevated, textPrimary, textSecondary, textTertiary, borderDecorative, borderControl, accent, accentSecondary, onAccent, danger, warning, success, fillHover, fillPressed, focus, scrim, materialTintBase, materialAlphaClear, materialAlphaUltralight, materialAlphaThin, materialAlphaRegular, materialAlphaThick]);
 }

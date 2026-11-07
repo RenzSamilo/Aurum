@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../foundations/aurum_glass.dart';
 import '../foundations/aurum_haptics.dart';
 import '../theme/aurum_theme.dart';
 import '../tokens/aurum_tokens.g.dart';
 import 'aurum_pressable.dart';
 
 /// filled: the one main action. tinted / gray: secondary. plain: text only.
-enum AurumButtonVariant { filled, tinted, gray, plain }
+/// glass: a clear-glass control that floats over imagery, video or a busy
+/// background, e.g. back, bookmark or playback speed. Use it on content, not
+/// inside cards.
+enum AurumButtonVariant { filled, tinted, gray, plain, glass }
 
 /// sm is 32 tall (48 hit area), md 48, lg 64.
 enum AurumButtonSize { sm, md, lg }
@@ -77,7 +81,9 @@ class _AurumButtonState extends State<AurumButton> {
       AurumButtonVariant.tinted => (tone.withValues(alpha: 0.14), tone),
       AurumButtonVariant.gray => (c.surfaceInset, tone),
       AurumButtonVariant.plain => (const Color(0x00000000), tone),
+      AurumButtonVariant.glass => (const Color(0x00000000), widget.destructive ? c.danger : c.textPrimary),
     };
+    final glass = widget.variant == AurumButtonVariant.glass;
     final height = switch (widget.size) {
       AurumButtonSize.sm => 32.0,
       AurumButtonSize.md => AurumSize.target,
@@ -91,7 +97,10 @@ class _AurumButtonState extends State<AurumButton> {
     };
     var text = context.aurumText(widget.size == AurumButtonSize.sm ? AurumType.subhead : AurumType.headline, color: fg);
     if (widget.size == AurumButtonSize.sm) {
-      text = text.copyWith(fontWeight: FontWeight.w600, fontVariations: [const FontVariation('wght', 600), FontVariation('opsz', text.fontSize!)]);
+      text = text.copyWith(
+        fontWeight: FontWeight.w600,
+        fontVariations: [const FontVariation('wght', 600), FontVariation('opsz', text.fontSize!)],
+      );
     }
     final overlay = _pressed ? 0.12 : (_hovered ? 0.06 : 0.0);
     final iconOnly = widget.label == null;
@@ -102,20 +111,36 @@ class _AurumButtonState extends State<AurumButton> {
       children: [
         if (widget.icon != null) Icon(widget.icon, size: text.fontSize! * 1.25, color: fg),
         if (widget.icon != null && !iconOnly) const SizedBox(width: AurumSpace.s8),
-        if (!iconOnly) Flexible(child: Text(widget.label!, style: text, maxLines: 1, overflow: TextOverflow.ellipsis)),
+        if (!iconOnly)
+          Flexible(
+            child: Text(widget.label!, style: text, maxLines: 1, overflow: TextOverflow.ellipsis),
+          ),
       ],
     );
 
     final shape = RoundedSuperellipseBorder(
       borderRadius: BorderRadius.circular(radius),
-      side: _focused ? BorderSide(color: c.focus, width: AurumSize.focusWidth, strokeAlign: BorderSide.strokeAlignOutside) : BorderSide.none,
+      side: _focused
+          ? BorderSide(color: c.focus, width: AurumSize.focusWidth, strokeAlign: BorderSide.strokeAlignOutside)
+          : BorderSide.none,
     );
     Widget body = Container(
       constraints: BoxConstraints(minHeight: height, minWidth: iconOnly ? height : 0),
       padding: EdgeInsets.symmetric(horizontal: iconOnly ? 0 : hPad),
-      decoration: ShapeDecoration(shape: shape, color: Color.alphaBlend(fg.withValues(alpha: overlay), bg)),
+      decoration: ShapeDecoration(
+        shape: shape,
+        color: Color.alphaBlend(fg.withValues(alpha: overlay), bg),
+      ),
       child: Center(widthFactor: widget.fullWidth ? null : 1, heightFactor: 1, child: content),
     );
+    if (glass) {
+      // The glass clips its child, so the focus ring goes outside it.
+      body = DecoratedBox(
+        position: DecorationPosition.foreground,
+        decoration: ShapeDecoration(shape: shape),
+        child: AurumGlass(level: AurumMaterialLevel.clear, radius: radius, lifted: true, child: body),
+      );
+    }
     if (widget.size == AurumButtonSize.sm) {
       // Keep a 48 hit area (Android's minimum; iOS asks for 44) around the 32 visual.
       body = Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: body);
