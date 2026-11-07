@@ -1,5 +1,6 @@
 import 'package:aurum_ui/aurum_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:phosphor_glyphs/phosphor_glyphs.dart';
 
@@ -71,6 +72,19 @@ void main() {
     await tester.pump();
     expect(selected, 1);
     expect(tester.getSemantics(find.bySemanticsLabel('Map')), isSemantics(isButton: true, isSelected: true));
+    // Keyboard focus is visible, separate from selection.
+    FocusManager.instance.highlightStrategy = FocusHighlightStrategy.alwaysTraditional;
+    await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+    await tester.pump();
+    final rings = tester
+        .widgetList<DecoratedBox>(find.descendant(of: find.byType(AurumTabBar), matching: find.byType(DecoratedBox)))
+        .map((b) => b.decoration)
+        .whereType<ShapeDecoration>()
+        .map((d) => d.shape)
+        .whereType<RoundedSuperellipseBorder>()
+        .where((shape) => shape.side.width == AurumSize.focusWidth);
+    expect(rings, hasLength(1));
+    FocusManager.instance.highlightStrategy = FocusHighlightStrategy.automatic;
     await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
     await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
     handle.dispose();

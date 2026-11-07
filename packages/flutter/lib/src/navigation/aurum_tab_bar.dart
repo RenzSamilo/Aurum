@@ -66,7 +66,7 @@ class AurumTabBar extends StatelessWidget {
   }
 }
 
-class _TabButton extends StatelessWidget {
+class _TabButton extends StatefulWidget {
   const _TabButton({
     required this.tab,
     required this.selected,
@@ -84,7 +84,15 @@ class _TabButton extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<_TabButton> createState() => _TabButtonState();
+}
+
+class _TabButtonState extends State<_TabButton> {
+  bool _focused = false;
+
+  @override
   Widget build(BuildContext context) {
+    final _TabButton(:tab, :selected, :index, :count, :colors, :onTap) = widget;
     final color = selected ? colors.accent : colors.textSecondary;
     final label = context
         .aurumText(AurumType.micro, color: color)
@@ -102,33 +110,44 @@ class _TabButton extends StatelessWidget {
       excludeSemantics: true,
       child: FocusableActionDetector(
         mouseCursor: SystemMouseCursors.click,
+        onShowFocusHighlight: (v) => setState(() => _focused = v),
         actions: {ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: (_) => onTap())},
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: onTap,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 56),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: AurumSpace.s8),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: AurumSize.iconMd,
-                    child: Center(
-                      child:
-                          tab.child ??
-                          Icon(
-                            selected ? (tab.selectedIcon ?? tab.icon) : tab.icon,
-                            size: AurumSize.iconMd,
-                            color: color,
-                          ),
+          // Focus ring, separate from selection, so keyboard users see where Enter goes.
+          child: DecoratedBox(
+            position: DecorationPosition.foreground,
+            decoration: ShapeDecoration(
+              shape: RoundedSuperellipseBorder(
+                borderRadius: BorderRadius.circular(context.aurumRadii.sm),
+                side: _focused ? BorderSide(color: colors.focus, width: AurumSize.focusWidth) : BorderSide.none,
+              ),
+            ),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 56),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: AurumSpace.s8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: AurumSize.iconMd,
+                      child: Center(
+                        child:
+                            tab.child ??
+                            Icon(
+                              selected ? (tab.selectedIcon ?? tab.icon) : tab.icon,
+                              size: AurumSize.iconMd,
+                              color: color,
+                            ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: AurumSpace.s2),
-                  Text(tab.label, style: label, maxLines: 1, overflow: TextOverflow.ellipsis),
-                ],
+                    const SizedBox(height: AurumSpace.s2),
+                    Text(tab.label, style: label, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  ],
+                ),
               ),
             ),
           ),
