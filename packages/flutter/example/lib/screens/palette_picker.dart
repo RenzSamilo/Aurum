@@ -39,7 +39,7 @@ class PalettePicker extends StatelessWidget {
   }
 }
 
-class _Chip extends StatelessWidget {
+class _Chip extends StatefulWidget {
   const _Chip({required this.brand, required this.selected, required this.onTap});
 
   final AurumBrand brand;
@@ -47,7 +47,17 @@ class _Chip extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
+  State<_Chip> createState() => _ChipState();
+}
+
+class _ChipState extends State<_Chip> {
+  bool _focused = false;
+
+  @override
   Widget build(BuildContext context) {
+    final brand = widget.brand;
+    final selected = widget.selected;
+    final onTap = widget.onTap;
     final c = context.aurum;
     final own = brand.colors(Theme.of(context).brightness);
     Widget dot(Color color) => Container(
@@ -65,36 +75,43 @@ class _Chip extends StatelessWidget {
       label: '${paletteName(brand)} palette',
       excludeSemantics: true,
       onTap: onTap,
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: AurumMotion.feedback,
-          curve: AurumMotion.easeStandard,
-          height: AurumSize.target,
-          padding: const EdgeInsetsDirectional.only(start: AurumSpace.s8, end: AurumSpace.s16),
-          decoration: ShapeDecoration(
-            color: selected ? Color.alphaBlend(c.accent.withValues(alpha: 0.12), c.surfaceCard) : c.surfaceCard,
-            shape: StadiumBorder(
-              side: BorderSide(color: selected ? c.accent : c.borderDecorative, width: selected ? 2 : 1),
-            ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: 30,
-                height: 18,
-                child: Stack(
-                  children: [
-                    dot(own.surfaceCanvas),
-                    Positioned(left: 6, child: dot(own.accentSecondary)),
-                    Positioned(left: 12, child: dot(own.accent)),
-                  ],
-                ),
+      child: FocusableActionDetector(
+        mouseCursor: SystemMouseCursors.click,
+        onShowFocusHighlight: (v) => setState(() => _focused = v),
+        actions: {ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: (_) => onTap())},
+        child: GestureDetector(
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: AurumMotion.feedback,
+            curve: AurumMotion.easeStandard,
+            height: AurumSize.target,
+            padding: const EdgeInsetsDirectional.only(start: AurumSpace.s8, end: AurumSpace.s16),
+            decoration: ShapeDecoration(
+              color: selected ? Color.alphaBlend(c.accent.withValues(alpha: 0.12), c.surfaceCard) : c.surfaceCard,
+              shape: StadiumBorder(
+                side: _focused
+                    ? BorderSide(color: c.focus, width: AurumSize.focusWidth)
+                    : BorderSide(color: selected ? c.accent : c.borderDecorative, width: selected ? 2 : 1),
               ),
-              const SizedBox(width: AurumSpace.s8),
-              Text(paletteName(brand), style: context.aurumText(AurumType.subhead)),
-            ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: 30,
+                  height: 18,
+                  child: Stack(
+                    children: [
+                      dot(own.surfaceCanvas),
+                      Positioned(left: 6, child: dot(own.accentSecondary)),
+                      Positioned(left: 12, child: dot(own.accent)),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: AurumSpace.s8),
+                Text(paletteName(brand), style: context.aurumText(AurumType.subhead)),
+              ],
+            ),
           ),
         ),
       ),

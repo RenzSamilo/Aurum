@@ -2,6 +2,9 @@ import 'package:aurum_example/brands/sapphire.g.dart';
 import 'package:aurum_example/main.dart';
 import 'package:aurum_example/screens/assistant.dart';
 import 'package:aurum_example/screens/money.dart';
+import 'package:aurum_example/screens/palette_picker.dart';
+import 'package:aurum_example/brands/brands.g.dart';
+import 'package:flutter/services.dart';
 import 'package:aurum_ui/aurum_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,6 +27,24 @@ void main() {
     await tester.pumpAndSettle();
     final colors = Theme.of(tester.element(find.text('Sapphire'))).extension<AurumColors>()!;
     expect(colors.accent, isIn([sapphireBrand.light.accent, sapphireBrand.dark.accent]));
+  });
+
+  testWidgets('palette chips work from the keyboard', (tester) async {
+    AurumBrand? picked;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: aurumTheme(Brightness.light),
+        home: Scaffold(
+          body: PalettePicker(brands: exampleBrands, selected: exampleBrands.first, onSelected: (b) => picked = b),
+        ),
+      ),
+    );
+    await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+    await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+    await tester.pump();
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pump();
+    expect(picked?.name, exampleBrands[1].name);
   });
 
   testWidgets('preview opens a sample screen', (tester) async {
