@@ -1,6 +1,7 @@
 {
   "$schema": "../../../tools/tokens/brand.schema.json",
   "name": "Cognac",
+  "spec": { "mood": "Warm amber-brown leather with a steel-blue secondary. Rich, crafted, inviting.", "bestFor": ["Food and nutrition", "Commerce and shopping", "Travel"], "avoid": "Dense data screens: the warm accent tires the eye at scale." },
   "accent": { "hue": 57, "chroma": 0.13, "lightnessLight": 0.5, "lightnessDark": 0.78, "chromaDark": 0.1 },
   "secondary": { "hue": 204, "chroma": 0.06 },
   "neutral": { "hue": 60, "warmHue": 82, "chroma": 2.2 },

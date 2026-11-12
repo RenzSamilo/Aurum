@@ -26,7 +26,7 @@ import StyleDictionary from 'style-dictionary';
 import { brandTokens, loadBrand } from './brand.mjs';
 import { dartColor, withAlpha } from './color.mjs';
 import { deriveSpring } from './spring.mjs';
-import { validateContrast } from './validate.mjs';
+import { contrastReport, validateContrast } from './validate.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const { values: args } = parseArgs({
@@ -34,10 +34,12 @@ const { values: args } = parseArgs({
     brand: { type: 'string' },
     css: { type: 'string' },
     dart: { type: 'string' },
+    // Writes a JSON receipt: key colours and the worst contrast pair per rule, per mode.
+    report: { type: 'string' },
   },
 });
 const appBuild = Boolean(args.brand);
-if (appBuild && !args.css && !args.dart) throw new Error('--brand needs --css and/or --dart to say where to write.');
+if (appBuild && !args.css && !args.dart && !args.report) throw new Error('--brand needs --css, --dart and/or --report to say where to write.');
 
 const brandPath = resolve(args.brand ?? join(root, 'tokens/brand/aurum.json'));
 const brand = await loadBrand(brandPath);
@@ -496,6 +498,16 @@ const AurumBrand ${brandIdent} = AurumBrand(
 async function write(file, content) {
   await mkdir(dirname(file), { recursive: true });
   await writeFile(file, content);
+}
+
+if (args.report) {
+  const KEY = ['color-accent', 'color-accent-secondary', 'color-on-accent', 'color-surface-canvas', 'color-surface-card', 'color-text-primary', 'color-text-secondary'];
+  const report = {
+    name: brand.name,
+    modes: Object.fromEntries(Object.keys(MODES).map((m) => [m, { colors: Object.fromEntries(KEY.map((k) => [k, sem[m][k]])) }])),
+  };
+  for (const [m, checks] of Object.entries(contrastReport(sem))) report.modes[m].checks = checks;
+  await write(resolve(args.report), `${JSON.stringify(report, null, 2)}\n`);
 }
 
 if (appBuild) {

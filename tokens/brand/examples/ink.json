@@ -1,6 +1,7 @@
 {
   "$schema": "../../../tools/tokens/brand.schema.json",
   "name": "Ink",
+  "spec": { "mood": "Near-black indigo on paper with a gold secondary. Editorial and restrained.", "bestFor": ["Writing and notes", "Productivity", "Portfolios and marketing sites"], "avoid": "Playful or kids apps." },
   "accent": { "hue": 258, "chroma": 0.05, "lightnessLight": 0.36, "lightnessDark": 0.78, "chromaDark": 0.04 },
   "secondary": { "hue": 86, "chroma": 0.08 },
   "neutral": { "hue": 258, "warmHue": 87, "chroma": 1.2 },

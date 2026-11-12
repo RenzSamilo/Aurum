@@ -1,6 +1,7 @@
 {
   "$schema": "../../../tools/tokens/brand.schema.json",
   "name": "Ember",
+  "spec": { "mood": "Warm orange on lightly tinted neutrals. Energetic and friendly.", "bestFor": ["Fitness and sport", "Food", "Social"], "avoid": "Calm or serious tools (finance, health records)." },
   "accent": { "hue": 35, "chroma": 0.14 },
   "neutral": { "hue": 50, "warmHue": 60, "chroma": 0.6 },
   "radius": { "scale": 0.75 }

@@ -8,6 +8,16 @@
   "properties": {
     "$schema": { "type": "string" },
     "name": { "type": "string", "description": "Used for generated Dart identifiers. Letters, digits and spaces." },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The palette's spec card in tokens/brand/PALETTES.md: what it feels like and where it fits. Has no effect on tokens.",
+      "properties": {
+        "mood": { "type": "string" },
+        "bestFor": { "type": "array", "items": { "type": "string" } },
+        "avoid": { "type": "string" }
+      }
+    },
     "accent": {
       "type": "object",
       "additionalProperties": false,

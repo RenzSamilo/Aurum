@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="184" viewBox="0 0 360 184" role="img" aria-label="Cognac palette in light and dark">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FDF8EF"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FFFBF4"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#26170A">Cognac</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#654D3A">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#984B00"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FFFBF4">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#356D73"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#130B06"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#1E140C"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F6F1E8">Cognac</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#C7B3A4">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#E8A777"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#150700">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#96D0D6"/>
+  </g>
+</svg>

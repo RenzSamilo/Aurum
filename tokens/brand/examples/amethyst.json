@@ -1,6 +1,7 @@
 {
   "$schema": "../../../tools/tokens/brand.schema.json",
   "name": "Amethyst",
+  "spec": { "mood": "Deep violet on lilac-tinted paper with a soft gold accent. Thoughtful and a little luxurious.", "bestFor": ["Learning and courses", "Journaling and wellbeing", "AI assistant apps"], "avoid": "Finance dashboards, where violet can read as unserious." },
   "accent": { "hue": 311, "chroma": 0.1, "lightnessLight": 0.42, "lightnessDark": 0.78, "chromaDark": 0.07 },
   "secondary": { "hue": 87, "chroma": 0.07 },
   "neutral": { "hue": 311, "warmHue": 311, "chroma": 1.6 },
