@@ -7,7 +7,7 @@
 // contract says what the other side does.
 
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 
 const SIDES = ['react', 'flutter'];
 // Plumbing every component has; not part of the design contract.
@@ -42,6 +42,53 @@ const stripComments = (src) => src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s
 const literalUnion = (t) => (/^'[^']*'(\s*\|\s*'[^']*')*$/.test(t) ? [...t.matchAll(/'([^']*)'/g)].map((m) => m[1]) : null);
 
 // --- React -------------------------------------------------------------------
+// Option values of a named TS type: a string-literal union, or `keyof typeof obj.key`
+// (how the generated tokens name material levels). Follows relative imports.
+// `'a' | 'b'`, `Alias`, or a mix like `Alias | 'c'`. Null if any part can't be read.
+function resolveUnion(file, type) {
+  const parts = type.split('|').map((t) => t.trim());
+  const out = [];
+  for (const part of parts) {
+    const lit = literalUnion(part);
+    const vals = lit ?? (/^\w+$/.test(part) ? resolveTsType(file, part) : null);
+    if (!vals) return null;
+    out.push(...vals);
+  }
+  return out;
+}
+
+export function resolveTsType(file, name, depth = 0) {
+  if (depth > 3 || !existsSync(file)) return null;
+  const src = stripComments(readFileSync(file, 'utf8'));
+  const alias = new RegExp(`export\\s+type\\s+${name}\\s*=\\s*([^;]+);`).exec(src);
+  if (alias) {
+    const t = alias[1].trim();
+    const union = literalUnion(t) ?? (t.includes('|') ? resolveUnion(file, t) : null);
+    if (union) return union;
+    const keyOf = /^keyof\s+typeof\s+(\w+)\.(\w+)$/.exec(t);
+    if (keyOf) {
+      const obj = new RegExp(`export\\s+const\\s+${keyOf[1]}\\s*=\\s*\\{`).exec(src);
+      if (!obj) return null;
+      const body = matchBlock(src, obj.index + obj[0].length - 1);
+      const member = new RegExp(`(?:^|[\\s,{])"?${keyOf[2]}"?\\s*:\\s*\\{`).exec(body);
+      if (!member) return null;
+      const inner = matchBlock(body, member.index + member[0].length - 1);
+      return splitTop(inner).map((kv) => /^"?(\w+)"?\s*:/.exec(kv)?.[1]).filter(Boolean);
+    }
+    return null;
+  }
+  for (const m of src.matchAll(/import\s+(?:type\s+)?\{([^}]*)\}\s+from\s+['"](\.[^'"]+)['"]/g)) {
+    const names = m[1].split(',').map((n) => n.replace(/^\s*type\s+/, '').trim().split(/\s+as\s+/));
+    const hit = names.find(([orig, local]) => (local ?? orig) === name);
+    if (!hit) continue;
+    const base = join(dirname(file), m[2]);
+    for (const ext of ['', '.ts', '.tsx', '/index.ts']) {
+      if (existsSync(base + ext) && !base.endsWith('/') && (ext || /\.tsx?$/.test(base))) return resolveTsType(base + ext, hit[0], depth + 1);
+    }
+  }
+  return null;
+}
+
 export function readReactProps(file, iface) {
   const src = stripComments(readFileSync(file, 'utf8'));
   const head = new RegExp(`export\\s+interface\\s+${iface}\\b[^{]*\\{`).exec(src);
@@ -55,8 +102,7 @@ export function readReactProps(file, iface) {
       if (m) {
         const name = m[1].replace(/'/g, '');
         const type = m[2].trim();
-        const alias = /^\w+$/.test(type) ? new RegExp(`export\\s+type\\s+${type}\\s*=\\s*([^;]+);`).exec(src) : null;
-        props.set(name, { type, values: literalUnion(type) ?? (alias ? literalUnion(alias[1].trim()) : null) });
+        props.set(name, { type, values: resolveUnion(file, type) });
       }
     }
     depth += (line.match(/[{(]/g) ?? []).length - (line.match(/[})]/g) ?? []).length;
@@ -142,6 +188,9 @@ export function checkContracts(root, components, fail) {
         if (!real) {
           fail(`${where}: "${p.name}" expects ${side} prop "${sideName}", which ${side === 'react' ? k.react.props : k.flutter.symbol} doesn't have`);
           continue;
+        }
+        if (p.values && !real.values && !p.unchecked?.[side]) {
+          fail(`${where}: "${p.name}" lists values, but ${side} type "${real.type}" has none that can be read. Use a string union or enum, or add "unchecked": { "${side}": "<why>" }.`);
         }
         if (p.values && real.values) {
           const want = p.values.filter((v) => !(p.missing?.[side] ?? []).includes(v));
