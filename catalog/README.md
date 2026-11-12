@@ -69,3 +69,14 @@ Every component built for both platforms has a contract in [contracts/](contract
 { "name": "variant", "values": ["filled", "tinted", "gray", "plain", "glass"],
   "missing": { "react": ["glass"] }, "todo": "Build the glass variant for web." }
 ```
+
+## Borrowing from Astryx
+
+[Astryx](https://github.com/meta/astryx) is Meta's open-source design system (MIT license). We borrow the hard, well-tested parts, usually keyboard and screen-reader behaviour, and keep Aurum's look.
+
+1. **Copy** the file into `packages/react/src/vendor/astryx/`, unchanged except import paths. Keep Meta's copyright line, and add a row to that folder's README (file, source path, commit, changes).
+2. **Build the Aurum component** on top of it, with Aurum tokens and styles. Add the Flutter version too (written for Flutter, since Astryx is web-only).
+3. **Catalog it** with `"origin": { "source": "astryx", "files": [...] }`. CATALOG.md then shows "Borrowed from astryx".
+4. **Open a PR.** Renz restyles or approves it, and merging it is the approval. Nothing borrowed joins the library without a merged PR.
+
+`pnpm catalog:check` fails if a borrowed file loses its copyright line, isn't in the vendor README, or isn't claimed by a component. Borrow only what we'll restyle: Astryx's own look (StyleX styles, its themes, its icons) stays out.

@@ -13,6 +13,7 @@
 //      core uses neither. A kit never imports another kit.
 //   4. Rule of two: a pattern or kit component needs two apps in `usedBy`.
 //   5. Tags and kits must be listed in catalog/kits.json.
+//   7. Borrowed code (vendor/<source>/) keeps its license and copyright, and is tracked.
 //   6. Contracts: every component built for both platforms has catalog/contracts/<name>.json,
 //      and its React props and Flutter params match it (see contracts.mjs).
 
@@ -112,6 +113,42 @@ function definesAnywhere(file, sym) {
   return new RegExp(`(function|const|let|class)\\s+${sym}\\b`).test(src);
 }
 
+// --- 7. borrowed code keeps its license ------------------------------------------
+// Code copied from another open-source system lives in a vendor/<source>/ folder with
+// that project's LICENSE and a README table, keeps its copyright line, and is named by
+// the component that uses it (`origin`). See catalog/README.md, "Borrowing from Astryx".
+const SOURCES = {
+  astryx: { dir: 'packages/react/src/vendor/astryx', copyright: /^\/\/ Copyright \(c\) Meta Platforms, Inc\. and affiliates\./ },
+};
+const borrowed = new Map();
+for (const c of components) {
+  if (!c.origin) continue;
+  const where = `components.json "${c.name}"`;
+  const src = SOURCES[c.origin.source];
+  if (!src) {
+    fail(`${where}: unknown origin source "${c.origin.source}" (known: ${Object.keys(SOURCES).join(', ')})`);
+    continue;
+  }
+  if (!c.origin.files?.length) fail(`${where}: origin needs the borrowed "files"`);
+  for (const f of c.origin.files ?? []) {
+    if (!f.startsWith(`${src.dir}/`)) fail(`${where}: borrowed file ${f} must live in ${src.dir}/`);
+    else if (!existsSync(join(root, f))) fail(`${where}: borrowed file ${f} does not exist`);
+    else borrowed.set(f, c.name);
+  }
+}
+for (const [name, src] of Object.entries(SOURCES)) {
+  const dir = join(root, src.dir);
+  if (!existsSync(dir)) continue;
+  if (!existsSync(join(dir, 'LICENSE'))) fail(`${src.dir}: missing ${name}'s LICENSE`);
+  const readme = existsSync(join(dir, 'README.md')) ? readFileSync(join(dir, 'README.md'), 'utf8') : '';
+  for (const f of readdirSync(dir).filter((f) => /\.(tsx?|dart)$/.test(f))) {
+    const rel = `${src.dir}/${f}`;
+    if (!src.copyright.test(readFileSync(join(dir, f), 'utf8'))) fail(`${rel}: lost its original copyright line`);
+    if (!readme.includes(`\`${f}\``)) fail(`${rel}: not listed in ${src.dir}/README.md`);
+    if (!borrowed.has(rel)) fail(`${rel}: no component lists it under "origin.files"`);
+  }
+}
+
 // --- candidates ---------------------------------------------------------------
 for (const c of candidates) {
   const where = `candidate "${c.name}"`;
@@ -167,7 +204,8 @@ if (errors.length) {
 
 // --- write CATALOG.md ----------------------------------------------------------
 const yes = (impl) => (impl ? '✓' : '—');
-const row = (c) => `| ${c.name} | ${yes(c.react)} | ${yes(c.flutter)} | ${c.tags.join(', ')} | ${c.notes ?? ''} |`;
+const notes = (c) => [c.notes, c.origin && `Borrowed from ${c.origin.source}: ${c.origin.notes ?? c.origin.files.join(', ')}`].filter(Boolean).join(' ');
+const row = (c) => `| ${c.name} | ${yes(c.react)} | ${yes(c.flutter)} | ${c.tags.join(', ')} | ${notes(c)} |`;
 const head = '| Component | React | Flutter | Tags | Notes |\n| --- | :-: | :-: | --- | --- |';
 const byGroup = (list, groups) =>
   groups

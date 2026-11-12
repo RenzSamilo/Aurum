@@ -1,5 +1,5 @@
-import { type AurumPreferences, Button, Card, Glass, ListRow, ListSection, Sheet, SegmentedControl, Switch, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
-import { Bell, Gear, Globe, House, Lock, MagnifyingGlass, Moon, Plus, Sun, Trash, WifiHigh } from '@phosphor-icons/react';
+import { type AurumPreferences, Button, Card, Glass, ListRow, ListSection, Menu, Sheet, SegmentedControl, Switch, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
+import { Archive, Bell, CopySimple, DotsThree, Gear, Globe, House, Lock, MagnifyingGlass, Moon, PencilSimple, Plus, Sun, Trash, WifiHigh } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
 const colorGroups: Record<string, string[]> = {
@@ -221,6 +221,28 @@ function Controls() {
               { value: 'grid', label: 'Grid' },
             ]}
           />
+          <h3 className="aurum-type-headline">Menu</h3>
+          <p className="aurum-type-footnote">Arrow keys move, letters jump (type-to-select borrowed from Astryx), Escape closes.</p>
+          <div className="control-row">
+            <Menu
+              trigger="Sort"
+              items={[
+                { label: 'Name', onSelect: () => {} },
+                { label: 'Date added', onSelect: () => {} },
+                { label: 'Size', onSelect: () => {} },
+              ]}
+            />
+            <Menu
+              trigger={<DotsThree weight="bold" />}
+              aria-label="More actions"
+              items={[
+                { label: 'Rename', icon: <PencilSimple />, onSelect: () => {} },
+                { label: 'Duplicate', icon: <CopySimple />, onSelect: () => {} },
+                { label: 'Archive', icon: <Archive />, onSelect: () => {}, disabled: true },
+                { label: 'Delete', icon: <Trash />, onSelect: () => {}, destructive: true },
+              ]}
+            />
+          </div>
         </div>
       </div>
     </Section>

@@ -5,6 +5,7 @@
 library;
 
 export 'src/core/controls/aurum_button.dart';
+export 'src/core/controls/aurum_menu.dart';
 export 'src/core/controls/aurum_pressable.dart';
 export 'src/core/controls/aurum_segmented_control.dart';
 export 'src/core/controls/aurum_switch.dart';

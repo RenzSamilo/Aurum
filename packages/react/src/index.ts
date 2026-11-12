@@ -25,3 +25,4 @@ export {
   Sheet,
   type SheetProps,
 } from './core/surfaces';
+export { Menu, type MenuItem, type MenuProps } from './core/menu';
