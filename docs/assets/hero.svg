@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="Aurum design system: nine palettes in light and dark">
+  <rect width="1280" height="640" fill="#FCF8EF"/>
+  <rect x="24" y="24" width="1232" height="592" rx="40" fill="#FFFCF4"/>
+  <text x="64" y="270" font-family="Georgia, 'Times New Roman', serif" font-size="96" fill="#0B1F15">Aurum</text>
+  <text x="66" y="324" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="26" fill="#3D5A4A">A calm, tactile design system.</text>
+  <text x="66" y="362" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="26" fill="#3D5A4A">One token file, React and Flutter.</text>
+  <rect x="64" y="404" width="236" height="56" rx="28" fill="#33573D"/>
+  <text x="182" y="439" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="600" fill="#FFFCF4">9 palettes</text>
+  <svg x="532" y="136.4" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FCF8EF"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FFFCF4"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#0B1F15">Aurum</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#3D5A4A">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#33573D"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FFFCF4">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#7B5F1B"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#07100B"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#0D1913"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F5F1E8">Aurum</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#A7BEB1">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#96B39D"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#000F07">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#DFC07F"/>
+  </g>
+</svg>
+  <svg x="766" y="136.4" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FBF7FE"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FDFAFF"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#1E1723">Amethyst</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#584E60">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#5E3B75"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FDFAFF">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#746131"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#0F0C11"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#18141B"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F4F0F7">Amethyst</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#BCB4C2">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#C6ABD9"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#0E0813">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#D8C290"/>
+  </g>
+</svg>
+  <svg x="1000" y="136.4" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FFF6F3"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FFFAF7"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#261518">Burgundy</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#654A4E">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#702337"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FFFAF7">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#825652"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#130B0C"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#1D1314"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F9F0EC">Burgundy</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#C7B1B4">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#D99FA8"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#150609">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#E9B6B1"/>
+  </g>
+</svg>
+  <svg x="532" y="264.79999999999995" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FDF8EF"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FFFBF4"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#26170A">Cognac</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#654D3A">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#984B00"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FFFBF4">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#356D73"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#130B06"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#1E140C"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F6F1E8">Cognac</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#C7B3A4">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#E8A777"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#150700">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#96D0D6"/>
+  </g>
+</svg>
+  <svg x="766" y="264.79999999999995" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FBF8F6"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FDFBFA"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#1E1917">Ember</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#58514D">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#9D381F"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FDFBFA">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#7B5F1B"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#0F0D0B"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#181514"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F4F1EF">Ember</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#BCB6B3">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#FF987C"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#0E0A08">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#DFC07F"/>
+  </g>
+</svg>
+  <svg x="1000" y="264.79999999999995" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FAF8F3"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FDFCF7"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#151B23">Ink</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#4A5360">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#2C3E57"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FDFCF7">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#786028"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#0B0D12"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#13161C"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F4F2ED">Ink</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#B1B8C2">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#A8B9D1"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#070B13">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#DBC188"/>
+  </g>
+</svg>
+  <svg x="532" y="393.19999999999993" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FAF8F4"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FDFCF8"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#131C20">Lagoon</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#47555B">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#026E5B"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FDFCF8">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#7B5F1B"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#0A0E10"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#111719"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F3F2ED">Lagoon</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#AEB9BE">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#78CEB7"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#050D10">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#DFC07F"/>
+  </g>
+</svg>
+  <svg x="766" y="393.19999999999993" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FCF8F1"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FFFBF6"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#251616">Oxblood</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#634C4B">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#652E39"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FFFBF6">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#5B6851"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#120B0B"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#1D1313"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F5F1EA">Oxblood</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#C5B2B1">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#D4A2A9"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#140707">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#BBCAB0"/>
+  </g>
+</svg>
+  <svg x="1000" y="393.19999999999993" width="216" height="110.39999999999999" viewBox="0 0 360 184">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FCF8F0"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FFFBF5"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#141B27">Sapphire</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#485367">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#264A8E"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FFFBF5">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#7E5D07"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#0A0D13"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#12161E"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F5F1EA">Sapphire</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#AFB8C8">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#95B2E5"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#060B17">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#E3BF76"/>
+  </g>
+</svg>
+</svg>

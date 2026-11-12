@@ -1,26 +1,19 @@
 # Using Aurum in an app
 
-For an app repo (React or Flutter) that wants Aurum's components and its own brand. Aurum lives in the private repo `RenzSamilo/Viridian` and is released as git tags named `aurum-vX.Y.Z`. Always pin a tag, never `main`.
+For an app repo (React or Flutter) that wants Aurum's components and its own brand. Aurum lives in the public repo [`RenzSamilo/Aurum`](https://github.com/RenzSamilo/Aurum) and is released as git tags named `aurum-vX.Y.Z`. Always pin a tag, never `main`.
 
 Current tag: **`aurum-v0.1.0`**. What changed in each tag: [CHANGELOG.md](../CHANGELOG.md).
 
 ## 1. Get access
 
-The repo is private, so every machine that installs Aurum needs read access to it.
-
-- **Your laptop:** works if `git clone https://github.com/RenzSamilo/Viridian.git` works (GitHub CLI login, a credential helper, or SSH).
-- **CI and hosting** (GitHub Actions, Vercel, Codemagic): give the build a read-only token for this repo and run this before installing:
-
-  ```sh
-  git config --global url."https://x-access-token:${AURUM_TOKEN}@github.com/".insteadOf "https://github.com/"
-  ```
+Nothing to set up: the repo is public, so any machine (laptop, CI, Vercel, Codemagic) can install it. Only a private fork needs a read token in CI, via `git config --global url."https://x-access-token:${TOKEN}@github.com/".insteadOf "https://github.com/"`.
 
 ## 2. Install
 
 **React** (Vite, Next, react-three-fiber):
 
 ```sh
-pnpm add "github:RenzSamilo/Viridian#aurum-v0.1.0&path:/packages/react"
+pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.0&path:/packages/react"
 ```
 
 The package ships built JavaScript, type declarations and CSS, so there is no build step and no `transpilePackages`. It needs React 19.
@@ -31,7 +24,7 @@ The package ships built JavaScript, type declarations and CSS, so there is no bu
 dependencies:
   aurum_ui:
     git:
-      url: https://github.com/RenzSamilo/Viridian.git
+      url: https://github.com/RenzSamilo/Aurum.git
       path: packages/flutter
       ref: aurum-v0.1.0
 ```
@@ -43,7 +36,7 @@ Then `flutter pub get`. Fonts (Inter, Fraunces) and icons come with the package.
 The brand build and the `aurum` cheat sheet run from a checkout of the same tag. Keep it in the app folder, ignored by git:
 
 ```sh
-git clone --depth 1 --branch aurum-v0.1.0 https://github.com/RenzSamilo/Viridian.git .aurum
+git clone --depth 1 --branch aurum-v0.1.0 https://github.com/RenzSamilo/Aurum.git .aurum
 pnpm --dir .aurum install --frozen-lockfile --filter aurum   # only the token tools, a few seconds
 echo ".aurum/" >> .gitignore
 ```

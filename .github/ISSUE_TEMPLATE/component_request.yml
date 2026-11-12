@@ -1,0 +1,33 @@
+name: Component request
+description: Ask for a new component or a new option on an existing one.
+labels: [component-request]
+body:
+  - type: markdown
+    attributes:
+      value: Check `pnpm aurum list` and catalog/CATALOG.md first. New pieces usually start in an app and join Aurum when a second app needs them (the rule of two, see catalog/README.md).
+  - type: input
+    id: name
+    attributes:
+      label: Component
+      placeholder: Date picker
+    validations:
+      required: true
+  - type: dropdown
+    id: shelf
+    attributes:
+      label: Shelf
+      options: [core (any app), pattern (bigger piece, any topic), kit (one kind of app), not sure]
+    validations:
+      required: true
+  - type: textarea
+    id: apps
+    attributes:
+      label: Which apps need it?
+      description: Name at least two for a pattern or kit, and link where it's built today if it exists.
+    validations:
+      required: true
+  - type: textarea
+    id: props
+    attributes:
+      label: Props and behaviour
+      description: What it does on React and on Flutter, keyboard and screen-reader behaviour, any haptics.

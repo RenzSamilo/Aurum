@@ -21,7 +21,10 @@
     "brands": "node tools/tokens/build-examples.mjs",
     "palettes": "node tools/tokens/palettes.mjs",
     "consumer:check": "node tools/consumer/check.mjs",
-    "bench:glass": "node tools/bench/glass.mjs"
+    "bench:glass": "node tools/bench/glass.mjs",
+    "readme:hero": "node tools/readme/hero.mjs --png",
+    "readme:shots": "node tools/readme/screens.mjs",
+    "docs:build": "pnpm --filter @aurum/docs build"
   },
   "devDependencies": {
     "style-dictionary": "5.7.1"
