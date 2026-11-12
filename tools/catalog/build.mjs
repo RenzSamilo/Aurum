@@ -39,7 +39,8 @@ const PLATFORMS = {
     base: 'packages/react/src',
     shelfDir: { core: ['core'], pattern: ['patterns'], kit: ['kits'] },
     defines: (src, sym) => new RegExp(`export\\s+(function|const)\\s+${sym}\\b`).test(src),
-    publicSymbols: (src) => [...src.matchAll(/export\s+function\s+([A-Z]\w*)/g)].map((m) => m[1]),
+    // Function components and const components (arrow functions, memo, forwardRef).
+    publicSymbols: (src) => [...src.matchAll(/export\s+(?:function|const)\s+([A-Z]\w*)/g)].map((m) => m[1]),
     ext: ['.tsx', '.ts'],
   },
   flutter: {
@@ -101,6 +102,13 @@ for (const c of components) {
   }
 }
 
+// Candidates can live in any app, React or Flutter.
+function definesAnywhere(file, sym) {
+  const src = read(file);
+  if (file.endsWith('.dart')) return PLATFORMS.flutter.defines(src, sym);
+  return new RegExp(`(function|const|let|class)\\s+${sym}\\b`).test(src);
+}
+
 // --- candidates ---------------------------------------------------------------
 for (const c of candidates) {
   const where = `candidate "${c.name}"`;
@@ -110,7 +118,7 @@ for (const c of candidates) {
   checkTags(where, c.tags);
   for (const f of c.foundIn ?? []) {
     if (!existsSync(join(root, f.file))) fail(`${where}: ${f.file} does not exist`);
-    else if (!new RegExp(`class\\s+${f.symbol}\\b`).test(read(f.file))) fail(`${where}: ${f.file} has no class ${f.symbol}`);
+    else if (!definesAnywhere(f.file, f.symbol)) fail(`${where}: ${f.file} does not define ${f.symbol}`);
   }
 }
 
@@ -132,8 +140,12 @@ for (const [p, plat] of Object.entries(PLATFORMS)) {
         if (!cataloged[p].has(sym)) fail(`${file}: ${sym} is not in catalog/components.json`);
       }
       const ownKit = shelfDir === 'kits' ? relative(join(root, plat.base, 'kits'), abs).split('/')[0] : null;
-      for (const m of src.matchAll(/(?:import|export)\s[^;]*?['"](\.{1,2}\/[^'"]+)['"]/g)) {
-        const target = relative(join(root, plat.base), resolve(dirname(abs), m[1])).split('/');
+      for (const m of src.matchAll(/(?:import|export)\s[^;]*?['"]((?:\.{1,2}\/|package:aurum_ui\/)[^'"]+)['"]/g)) {
+        // package:aurum_ui/x resolves to packages/flutter/lib/x, same as a relative import.
+        const resolved = m[1].startsWith('package:aurum_ui/')
+          ? join(root, 'packages/flutter/lib', m[1].slice('package:aurum_ui/'.length))
+          : resolve(dirname(abs), m[1]);
+        const target = relative(join(root, plat.base), resolved).split('/');
         if (!(target[0] in rank)) continue;
         if (rank[target[0]] > rank[shelfDir]) fail(`${file}: ${shelfDir} must not import from ${target[0]}/ (imports only point down)`);
         if (target[0] === 'kits' && ownKit && target[1] !== ownKit) fail(`${file}: kit "${ownKit}" must not import kit "${target[1]}"`);
