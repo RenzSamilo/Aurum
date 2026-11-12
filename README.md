@@ -121,10 +121,12 @@ RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(context.aurumRadii
 | Glass | `<Glass>` | `AurumGlass` |
 | Continuous corners | `<Squircle>`, `useSquircle()` | `RoundedSuperellipseBorder` |
 | Haptics | `playHaptic(intent)` | `AurumHaptics.play(intent)` |
-| Text field | (next) | `AurumTextField` |
-| Avatar, badge | (next) | `AurumAvatar`, `AurumBadge` |
-| Top bar, back button | (next) | `AurumTopBar`, `AurumBackButton` |
-| Tab bar | (next) | `AurumTabBar` |
+| Text field | `<TextField>` | `AurumTextField` |
+| Avatar, badge | `<Avatar>`, `<Badge>` | `AurumAvatar`, `AurumBadge` |
+| Progress ring | `<ProgressRing>` | `AurumProgressRing` |
+| Top bar, back button | `<TopBar>`, `<BackButton>` | `AurumTopBar`, `AurumBackButton` |
+| Tab bar | `<TabBar>` | `AurumTabBar` |
+| Floating tab bar | (next) | `AurumFloatingTabBar` |
 
 The Flutter example app has **Sample screens**: an assistant app (home, chat, plans) and a money app (home, add money, profile), built only from these parts to test the template on real layouts.
 

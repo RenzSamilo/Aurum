@@ -26,3 +26,23 @@ export {
   type SheetProps,
 } from './core/surfaces';
 export { Menu, type MenuItem, type MenuProps } from './core/menu';
+export { TextField, type TextFieldProps } from './core/text-field';
+export {
+  BackButton,
+  type BackButtonProps,
+  TabBar,
+  type TabBarItem,
+  type TabBarProps,
+  TopBar,
+  type TopBarProps,
+} from './core/navigation';
+export { ProgressRing, type ProgressRingProps } from './core/feedback';
+export {
+  Avatar,
+  type AvatarProps,
+  Badge,
+  type BadgeAppearance,
+  type BadgeProps,
+  type BadgeTone,
+  initialsOf,
+} from './core/identity';

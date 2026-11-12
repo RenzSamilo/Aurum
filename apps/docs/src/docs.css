@@ -285,3 +285,29 @@ code {
   align-items: center;
   gap: var(--space-8);
 }
+
+/* A phone-sized frame for the app-parts demo. */
+.phone {
+  --aurum-radius: var(--radius-xl);
+  max-width: 390px;
+  height: 720px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-decorative);
+  background: var(--color-surface-canvas);
+}
+.phone-scroll {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+.phone-body {
+  flex: 1;
+  padding: var(--space-8) var(--space-16) var(--space-24);
+}
+.part-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+}

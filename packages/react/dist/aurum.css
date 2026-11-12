@@ -8,6 +8,9 @@
 @import './core/controls.css';
 @import './core/surfaces.css';
 @import './core/menu.css';
+@import './core/text-field.css';
+@import './core/navigation.css';
+@import './core/identity.css';
 
 html {
   font-family: var(--font-family-ui);

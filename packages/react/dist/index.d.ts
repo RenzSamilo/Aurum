@@ -7,3 +7,7 @@ export { Glass, type GlassOwnProps, Squircle } from './core/components.js';
 export { Button, type ButtonProps, type ButtonSize, type ButtonVariant, type Segment, SegmentedControl, type SegmentedControlProps, Switch, type SwitchProps, } from './core/controls.js';
 export { Card, type CardProps, ListRow, type ListRowProps, ListSection, type ListSectionProps, Sheet, type SheetProps, } from './core/surfaces.js';
 export { Menu, type MenuItem, type MenuProps } from './core/menu.js';
+export { TextField, type TextFieldProps } from './core/text-field.js';
+export { BackButton, type BackButtonProps, TabBar, type TabBarItem, type TabBarProps, TopBar, type TopBarProps, } from './core/navigation.js';
+export { ProgressRing, type ProgressRingProps } from './core/feedback.js';
+export { Avatar, type AvatarProps, Badge, type BadgeAppearance, type BadgeProps, type BadgeTone, initialsOf, } from './core/identity.js';

@@ -16,7 +16,7 @@ Building blocks for any app.
 | Press scale | — | ✓ | any | Web gets the same effect from CSS :active on each control. |
 | Segmented control | ✓ | ✓ | any |  |
 | Switch | ✓ | ✓ | any |  |
-| Text field | — | ✓ | any | React version not built yet. |
+| Text field | ✓ | ✓ | any |  |
 | Menu | ✓ | ✓ | any | Borrowed from astryx: type-to-select (typeahead). The look and the rest of the menu are Aurum's. |
 
 ### Surfaces
@@ -34,23 +34,23 @@ Building blocks for any app.
 
 | Component | React | Flutter | Tags | Notes |
 | --- | :-: | :-: | --- | --- |
-| Top bar | — | ✓ | any |  |
-| Back button | — | ✓ | any |  |
-| Tab bar | — | ✓ | any |  |
+| Top bar | ✓ | ✓ | any |  |
+| Back button | ✓ | ✓ | any |  |
+| Tab bar | ✓ | ✓ | any |  |
 | Floating tab bar | — | ✓ | any |  |
 
 ### Feedback
 
 | Component | React | Flutter | Tags | Notes |
 | --- | :-: | :-: | --- | --- |
-| Progress ring | — | ✓ | any |  |
+| Progress ring | ✓ | ✓ | any |  |
 
 ### Identity
 
 | Component | React | Flutter | Tags | Notes |
 | --- | :-: | :-: | --- | --- |
-| Avatar | — | ✓ | any |  |
-| Badge | — | ✓ | any |  |
+| Avatar | ✓ | ✓ | any |  |
+| Badge | ✓ | ✓ | any |  |
 
 ## Patterns
 

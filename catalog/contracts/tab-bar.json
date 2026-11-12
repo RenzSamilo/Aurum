@@ -1,0 +1,34 @@
+{
+  "component": "Tab bar",
+  "react": {
+    "props": "TabBarProps"
+  },
+  "flutter": {
+    "symbol": "AurumTabBar"
+  },
+  "props": [
+    {
+      "name": "tabs",
+      "note": "Each tab: label, icon, selectedIcon. React tabs can also take href (a link); Flutter tabs can take child (replaces the icon)."
+    },
+    {
+      "name": "selectedIndex"
+    },
+    {
+      "name": "onSelected",
+      "react": "onSelectedChange",
+      "flutter": "onSelected"
+    },
+    {
+      "name": "landmarkLabel",
+      "react": "aria-label",
+      "flutter": null,
+      "why": "The web bar is a nav landmark and needs a name; Flutter has no landmarks, each tab reads \"Tab n of m\"."
+    },
+    {
+      "name": "solid",
+      "react": null,
+      "why": "On the web, solid surfaces follow setAurumPreferences({ transparency })."
+    }
+  ]
+}

@@ -7,3 +7,7 @@ export { Glass, Squircle } from './core/components.js';
 export { Button, SegmentedControl, Switch, } from './core/controls.js';
 export { Card, ListRow, ListSection, Sheet, } from './core/surfaces.js';
 export { Menu } from './core/menu.js';
+export { TextField } from './core/text-field.js';
+export { BackButton, TabBar, TopBar, } from './core/navigation.js';
+export { ProgressRing } from './core/feedback.js';
+export { Avatar, Badge, initialsOf, } from './core/identity.js';
