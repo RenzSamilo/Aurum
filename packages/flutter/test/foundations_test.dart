@@ -42,10 +42,10 @@ void main() {
   });
 
   group('AurumGlass', () {
-    Widget host({bool? solid, bool highContrast = false}) => MediaQuery(
+    Widget host({bool? solid, bool highContrast = false, AurumBrand brand = aurumBrand}) => MediaQuery(
           data: MediaQueryData(highContrast: highContrast),
           child: MaterialApp(
-            theme: aurumTheme(Brightness.light),
+            theme: aurumTheme(Brightness.light, brand: brand),
             home: Center(child: AurumGlass(solid: solid, child: const Text('Glass'))),
           ),
         );
@@ -60,6 +60,24 @@ void main() {
       expect(find.byType(BackdropFilter), findsNothing);
       await tester.pumpWidget(host(solid: true));
       expect(find.byType(BackdropFilter), findsNothing);
+    });
+
+    testWidgets('an opaque brand turns every glass solid, unless a widget asks otherwise', (tester) async {
+      final opaque = AurumBrand(
+        name: 'Opaque',
+        light: aurumBrand.light,
+        dark: aurumBrand.dark,
+        contrastLight: aurumBrand.contrastLight,
+        contrastDark: aurumBrand.contrastDark,
+        radii: aurumBrand.radii,
+        typeface: aurumBrand.typeface,
+        surfaces: const AurumSurfaces(material: AurumSurfaceMaterial.opaque),
+      );
+      expect(aurumBrand.surfaces.opaque, isFalse);
+      await tester.pumpWidget(host(brand: opaque));
+      expect(find.byType(BackdropFilter), findsNothing);
+      await tester.pumpWidget(host(brand: opaque, solid: false));
+      expect(find.byType(BackdropFilter), findsOneWidget);
     });
   });
 

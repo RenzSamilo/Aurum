@@ -1,6 +1,7 @@
 {
   "$schema": "../../../tools/tokens/brand.schema.json",
   "name": "Oxblood",
+  "spec": { "mood": "A quieter, browner red with a sage secondary. Heritage and leather-bound.", "bestFor": ["Reading and media", "Commerce", "Personal brand sites"], "avoid": "Error-heavy flows, where the accent competes with danger red." },
   "accent": { "hue": 9, "chroma": 0.08, "lightnessLight": 0.38, "lightnessDark": 0.76, "chromaDark": 0.06 },
   "secondary": { "hue": 132, "chroma": 0.04 },
   "neutral": { "hue": 20, "warmHue": 79, "chroma": 1.6 },

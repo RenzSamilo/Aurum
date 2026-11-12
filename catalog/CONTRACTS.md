@@ -89,6 +89,17 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | header | `header` | `header` |  |
 | footer | `footer` | `footer` |  |
 
+### Menu
+
+`MenuProps` · `AurumMenu`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| trigger | `trigger` | `trigger` |  |
+| items | `items` | `items` | Each item: label, icon, destructive, and onSelect (React) / onSelected (Flutter). Disabled is disabled: true (React) / enabled: false (Flutter). |
+| align | `align` | `align` | start / end. |
+| semanticLabel | `aria-label` | `semanticLabel` |  |
+
 ### Segmented control
 
 `SegmentedControlProps` · `AurumSegmentedControl`

@@ -7,6 +7,7 @@
 @import './tokens/tokens.css';
 @import './core/controls.css';
 @import './core/surfaces.css';
+@import './core/menu.css';
 
 html {
   font-family: var(--font-family-ui);

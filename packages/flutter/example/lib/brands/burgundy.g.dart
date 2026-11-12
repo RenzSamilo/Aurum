@@ -124,4 +124,5 @@ const AurumBrand burgundyBrand = AurumBrand(
     displayWeight: 560,
     displayTracking: -0.01,
   ),
+  surfaces: AurumSurfaces(material: AurumSurfaceMaterial.translucent),
 );

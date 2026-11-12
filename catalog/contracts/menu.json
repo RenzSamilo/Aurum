@@ -1,0 +1,11 @@
+{
+  "component": "Menu",
+  "react": { "props": "MenuProps" },
+  "flutter": { "symbol": "AurumMenu" },
+  "props": [
+    { "name": "trigger" },
+    { "name": "items", "note": "Each item: label, icon, destructive, and onSelect (React) / onSelected (Flutter). Disabled is disabled: true (React) / enabled: false (Flutter)." },
+    { "name": "align", "values": ["start", "end"] },
+    { "name": "semanticLabel", "react": "aria-label" }
+  ]
+}

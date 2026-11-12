@@ -124,4 +124,5 @@ const AurumBrand lagoonBrand = AurumBrand(
     displayWeight: null,
     displayTracking: null,
   ),
+  surfaces: AurumSurfaces(material: AurumSurfaceMaterial.translucent),
 );

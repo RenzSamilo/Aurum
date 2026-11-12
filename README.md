@@ -47,6 +47,7 @@ pnpm tokens          # rebuild tokens for every platform
 pnpm dev             # web preview at localhost:5173
 pnpm guard           # license guard
 pnpm catalog         # check the component catalog, rewrite catalog/CATALOG.md
+pnpm aurum list      # cheat sheet: components, props (show <name>), tokens, kits, rules
 pnpm typecheck && pnpm build
 
 cd packages/flutter/example && flutter run   # Flutter preview
@@ -56,7 +57,7 @@ Change a value in `tokens/`, run `pnpm tokens`, and both the web preview and the
 
 ## Make it yours (one file per app)
 
-1. Copy `tokens/brand/aurum.json` into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`.
+1. Copy `tokens/brand/aurum.json` into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`, and `surfaces.material`: `"translucent"` (glass, the default) or `"opaque"` (every glass surface solid, on web and Flutter, for apps that should feel flat and calm).
 2. Build it:
 
    ```sh
@@ -69,7 +70,7 @@ Change a value in `tokens/`, run `pnpm tokens`, and both the web preview and the
 
 The build checks every mode (light, dark, both high-contrast) against WCAG and refuses a brand that fails, with the exact pair and ratio. Text roles, spacing, springs, materials and haptics stay the same across brands, so every app feels like Aurum.
 
-The default look is **old green**: bottle-green accent on parchment, green-black dark surfaces with a muted sage accent, gilt gold for ornament (`--color-accent-secondary`, `accentSecondary`), and Fraunces serif titles over Inter. `tokens/brand/examples/` has other starting points: heritage palettes (Sapphire, Burgundy, Cognac, Oxblood, Amethyst, Ink), Lagoon (the earlier teal) and Ember (warm orange). `pnpm brands` builds them all into the Flutter example, whose palette picker switches between them live. Add a JSON file there to try a new palette.
+The default look is **old green**: bottle-green accent on parchment, green-black dark surfaces with a muted sage accent, gilt gold for ornament (`--color-accent-secondary`, `accentSecondary`), and Fraunces serif titles over Inter. `tokens/brand/examples/` has other starting points: heritage palettes (Sapphire, Burgundy, Cognac, Oxblood, Amethyst, Ink), Lagoon (the earlier teal) and Ember (warm orange). [tokens/brand/PALETTES.md](tokens/brand/PALETTES.md) has a spec card for each (mood, best uses, key colours, contrast receipt; `pnpm palettes` rebuilds it). `pnpm brands` builds them all into the Flutter example, whose palette picker switches between them live. Add a JSON file there to try a new palette.
 
 Fonts: `font.ui` sets the UI font and `font.display` the title font (display, page, section and card roles); `font.displayWeight` and `font.displayTracking` tune titles. Delete `font.display` for an all-sans look. Inter and Fraunces ship with Aurum; any other font must be a variable font with a `wght` axis, bundled in your app.
 

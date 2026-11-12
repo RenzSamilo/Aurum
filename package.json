@@ -9,15 +9,17 @@
   },
   "scripts": {
     "tokens": "node tools/tokens/build.mjs",
-    "tokens:check": "node tools/tokens/build.mjs && node tools/tokens/build-examples.mjs && git diff --exit-code -- packages/react/src/tokens packages/flutter/lib/src/tokens packages/flutter/example/lib/brands",
+    "tokens:check": "node tools/tokens/build.mjs && node tools/tokens/build-examples.mjs && node tools/tokens/palettes.mjs && git diff --exit-code -- tokens/brand/PALETTES.md tokens/brand/swatches packages/react/src/tokens packages/flutter/lib/src/tokens packages/flutter/example/lib/brands",
     "guard": "node tools/license-guard.mjs",
     "catalog": "node tools/catalog/build.mjs",
     "catalog:check": "node tools/catalog/build.mjs --check",
+    "aurum": "node tools/aurum.mjs",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "build": "pnpm -r build",
     "dev": "pnpm --filter @aurum/docs dev",
-    "brands": "node tools/tokens/build-examples.mjs"
+    "brands": "node tools/tokens/build-examples.mjs",
+    "palettes": "node tools/tokens/palettes.mjs"
   },
   "devDependencies": {
     "style-dictionary": "5.7.1"

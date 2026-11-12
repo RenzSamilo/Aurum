@@ -2,7 +2,7 @@
 
 # Aurum component catalog
 
-18 components in the library, 12 candidates waiting. How the shelves work: [README.md](README.md).
+19 components in the library, 12 candidates waiting. How the shelves work: [README.md](README.md).
 
 ## Core
 
@@ -17,6 +17,7 @@ Building blocks for any app.
 | Segmented control | ✓ | ✓ | any |  |
 | Switch | ✓ | ✓ | any |  |
 | Text field | — | ✓ | any | React version not built yet. |
+| Menu | ✓ | ✓ | any | Borrowed from astryx: type-to-select (typeahead). The look and the rest of the menu are Aurum's. |
 
 ### Surfaces
 

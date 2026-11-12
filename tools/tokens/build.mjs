@@ -26,7 +26,7 @@ import StyleDictionary from 'style-dictionary';
 import { brandTokens, loadBrand } from './brand.mjs';
 import { dartColor, withAlpha } from './color.mjs';
 import { deriveSpring } from './spring.mjs';
-import { validateContrast } from './validate.mjs';
+import { contrastReport, validateContrast } from './validate.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const { values: args } = parseArgs({
@@ -34,10 +34,12 @@ const { values: args } = parseArgs({
     brand: { type: 'string' },
     css: { type: 'string' },
     dart: { type: 'string' },
+    // Writes a JSON receipt: key colours and the worst contrast pair per rule, per mode.
+    report: { type: 'string' },
   },
 });
 const appBuild = Boolean(args.brand);
-if (appBuild && !args.css && !args.dart) throw new Error('--brand needs --css and/or --dart to say where to write.');
+if (appBuild && !args.css && !args.dart && !args.report) throw new Error('--brand needs --css, --dart and/or --report to say where to write.');
 
 const brandPath = resolve(args.brand ?? join(root, 'tokens/brand/aurum.json'));
 const brand = await loadBrand(brandPath);
@@ -121,12 +123,17 @@ if (fontDisplay !== fontUi) {
   }
 }
 const levels = Object.keys(materialBlur);
+/** Brand intent: 'translucent' glass, or 'opaque' solid surfaces everywhere (web and Flutter). */
+const opaque = brand.surfaces.material === 'opaque';
 
 /** Semantic values of one mode, plus composed material tints. */
 function semantic(mode) {
   const map = modes[mode];
   const vals = Object.fromEntries(semanticNames.map((n) => [n, map.get(n).$value]));
-  for (const l of levels) vals[`material-tint-${l}`] = withAlpha(vals['material-tint-base'], vals[`material-alpha-${l}`]);
+  for (const l of levels) {
+    // An opaque brand (surfaces.material) fills glass with the elevated surface in every mode.
+    vals[`material-tint-${l}`] = opaque ? vals['color-surface-elevated'] : withAlpha(vals['material-tint-base'], vals[`material-alpha-${l}`]);
+  }
   return vals;
 }
 const sem = Object.fromEntries(Object.keys(MODES).map((m) => [m, semantic(m)]));
@@ -188,7 +195,7 @@ const cssBase = {
     ]),
   ),
   ...Object.fromEntries(Object.entries(press).map(([k, v]) => [`press-${k}`, v])),
-  ...Object.fromEntries(Object.entries(materialBlur).map(([k, v]) => [`material-blur-${k}`, v])),
+  ...Object.fromEntries(Object.entries(materialBlur).map(([k, v]) => [`material-blur-${k}`, opaque ? '0px' : v])),
   ...Object.fromEntries(Object.entries(materialSat).map(([k, v]) => [`material-saturation-${k}`, v])),
   ...Object.fromEntries(Object.entries(shadows).map(([k, v]) => [`shadow-${k}`, shadowCss(v)])),
 };
@@ -487,6 +494,7 @@ const AurumBrand ${brandIdent} = AurumBrand(
     displayWeight: ${displayWeight ?? 'null'},
     displayTracking: ${displayTracking ?? 'null'},
   ),
+  surfaces: AurumSurfaces(material: AurumSurfaceMaterial.${brand.surfaces.material}),
 );
 `;
 
@@ -496,6 +504,16 @@ const AurumBrand ${brandIdent} = AurumBrand(
 async function write(file, content) {
   await mkdir(dirname(file), { recursive: true });
   await writeFile(file, content);
+}
+
+if (args.report) {
+  const KEY = ['color-accent', 'color-accent-secondary', 'color-on-accent', 'color-surface-canvas', 'color-surface-card', 'color-text-primary', 'color-text-secondary'];
+  const report = {
+    name: brand.name,
+    modes: Object.fromEntries(Object.keys(MODES).map((m) => [m, { colors: Object.fromEntries(KEY.map((k) => [k, sem[m][k]])) }])),
+  };
+  for (const [m, checks] of Object.entries(contrastReport(sem))) report.modes[m].checks = checks;
+  await write(resolve(args.report), `${JSON.stringify(report, null, 2)}\n`);
 }
 
 if (appBuild) {

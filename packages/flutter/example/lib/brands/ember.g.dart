@@ -124,4 +124,5 @@ const AurumBrand emberBrand = AurumBrand(
     displayWeight: null,
     displayTracking: null,
   ),
+  surfaces: AurumSurfaces(material: AurumSurfaceMaterial.translucent),
 );

@@ -44,6 +44,19 @@
       "notes": "React version not built yet."
     },
     {
+      "name": "Menu",
+      "shelf": "core",
+      "group": "controls",
+      "tags": ["any"],
+      "react": { "symbol": "Menu", "file": "packages/react/src/core/menu.tsx" },
+      "flutter": { "symbol": "AurumMenu", "file": "packages/flutter/lib/src/core/controls/aurum_menu.dart" },
+      "origin": {
+        "source": "astryx",
+        "files": ["packages/react/src/vendor/astryx/typeaheadMatch.ts", "packages/react/src/vendor/astryx/useTypeahead.ts"],
+        "notes": "type-to-select (typeahead). The look and the rest of the menu are Aurum's."
+      }
+    },
+    {
       "name": "Card",
       "shelf": "core",
       "group": "surfaces",

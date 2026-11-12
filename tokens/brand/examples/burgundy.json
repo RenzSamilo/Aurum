@@ -1,6 +1,7 @@
 {
   "$schema": "../../../tools/tokens/brand.schema.json",
   "name": "Burgundy",
+  "spec": { "mood": "Wine red on warm cream with a rosy secondary. Elegant and bold.", "bestFor": ["Commerce and luxury", "Events and booking", "Media"], "avoid": "Finance: red reads as loss next to numbers." },
   "accent": { "hue": 8, "chroma": 0.11, "lightnessLight": 0.38, "lightnessDark": 0.76, "chromaDark": 0.07 },
   "secondary": { "hue": 25, "chroma": 0.06 },
   "neutral": { "hue": 10, "warmHue": 44, "chroma": 1.8 },

@@ -69,3 +69,31 @@ Every component built for both platforms has a contract in [contracts/](contract
 { "name": "variant", "values": ["filled", "tinted", "gray", "plain", "glass"],
   "missing": { "react": ["glass"] }, "todo": "Build the glass variant for web." }
 ```
+
+## Borrowing from Astryx
+
+[Astryx](https://github.com/meta/astryx) is Meta's open-source design system (MIT license). We borrow the hard, well-tested parts, usually keyboard and screen-reader behaviour, and keep Aurum's look.
+
+1. **Copy** the file into `packages/react/src/vendor/astryx/`, unchanged except import paths. Keep Meta's copyright line, and add a row to that folder's README (file, source path, commit, changes).
+2. **Build the Aurum component** on top of it, with Aurum tokens and styles. Add the Flutter version too (written for Flutter, since Astryx is web-only).
+3. **Catalog it** with `"origin": { "source": "astryx", "files": [...] }`. CATALOG.md then shows "Borrowed from astryx".
+4. **Open a PR.** Renz restyles or approves it, and merging it is the approval. Nothing borrowed joins the library without a merged PR.
+
+`pnpm catalog:check` fails if a borrowed file loses its copyright line, isn't in the vendor README, or isn't claimed by a component. Borrow only what we'll restyle: Astryx's own look (StyleX styles, its themes, its icons) stays out.
+
+## Eject: when one app needs a component to differ
+
+Don't change Aurum for everyone because one app needs something different. Copy the component into that app and change the copy:
+
+```sh
+pnpm aurum eject Button --to ../tren/lib/ui --platform flutter
+pnpm aurum eject Menu --to ../site/src/ui --platform react
+```
+
+- The copy imports the rest of Aurum from the package, so it keeps the tokens, theme and haptics. Borrowed Astryx code comes along with its license.
+- Flutter: the command prints the names to `hide` when you import `aurum_ui`, so your copy wins.
+- React: import your copy for that component, and its `.css` after `aurum.css`.
+- `ejected.json` in that folder records the source and commit. `pnpm aurum ejected <folder>` shows what changed upstream since, so you can pull in fixes by hand.
+- Eject never overwrites a file already in that folder. Components that share a source file (Button, Switch and Segmented control are all in `controls`) share the copy: ejecting the second one keeps your edited copy. Pass `--force` to overwrite with a fresh copy.
+
+If a second app wants the same change, that's the rule of two: bring it back into Aurum as an option instead.

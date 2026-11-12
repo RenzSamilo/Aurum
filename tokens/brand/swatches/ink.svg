@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="184" viewBox="0 0 360 184" role="img" aria-label="Ink palette in light and dark">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FAF8F3"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FDFCF7"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#151B23">Ink</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#4A5360">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#2C3E57"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FDFCF7">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#786028"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#0B0D12"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#13161C"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F4F2ED">Ink</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#B1B8C2">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#A8B9D1"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#070B13">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#DBC188"/>
+  </g>
+</svg>

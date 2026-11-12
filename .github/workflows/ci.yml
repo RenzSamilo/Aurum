@@ -27,6 +27,14 @@ jobs:
         run: pnpm guard
       - name: Component catalog is complete, shelves are respected, CATALOG.md is current
         run: pnpm catalog:check
+      - name: Cheat sheet runs (pnpm aurum)
+        run: pnpm -s aurum list > /dev/null && pnpm -s aurum show Button > /dev/null && pnpm -s aurum tokens > /dev/null
+      - name: Ejected React components still type-check
+        run: |
+          pnpm -s aurum eject Menu --to apps/docs/src/_ejected --platform react
+          pnpm -s aurum eject Card --to apps/docs/src/_ejected --platform react
+          pnpm --filter @aurum/docs exec tsc --noEmit -p .
+          rm -rf apps/docs/src/_ejected
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build

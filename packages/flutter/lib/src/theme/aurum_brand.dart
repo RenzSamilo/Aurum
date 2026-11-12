@@ -22,6 +22,7 @@ class AurumBrand {
     required this.contrastDark,
     required this.radii,
     required this.typeface,
+    this.surfaces = const AurumSurfaces(),
   });
 
   final String name;
@@ -31,6 +32,9 @@ class AurumBrand {
   final AurumColors contrastDark;
   final AurumRadii radii;
   final AurumTypeface typeface;
+
+  /// Glass or solid surfaces for the whole app (the brand file's `surfaces.material`).
+  final AurumSurfaces surfaces;
 
   /// The colour set for a brightness and contrast setting.
   AurumColors colors(Brightness brightness, {bool highContrast = false}) {
@@ -164,4 +168,28 @@ class AurumTypeface extends ThemeExtension<AurumTypeface> {
 
   @override
   int get hashCode => Object.hash(family, package, displayFamily, displayPackage, displayWeight, displayTracking);
+}
+
+/// Whether glass surfaces in this app blur what's behind them.
+enum AurumSurfaceMaterial {
+  /// Glass blurs and tints what's behind it. The default.
+  translucent,
+
+  /// Every glass surface is solid, as if the user had turned on Reduce Transparency.
+  opaque,
+}
+
+/// The brand's surface intent, read by [AurumGlass] and everything built on it.
+class AurumSurfaces extends ThemeExtension<AurumSurfaces> {
+  const AurumSurfaces({this.material = AurumSurfaceMaterial.translucent});
+
+  final AurumSurfaceMaterial material;
+
+  bool get opaque => material == AurumSurfaceMaterial.opaque;
+
+  @override
+  AurumSurfaces copyWith({AurumSurfaceMaterial? material}) => AurumSurfaces(material: material ?? this.material);
+
+  @override
+  AurumSurfaces lerp(AurumSurfaces? other, double t) => t < 0.5 || other == null ? this : other;
 }

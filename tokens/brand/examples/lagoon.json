@@ -1,6 +1,7 @@
 {
   "$schema": "../../../tools/tokens/brand.schema.json",
   "name": "Lagoon",
+  "spec": { "mood": "The original teal on cool grey. Fresh and modern.", "bestFor": ["Health and wellness", "Travel", "Utilities"], "avoid": "Apps that should feel heritage or premium." },
   "accent": { "hue": 175, "chroma": 0.09 },
   "neutral": { "hue": 225, "warmHue": 90, "chroma": 1 },
   "danger": { "hue": 25 },

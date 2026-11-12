@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="184" viewBox="0 0 360 184" role="img" aria-label="Aurum palette in light and dark">
+  <g transform="translate(0 0)">
+    <rect width="360" height="88" rx="20" fill="#FCF8EF"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#FFFCF4"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#0B1F15">Aurum</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#3D5A4A">Light</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#33573D"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#FFFCF4">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#7B5F1B"/>
+  </g>
+  <g transform="translate(0 96)">
+    <rect width="360" height="88" rx="20" fill="#07100B"/>
+    <rect x="12" y="12" width="200" height="64" rx="14" fill="#0D1913"/>
+    <text x="28" y="42" font-family="Georgia, serif" font-size="20" fill="#F5F1E8">Aurum</text>
+    <text x="28" y="62" font-family="system-ui, sans-serif" font-size="12" fill="#A7BEB1">Dark</text>
+    <rect x="226" y="26" width="84" height="36" rx="18" fill="#96B39D"/>
+    <text x="268" y="49" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#000F07">Button</text>
+    <circle cx="334" cy="44" r="10" fill="#DFC07F"/>
+  </g>
+</svg>

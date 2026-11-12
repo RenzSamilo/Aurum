@@ -1,6 +1,7 @@
 {
   "$schema": "../../tools/tokens/brand.schema.json",
   "name": "Aurum",
+  "spec": { "mood": "The Viridian look. Old green: bottle green on parchment with gilt gold ornament, like an antique book or a brass clock face. Calm and trustworthy.", "bestFor": ["Default for new apps", "Fitness and habit apps (TREN)", "Productivity", "Reading and learning"], "avoid": "Loud, playful consumer apps." },
   "accent": { "hue": 152, "chroma": 0.06, "lightnessLight": 0.42, "lightnessDark": 0.74, "chromaDark": 0.045 },
   "secondary": { "hue": 85, "chroma": 0.09 },
   "neutral": { "hue": 160, "warmHue": 88, "chroma": 2.2 },

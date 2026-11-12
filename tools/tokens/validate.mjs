@@ -29,3 +29,22 @@ export function validateContrast(semanticByMode) {
   }
   return failures;
 }
+
+/** For each mode and rule: the lowest ratio and its pair. Used for palette spec cards. */
+export function contrastReport(semanticByMode) {
+  return Object.fromEntries(
+    Object.entries(semanticByMode).map(([mode, values]) => [
+      mode,
+      RULES.map((rule) => {
+        let worst = null;
+        for (const fg of rule.fg) {
+          for (const bg of rule.bg) {
+            const ratio = contrast(values[fg], values[bg]);
+            if (!worst || ratio < worst.ratio) worst = { fg, bg, ratio: +ratio.toFixed(2) };
+          }
+        }
+        return { why: rule.why, min: rule.min, ...worst, pass: worst.ratio >= rule.min };
+      }),
+    ]),
+  );
+}
