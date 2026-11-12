@@ -1,20 +1,52 @@
 {
   "name": "@aurum/react",
-  "version": "0.0.0",
-  "description": "Aurum design system for React: tokens, base styles, and (from Phase 1) components.",
+  "version": "0.1.0",
+  "description": "Aurum design system for React: tokens, base styles and components.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RenzSamilo/Viridian.git",
+    "directory": "packages/react"
+  },
   "type": "module",
   "sideEffects": [
     "*.css"
   ],
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./aurum.css": "./src/aurum.css",
-    "./tokens.css": "./src/tokens/tokens.css",
-    "./patterns": "./src/patterns/index.ts",
-    "./kits/*": "./src/kits/*/index.ts"
+    ".": {
+      "aurum-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./aurum.css": {
+      "aurum-source": "./src/aurum.css",
+      "default": "./dist/aurum.css"
+    },
+    "./tokens.css": {
+      "aurum-source": "./src/tokens/tokens.css",
+      "default": "./dist/tokens/tokens.css"
+    },
+    "./patterns": {
+      "aurum-source": "./src/patterns/index.ts",
+      "types": "./dist/patterns/index.d.ts",
+      "default": "./dist/patterns/index.js"
+    },
+    "./kits/*": {
+      "aurum-source": "./src/kits/*/index.ts",
+      "types": "./dist/kits/*/index.d.ts",
+      "default": "./dist/kits/*/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
+    "build": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
