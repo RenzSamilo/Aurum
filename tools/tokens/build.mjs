@@ -199,6 +199,8 @@ const cssBase = {
   ),
   ...Object.fromEntries(Object.entries(press).map(([k, v]) => [`press-${k}`, v])),
   ...Object.fromEntries(Object.entries(materialBlur).map(([k, v]) => [`material-blur-${k}`, opaque ? '0px' : v])),
+  // Solid surfaces skip the backdrop filter entirely: even blur(0) makes the browser re-read what is behind.
+  ...(opaque ? { 'material-backdrop': 'none' } : {}),
   ...Object.fromEntries(Object.entries(materialSat).map(([k, v]) => [`material-saturation-${k}`, v])),
   ...Object.fromEntries(Object.entries(shadows).map(([k, v]) => [`shadow-${k}`, shadowCss(v)])),
 };
@@ -207,6 +209,7 @@ const reducedTransparency = {
   ...Object.fromEntries(levels.map((l) => [`material-blur-${l}`, '0px'])),
   ...Object.fromEntries(levels.map((l) => [`material-tint-${l}`, 'var(--color-surface-elevated)'])),
   ...Object.fromEntries(RIM.map((k) => [k, 'transparent'])),
+  'material-backdrop': 'none',
 };
 const reducedMotion = Object.fromEntries(Object.keys(press).map((k) => [`press-${k}`, 1]));
 const dark = { 'color-scheme': 'dark', ...diff('light', 'dark') };

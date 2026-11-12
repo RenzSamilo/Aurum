@@ -282,6 +282,7 @@
     --material-rim-high: transparent;
     --material-rim-low: transparent;
     --material-rim-sheen: transparent;
+    --material-backdrop: none;
   }
 }
 
@@ -299,6 +300,7 @@
   --material-rim-high: transparent;
   --material-rim-low: transparent;
   --material-rim-sheen: transparent;
+  --material-backdrop: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

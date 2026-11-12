@@ -67,8 +67,9 @@ body {
   box-shadow:
     inset 1px 1px 0 var(--material-rim-high),
     inset -1px -1px 0 var(--material-rim-low);
-  -webkit-backdrop-filter: blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation));
-  backdrop-filter: blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation));
+  /* --material-backdrop is none for solid surfaces (reduced transparency, opaque brands). */
+  -webkit-backdrop-filter: var(--material-backdrop, blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation)));
+  backdrop-filter: var(--material-backdrop, blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation)));
   border: 1px solid var(--color-border-decorative);
 }
 .aurum-glass[data-level='clear'] {

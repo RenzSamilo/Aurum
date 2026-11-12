@@ -12,4 +12,5 @@ First version apps can install.
 - **App guide:** [docs/USING-AURUM.md](docs/USING-AURUM.md): install, brand file, token build, imports, updating the pin.
 - **New on the web:** `TextField`, `TabBar`, `TopBar` + `BackButton`, `ProgressRing`, `Avatar` and `Badge`, matching the Flutter widgets. Each has a contract in `catalog/contracts/`, axe-core tests, and a preview in the docs app.
 - **Web glass:** `Button variant="glass"`, `Card material="thin"` (any level), `SegmentedControl glass`, and `Glass` now takes `tint` and `rim` (on by default, like Flutter: a light-catching edge and top sheen). New tokens `--material-rim-high | low | sheen`; reduced transparency and opaque brands turn them off. Still open: `Glass lifted` on the web.
+- **Glass performance:** [docs/GLASS-PERFORMANCE.md](docs/GLASS-PERFORMANCE.md) and `pnpm bench:glass` (glass over an animated WebGL canvas, phone profile). Solid surfaces (reduced transparency, opaque brands) now drop `backdrop-filter` entirely via `--material-backdrop: none`; in WebKit that took the solid overlay from 21 to 26 fps.
 - **Release check:** pushing an `aurum-v*` tag checks it against both package versions and this file.
