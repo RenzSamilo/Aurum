@@ -1,155 +1,125 @@
+<p align="center">
+  <img src="docs/assets/hero.svg" alt="Aurum: nine palettes, each shown in light and dark" width="100%">
+</p>
+
 # Aurum
 
-A base design system for calm, precise, tactile interfaces. Each app re-skins it with one brand file. It takes its principles from Apple's Human Interface Guidelines (continuous corners, spring motion, materials, meaningful haptics) and uses only original or openly licensed assets.
+**A calm, precise, tactile design system: one token file drives a React library and a Flutter library, and each app re-skins it with one brand file.**
 
-One token source feeds two libraries:
+[![CI](https://github.com/RenzSamilo/Aurum/actions/workflows/ci.yml/badge.svg)](https://github.com/RenzSamilo/Aurum/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Latest release](https://img.shields.io/github/v/release/RenzSamilo/Aurum?label=release)](https://github.com/RenzSamilo/Aurum/releases/latest)
 
-| Package | For | Path |
-| --- | --- | --- |
-| `@aurum/react` | Websites (React, CSS variables) | `packages/react` |
-| `aurum_ui` | Mobile apps (Flutter) | `packages/flutter` |
+## Why Aurum
 
-## Layout
+- **One token file.** Colour, type, spacing, corners, springs, materials and haptics live in `tokens/` and build to CSS, TypeScript and Dart.
+- **React and Flutter stay matched.** Every shared component has a contract (one prop list for both platforms), and CI fails when the two drift. See [CONTRACTS.md](catalog/CONTRACTS.md).
+- **Contrast is checked at build time.** Every brand is tested against WCAG in light, dark and both high-contrast modes, and the build refuses one that fails, naming the pair and the ratio.
 
-```
-tokens/
-  brand/aurum.json  the default brand: accent, neutrals, status hues, fonts, corner scale
-  brand/examples/   sample brands (CI builds them to prove re-skinning works)
-  primitive/        raw values that never change per brand: space, type, motion, materials, haptics
-  semantic/         meaning per mode: light, dark, contrast-light, contrast-dark
-catalog/
-  components.json   every component: its shelf (core, pattern, kit), tags, React + Flutter files
-  kits.json         topic kits (fitness, finance, learning, ...)
-  contracts/        one prop list per component, shared by React and Flutter
-  CATALOG.md        generated list of everything; see catalog/README.md for how Aurum grows
-  CONTRACTS.md      generated: React vs Flutter props side by side, plus gaps to close
-tools/
-  catalog/build.mjs checks the catalog and writes CATALOG.md
-  tokens/build.mjs  Style Dictionary build -> CSS, TypeScript, Dart; fails on contrast
-  license-guard.mjs fails on Apple fonts, SF Symbols or Apple.com brand colours
-packages/
-  react/            @aurum/react (tokens.css, tokens.ts, base styles)
-  flutter/          aurum_ui (generated tokens, ThemeExtension, theme) + example app
-apps/
-  docs/             web token preview
-```
+## Quick start (60 seconds)
 
-Generated files (never edit by hand):
+Pin a release tag, never `main`. The full guide, including brand files and updates, is [docs/USING-AURUM.md](docs/USING-AURUM.md).
 
-- `packages/react/src/tokens/tokens.css` and `tokens.ts`
-- `packages/flutter/lib/src/tokens/aurum_tokens.g.dart` and `aurum_brand.g.dart`
-
-## Commands
+**React** (React 19; built JS, types and CSS ship in the package):
 
 ```sh
-pnpm install
-pnpm tokens          # rebuild tokens for every platform
-pnpm dev             # web preview at localhost:5173
-pnpm guard           # license guard
-pnpm catalog         # check the component catalog, rewrite catalog/CATALOG.md
-pnpm aurum list      # cheat sheet: components, props (show <name>), tokens, kits, rules
-pnpm typecheck && pnpm build
-
-cd packages/flutter/example && flutter run   # Flutter preview
+pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.0&path:/packages/react"
 ```
 
-Change a value in `tokens/`, run `pnpm tokens`, and both the web preview and the Flutter preview pick it up.
-
-## Make it yours (one file per app)
-
-1. Copy `tokens/brand/aurum.json` into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`, and `surfaces.material`: `"translucent"` (glass, the default) or `"opaque"` (every glass surface solid, on web and Flutter, for apps that should feel flat and calm).
-2. Build it:
-
-   ```sh
-   node path/to/aurum/tools/tokens/build.mjs --brand my.brand.json \
-     --css src/aurum-tokens.css \
-     --dart lib/my_brand.g.dart
-   ```
-
-3. Web: import your `aurum-tokens.css` after `@aurum/react/aurum.css`. Flutter: `aurumTheme(Brightness.light, brand: myBrand)`.
-
-The build checks every mode (light, dark, both high-contrast) against WCAG and refuses a brand that fails, with the exact pair and ratio. Text roles, spacing, springs, materials and haptics stay the same across brands, so every app feels like Aurum.
-
-The default look is **old green**: bottle-green accent on parchment, green-black dark surfaces with a muted sage accent, gilt gold for ornament (`--color-accent-secondary`, `accentSecondary`), and Fraunces serif titles over Inter. `tokens/brand/examples/` has other starting points: heritage palettes (Sapphire, Burgundy, Cognac, Oxblood, Amethyst, Ink), Lagoon (the earlier teal) and Ember (warm orange). [tokens/brand/PALETTES.md](tokens/brand/PALETTES.md) has a spec card for each (mood, best uses, key colours, contrast receipt; `pnpm palettes` rebuilds it). `pnpm brands` builds them all into the Flutter example, whose palette picker switches between them live. Add a JSON file there to try a new palette.
-
-Fonts: `font.ui` sets the UI font and `font.display` the title font (display, page, section and card roles); `font.displayWeight` and `font.displayTracking` tune titles. Delete `font.display` for an all-sans look. Inter and Fraunces ship with Aurum; any other font must be a variable font with a `wght` axis, bundled in your app.
-
-## Using it
-
-**In another app repo:** follow [docs/USING-AURUM.md](docs/USING-AURUM.md) (install from a pinned tag, brand file, token build, imports, updates).
-
-**React**
-
-```ts
+```tsx
 import '@aurum/react/aurum.css';
-import { spring, setAurumPreferences } from '@aurum/react';
+import { Button, setAurumPreferences } from '@aurum/react';
 
-// Follow the system, or override per user. Safari ignores prefers-reduced-transparency,
-// so offer a "Solid surfaces" setting and pass it here.
-setAurumPreferences({ theme: 'dark', transparency: 'reduced' });
+setAurumPreferences({ theme: 'dark' }); // or leave it to follow the system
+export const App = () => <Button>Continue</Button>;
 ```
 
-Modes are data attributes on `<html>`: `data-theme`, `data-contrast`, `data-transparency`, `data-motion`. Without them, system preferences apply.
+**Flutter** (`pubspec.yaml`):
 
-**Flutter**
+```yaml
+dependencies:
+  aurum_ui:
+    git:
+      url: https://github.com/RenzSamilo/Aurum.git
+      path: packages/flutter
+      ref: aurum-v0.1.0
+```
 
 ```dart
 import 'package:aurum_ui/aurum_ui.dart';
 
 MaterialApp(
-  theme: aurumTheme(Brightness.light),            // add brand: myBrand for your app
+  theme: aurumTheme(Brightness.light),
   darkTheme: aurumTheme(Brightness.dark),
+  home: Scaffold(body: Center(child: AurumButton(label: 'Continue', onPressed: () {}))),
 );
-
-// In a widget
-final c = context.aurum;                           // semantic colours
-context.aurumText(AurumType.body);                 // brand font, optical size, primary text
-AurumMotion.control.description;                  // SpringDescription
-RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(context.aurumRadii.lg));
 ```
 
 ## Components
 
-| | Web | Flutter |
-| --- | --- | --- |
-| Button | `<Button>` | `AurumButton` |
-| Switch | `<Switch>` | `AurumSwitch` |
-| Segmented control | `<SegmentedControl>` | `AurumSegmentedControl` |
-| Grouped list | `<ListSection>` + `<ListRow>` | `AurumListSection` + `AurumListRow` |
-| Card | `<Card>` | `AurumCard` |
-| Sheet | `<Sheet>` | `showAurumSheet()` |
-| Glass | `<Glass>` | `AurumGlass` |
-| Continuous corners | `<Squircle>`, `useSquircle()` | `RoundedSuperellipseBorder` |
+19 components on both platforms, plus haptics and continuous corners. Full list with tags and notes: [catalog/CATALOG.md](catalog/CATALOG.md).
+
+| Component | Web | Flutter |
+| --- | :-: | :-: |
+| Button, Switch, Segmented control, Text field, Menu | ✓ | ✓ |
+| Card, Grouped list (section + row), Sheet, Glass | ✓ | ✓ |
+| Top bar, Back button, Tab bar | ✓ | ✓ |
+| Avatar, Badge, Progress ring | ✓ | ✓ |
+| Floating tab bar | next | ✓ |
+| Continuous corners | `<Squircle>` | theme shape |
 | Haptics | `playHaptic(intent)` | `AurumHaptics.play(intent)` |
-| Text field | `<TextField>` | `AurumTextField` |
-| Avatar, badge | `<Avatar>`, `<Badge>` | `AurumAvatar`, `AurumBadge` |
-| Progress ring | `<ProgressRing>` | `AurumProgressRing` |
-| Top bar, back button | `<TopBar>`, `<BackButton>` | `AurumTopBar`, `AurumBackButton` |
-| Tab bar | `<TabBar>` | `AurumTabBar` |
-| Floating tab bar | (next) | `AurumFloatingTabBar` |
 
-The Flutter example app has **Sample screens**: an assistant app (home, chat, plans) and a money app (home, add money, profile), built only from these parts to test the template on real layouts.
+Every component works with a keyboard and a screen reader, honours reduced motion, and is tested (axe-core on the web, Flutter's accessibility guidelines on mobile).
 
-Every component works with a keyboard and a screen reader, honours reduced motion, and is checked by tests (axe-core on the web, Flutter's accessibility guidelines on mobile).
+## Palettes
 
-## Releasing
+The default look is **Viridian**, an old green: bottle green on parchment, green-black in the dark, gilt gold for ornament, Fraunces serif titles over Inter. Eight more palettes ship as brand files, and each one passes the same contrast checks. Spec cards and contrast receipts: [tokens/brand/PALETTES.md](tokens/brand/PALETTES.md).
 
-Apps pin git tags named `aurum-vX.Y.Z`.
+| | | |
+| :-: | :-: | :-: |
+| ![Viridian (default)](tokens/brand/swatches/aurum.svg)<br>**Viridian** (default) | ![Amethyst](tokens/brand/swatches/amethyst.svg)<br>**Amethyst** | ![Sapphire](tokens/brand/swatches/sapphire.svg)<br>**Sapphire** |
+| ![Cognac](tokens/brand/swatches/cognac.svg)<br>**Cognac** | ![Burgundy](tokens/brand/swatches/burgundy.svg)<br>**Burgundy** | ![Oxblood](tokens/brand/swatches/oxblood.svg)<br>**Oxblood** |
+| ![Ink](tokens/brand/swatches/ink.svg)<br>**Ink** | ![Lagoon](tokens/brand/swatches/lagoon.svg)<br>**Lagoon** | ![Ember](tokens/brand/swatches/ember.svg)<br>**Ember** |
 
-1. Bump `version` in `packages/react/package.json` and `packages/flutter/pubspec.yaml` to the same number, and add a `## X.Y.Z` section to [CHANGELOG.md](CHANGELOG.md).
-2. `pnpm build` (rebuilds `packages/react/dist`, which is committed), then merge to `main`.
-3. On GitHub, **Releases → Draft a new release**, tag `aurum-vX.Y.Z` on `main`, publish. The *Release check* workflow confirms the tag matches both versions and the changelog, and that a fresh app can install it.
+## Make it yours (one file per app)
 
-## Assets and licences
+1. Copy `tokens/brand/aurum.json` (or a palette from `tokens/brand/examples/`) into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`, and `surfaces.material`: `"translucent"` (glass, the default) or `"opaque"` (every glass surface solid, for apps that should feel flat and calm).
+2. Build it: `node path/to/aurum/tools/tokens/build.mjs --brand my.brand.json --css src/aurum-tokens.css --dart lib/my_brand.g.dart`.
+3. Web: import your `aurum-tokens.css` after `@aurum/react/aurum.css`. Flutter: `aurumTheme(Brightness.light, brand: myBrand)`.
+
+Text roles, spacing, springs, materials and haptics stay the same across brands, so every app still feels like Aurum. Fonts: `font.ui` sets the UI font and `font.display` the title font; delete `font.display` for an all-sans look. Inter and Fraunces ship with Aurum; any other font must be a variable font with a `wght` axis.
+
+Modes are data attributes on `<html>` (`data-theme`, `data-contrast`, `data-transparency`, `data-motion`); without them, system preferences apply. Safari ignores `prefers-reduced-transparency`, so offer a "Solid surfaces" setting and pass it to `setAurumPreferences`.
+
+## Principles
+
+- **Calm.** Quiet surfaces, one accent, ornament used sparingly.
+- **Precise.** Continuous corners, a 4-point spacing scale, optical type sizes.
+- **Tactile.** Spring motion, press feedback and haptics that mean something, all off when reduced motion is on.
+- **Grows by use.** New pieces start in an app and join Aurum when a second app needs them (the [rule of two](catalog/README.md#the-rule-of-two)).
+
+## Not Apple
+
+Aurum is inspired by the principles of Apple's Human Interface Guidelines. It is not affiliated with Apple and uses only original or openly licensed assets: no SF Pro, SF Symbols, New York, Apple imagery or Apple.com colours. CI enforces this on every change with `pnpm guard`.
+
+Assets and licences:
 
 - Inter Variable 4.1, OFL-1.1 (`packages/flutter/fonts/Inter-OFL.txt`; web via `@fontsource-variable/inter`)
-- Fraunces Variable, OFL-1.1 (`packages/flutter/fonts/Fraunces-OFL.txt`; Latin subset with opsz and wght axes; web via `@fontsource-variable/fraunces`)
+- Fraunces Variable, OFL-1.1 (`packages/flutter/fonts/Fraunces-OFL.txt`; web via `@fontsource-variable/fraunces`)
 - Phosphor icons, MIT (`@phosphor-icons/react`, `phosphor_glyphs` on Flutter)
-- No SF Pro, SF Symbols, New York, Apple artwork or Apple.com colours. CI enforces this with `pnpm guard`.
 
 ## Roadmap
 
 - **Phase 0** (done): monorepo, token pipeline, CI, previews.
-- **Phase 1**: brand layer; Button, Switch, Segmented control, List row + card, Sheet on both platforms; haptics; glass; squircle polyfill for Safari and Firefox.
+- **Phase 1** (done): brand layer; Button, Switch, Segmented control, List row + card, Sheet on both platforms; haptics; glass; squircle polyfill for Safari and Firefox.
 - **Phase 2**: v1 components and generic flows (settings, list and detail, form, onboarding).
 - **Phase 3**: pickers, charts, polish.
+
+## More
+
+- [docs/USING-AURUM.md](docs/USING-AURUM.md): install Aurum in an app, add a brand, update.
+- [docs/DEVELOPING.md](docs/DEVELOPING.md): repo layout, commands, releasing.
+- [catalog/README.md](catalog/README.md): shelves, kits, contracts, how Aurum grows.
+- [CONTRIBUTING.md](CONTRIBUTING.md) · [SECURITY.md](SECURITY.md) · [CHANGELOG.md](CHANGELOG.md)
+
+MIT © 2026 Renz Samilo. See [LICENSE](LICENSE).
