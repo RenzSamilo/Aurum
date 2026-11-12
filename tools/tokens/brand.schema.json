@@ -60,6 +60,16 @@
         "displayTracking": { "type": "number", "minimum": -0.1, "maximum": 0.1, "description": "Letter spacing in em for title roles when a display font is set." }
       }
     },
+    "surfaces": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "material": {
+          "enum": ["translucent", "opaque"],
+          "description": "translucent (default): glass blurs what's behind it. opaque: every glass surface is solid in this app, on web and Flutter. Users can still ask for solid surfaces in a translucent app."
+        }
+      }
+    },
     "radius": {
       "type": "object",
       "additionalProperties": false,

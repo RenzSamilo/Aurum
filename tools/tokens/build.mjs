@@ -123,12 +123,17 @@ if (fontDisplay !== fontUi) {
   }
 }
 const levels = Object.keys(materialBlur);
+/** Brand intent: 'translucent' glass, or 'opaque' solid surfaces everywhere (web and Flutter). */
+const opaque = brand.surfaces.material === 'opaque';
 
 /** Semantic values of one mode, plus composed material tints. */
 function semantic(mode) {
   const map = modes[mode];
   const vals = Object.fromEntries(semanticNames.map((n) => [n, map.get(n).$value]));
-  for (const l of levels) vals[`material-tint-${l}`] = withAlpha(vals['material-tint-base'], vals[`material-alpha-${l}`]);
+  for (const l of levels) {
+    // An opaque brand (surfaces.material) fills glass with the elevated surface in every mode.
+    vals[`material-tint-${l}`] = opaque ? vals['color-surface-elevated'] : withAlpha(vals['material-tint-base'], vals[`material-alpha-${l}`]);
+  }
   return vals;
 }
 const sem = Object.fromEntries(Object.keys(MODES).map((m) => [m, semantic(m)]));
@@ -190,7 +195,7 @@ const cssBase = {
     ]),
   ),
   ...Object.fromEntries(Object.entries(press).map(([k, v]) => [`press-${k}`, v])),
-  ...Object.fromEntries(Object.entries(materialBlur).map(([k, v]) => [`material-blur-${k}`, v])),
+  ...Object.fromEntries(Object.entries(materialBlur).map(([k, v]) => [`material-blur-${k}`, opaque ? '0px' : v])),
   ...Object.fromEntries(Object.entries(materialSat).map(([k, v]) => [`material-saturation-${k}`, v])),
   ...Object.fromEntries(Object.entries(shadows).map(([k, v]) => [`shadow-${k}`, shadowCss(v)])),
 };
@@ -489,6 +494,7 @@ const AurumBrand ${brandIdent} = AurumBrand(
     displayWeight: ${displayWeight ?? 'null'},
     displayTracking: ${displayTracking ?? 'null'},
   ),
+  surfaces: AurumSurfaces(material: AurumSurfaceMaterial.${brand.surfaces.material}),
 );
 `;
 

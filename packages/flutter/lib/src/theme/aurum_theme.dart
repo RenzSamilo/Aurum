@@ -47,7 +47,7 @@ ThemeData aurumTheme(Brightness brightness, {bool highContrast = false, AurumBra
       labelMedium: role(AurumType.caption),
       labelSmall: role(AurumType.micro),
     ),
-    extensions: [colors, brand.radii, face],
+    extensions: [colors, brand.radii, face, brand.surfaces],
   );
 }
 
@@ -60,6 +60,9 @@ extension AurumContext on BuildContext {
 
   /// The active brand's typeface.
   AurumTypeface get aurumTypeface => Theme.of(this).extension<AurumTypeface>() ?? aurumBrand.typeface;
+
+  /// The active brand's surface intent: glass or solid.
+  AurumSurfaces get aurumSurfaces => Theme.of(this).extension<AurumSurfaces>() ?? aurumBrand.surfaces;
 
   /// [role] in the brand typeface. [color] defaults to primary text.
   TextStyle aurumText(AurumTextRole role, {Color? color, bool tabularFigures = false}) =>

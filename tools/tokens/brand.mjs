@@ -14,6 +14,7 @@ const DEFAULTS = {
   warning: { hue: 75 },
   font: { ui: 'Inter', mono: 'Geist Mono', display: null },
   radius: { scale: 1 },
+  surfaces: { material: 'translucent' },
 };
 
 /** Neutral steps: [name, lightness, base chroma]. Lightness is fixed; chroma scales. */
@@ -33,6 +34,9 @@ export async function loadBrand(path) {
   }
   const brand = { name: raw.name };
   for (const [key, defaults] of Object.entries(DEFAULTS)) brand[key] = { ...defaults, ...(raw[key] ?? {}) };
+  if (!['translucent', 'opaque'].includes(brand.surfaces.material)) {
+    throw new Error(`${path}: "surfaces.material" must be "translucent" or "opaque".`);
+  }
   return brand;
 }
 

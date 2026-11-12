@@ -31,7 +31,8 @@ enum AurumMaterialLevel {
 }
 
 /// A translucent material with continuous corners. It blurs what is behind it
-/// and turns solid when [solid] is true. By default it is solid when the user
+/// and turns solid when [solid] is true. By default it is solid when the brand
+/// asks for opaque surfaces (`surfaces.material` in the brand file) or the user
 /// asked for more contrast, since Flutter does not expose iOS's Reduce
 /// Transparency setting; pass your app's own setting to [solid].
 ///
@@ -75,7 +76,7 @@ class AurumGlass extends StatelessWidget {
     final c = context.aurum;
     final dark = Theme.of(context).brightness == Brightness.dark;
     final r = BorderRadius.circular(radius ?? context.aurumRadii.lg);
-    final isSolid = solid ?? MediaQuery.maybeHighContrastOf(context) ?? false;
+    final isSolid = solid ?? (context.aurumSurfaces.opaque || (MediaQuery.maybeHighContrastOf(context) ?? false));
     final shape = RoundedSuperellipseBorder(borderRadius: r);
 
     var fill = isSolid ? c.surfaceElevated : c.materialTintBase.withValues(alpha: level.alphaIn(c));

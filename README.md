@@ -57,7 +57,7 @@ Change a value in `tokens/`, run `pnpm tokens`, and both the web preview and the
 
 ## Make it yours (one file per app)
 
-1. Copy `tokens/brand/aurum.json` into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`.
+1. Copy `tokens/brand/aurum.json` into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`, and `surfaces.material`: `"translucent"` (glass, the default) or `"opaque"` (every glass surface solid, on web and Flutter, for apps that should feel flat and calm).
 2. Build it:
 
    ```sh
