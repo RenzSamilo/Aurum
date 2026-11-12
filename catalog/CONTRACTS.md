@@ -4,15 +4,10 @@
 
 Each component has one list of props shared by React and Flutter. A prop added on only one side fails CI until its contract says what the other side does: a different name, an intentional difference (why), or a gap to close (to do).
 
-## Gaps to close (7)
+## Gaps to close (2)
 
-- [ ] **Button**: Build the glass variant for web.
-- [ ] **Card**: Build the glass card (material level) for web.
-- [ ] **Glass**: Add a tint override for web glass.
-- [ ] **Glass**: Add the specular rim to web glass.
-- [ ] **Glass**: Add the lifted shadow to web glass.
+- [ ] **Glass**: Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card.
 - [ ] **Segmented control**: Add a semanticLabel for the whole group in Flutter.
-- [ ] **Segmented control**: Build the glass track for web.
 
 ## Components
 
@@ -56,7 +51,7 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | icon | `icon` | `icon` |  |
 | onPress | `onClick` | `onPressed` |  |
 | disabled | `disabled` | — | Flutter disables a button by passing onPressed: null. |
-| variant | `variant` (no glass) | `variant` | filled / tinted / gray / plain / glass. **To do:** Build the glass variant for web. |
+| variant | `variant` | `variant` | filled / tinted / gray / plain / glass. glass is clear glass for controls over imagery or video. |
 | size | `size` | `size` | sm / md / lg. |
 | capsule | `capsule` | `capsule` |  |
 | destructive | `destructive` | `destructive` |  |
@@ -76,7 +71,7 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | padding | `padding` | `padding` | React takes none | md | lg. Flutter takes any EdgeInsets (default 24). |
 | elevation | `elevation` | `lifted` | flat / lifted. Flutter takes a bool: lifted: false is flat. |
 | color | — | `color` | On the web, override the fill with className. |
-| material | — | `material` | **To do:** Build the glass card (material level) for web. |
+| material | `material` | `material` | Glass at this level. On the web a glass card casts no shadow (a shadow filter would stop the blur), and tints with className instead of color. |
 
 ### Glass
 
@@ -89,9 +84,9 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | radius | `radius` | `radius` | React takes sm | md | lg | xl or any CSS length. Flutter takes a number. |
 | solid | — | `solid` | On the web, solid surfaces follow setAurumPreferences({ transparency }). |
 | padding | — | `padding` | On the web, pad with CSS. |
-| tint | — | `tint` | **To do:** Add a tint override for web glass. |
-| rim | — | `rim` | **To do:** Add the specular rim to web glass. |
-| lifted | — | `lifted` | **To do:** Add the lifted shadow to web glass. |
+| tint | `tint` | `tint` | React takes a CSS colour (use a token var). |
+| rim | `rim` | `rim` | On by default. Off leaves a flat hairline. |
+| lifted | — | `lifted` | **To do:** Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card. |
 
 ### List row
 
@@ -155,7 +150,7 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | onChange | `onValueChange` | `onChanged` |  |
 | size | `size` | `small` | sm / md. Flutter takes a bool: small: true is sm. |
 | groupLabel | `aria-label` | — | **To do:** Add a semanticLabel for the whole group in Flutter. |
-| glass | — | `glass` | **To do:** Build the glass track for web. |
+| glass | `glass` | `glass` |  |
 
 ### Sheet
 

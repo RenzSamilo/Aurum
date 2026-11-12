@@ -1,4 +1,5 @@
 import { type ComponentPropsWithoutRef, type ReactNode, type Ref } from 'react';
+import { type MaterialLevel } from '../tokens/tokens.js';
 export interface CardProps extends ComponentPropsWithoutRef<'div'> {
     /** Makes the whole card one button. Put no other buttons inside it. */
     onPress?: () => void;
@@ -7,13 +8,18 @@ export interface CardProps extends ComponentPropsWithoutRef<'div'> {
     padding?: 'none' | 'md' | 'lg';
     /** Lifted cards cast a soft shadow; flat cards use a hairline border only. */
     elevation?: 'flat' | 'lifted';
+    /**
+     * Makes the card glass at this level, for cards over imagery or a coloured backdrop.
+     * Glass cards cast no shadow on the web: a shadow filter would stop the blur.
+     */
+    material?: MaterialLevel;
 }
 /**
  * A grouped surface with continuous corners. The shadow sits on a wrapper and
  * uses drop-shadow, so it follows the corner shape even where the corners are
  * clipped by the polyfill.
  */
-export declare function Card({ onPress, padding, elevation, className, children, ...rest }: CardProps): import("react").JSX.Element;
+export declare function Card({ onPress, padding, elevation, material, className, children, ...rest }: CardProps): import("react").JSX.Element;
 export interface ListSectionProps extends ComponentPropsWithoutRef<'section'> {
     header?: ReactNode;
     footer?: ReactNode;

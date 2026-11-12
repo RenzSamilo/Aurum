@@ -1,15 +1,53 @@
 {
   "component": "Glass",
-  "react": { "props": "GlassOwnProps" },
-  "flutter": { "symbol": "AurumGlass" },
+  "react": {
+    "props": "GlassOwnProps"
+  },
+  "flutter": {
+    "symbol": "AurumGlass"
+  },
   "props": [
-    { "name": "content", "react": "children", "flutter": "child" },
-    { "name": "level", "values": ["clear", "ultralight", "thin", "regular", "thick"] },
-    { "name": "radius", "note": "React takes sm | md | lg | xl or any CSS length. Flutter takes a number." },
-    { "name": "solid", "react": null, "why": "On the web, solid surfaces follow setAurumPreferences({ transparency })." },
-    { "name": "padding", "react": null, "why": "On the web, pad with CSS." },
-    { "name": "tint", "react": null, "todo": "Add a tint override for web glass." },
-    { "name": "rim", "react": null, "todo": "Add the specular rim to web glass." },
-    { "name": "lifted", "react": null, "todo": "Add the lifted shadow to web glass." }
+    {
+      "name": "content",
+      "react": "children",
+      "flutter": "child"
+    },
+    {
+      "name": "level",
+      "values": [
+        "clear",
+        "ultralight",
+        "thin",
+        "regular",
+        "thick"
+      ]
+    },
+    {
+      "name": "radius",
+      "note": "React takes sm | md | lg | xl or any CSS length. Flutter takes a number."
+    },
+    {
+      "name": "solid",
+      "react": null,
+      "why": "On the web, solid surfaces follow setAurumPreferences({ transparency })."
+    },
+    {
+      "name": "padding",
+      "react": null,
+      "why": "On the web, pad with CSS."
+    },
+    {
+      "name": "tint",
+      "note": "React takes a CSS colour (use a token var)."
+    },
+    {
+      "name": "rim",
+      "note": "On by default. Off leaves a flat hairline."
+    },
+    {
+      "name": "lifted",
+      "react": null,
+      "todo": "Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card."
+    }
   ]
 }

@@ -20,7 +20,11 @@ export declare function Squircle<T extends ElementType = 'div'>({ as, radius, cl
 export interface GlassOwnProps {
     level?: MaterialLevel;
     radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {});
+    /** Mixed into the glass, e.g. 'var(--color-accent)' for a selected or primary control. */
+    tint?: string;
+    /** Light-catching rim and top sheen. Off leaves a flat hairline border. */
+    rim?: boolean;
     children?: ReactNode;
 }
-export declare function Glass<T extends ElementType = 'div'>({ level, className, ...rest }: Polymorphic<T, GlassOwnProps>): import("react").JSX.Element;
+export declare function Glass<T extends ElementType = 'div'>({ level, tint, rim, className, ...rest }: Polymorphic<T, GlassOwnProps>): import("react").JSX.Element;
 export {};

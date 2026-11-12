@@ -1,9 +1,12 @@
 import { type ComponentPropsWithoutRef, type ReactNode, type Ref } from 'react';
 import type { HapticIntent } from '../tokens/tokens.js';
-export type ButtonVariant = 'filled' | 'tinted' | 'gray' | 'plain';
+export type ButtonVariant = 'filled' | 'tinted' | 'gray' | 'plain' | 'glass';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
-    /** filled: the one main action. tinted / gray: secondary. plain: text only. */
+    /**
+     * filled: the one main action. tinted / gray: secondary. plain: text only.
+     * glass: clear glass, for a control floating over imagery, video or a busy background.
+     */
     variant?: ButtonVariant;
     /** sm 32px tall (still a 44px hit area), md 48px, lg 64px. */
     size?: ButtonSize;
@@ -51,9 +54,11 @@ export interface SegmentedControlProps<T extends string> extends Omit<ComponentP
     /** Names the group for screen readers. */
     'aria-label': string;
     size?: 'sm' | 'md';
+    /** A capsule of clear glass with a glass thumb, for a control floating over imagery or a busy background. */
+    glass?: boolean;
 }
 /**
  * Two to five mutually exclusive options shown side by side, such as views of
  * the same content. Arrow keys move the selection, like native radio groups.
  */
-export declare function SegmentedControl<T extends string>({ segments, value, onValueChange, size, className, style, ...rest }: SegmentedControlProps<T>): import("react").JSX.Element;
+export declare function SegmentedControl<T extends string>({ segments, value, onValueChange, size, glass, className, style, ...rest }: SegmentedControlProps<T>): import("react").JSX.Element;

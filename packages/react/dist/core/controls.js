@@ -7,7 +7,7 @@ const cx = (...parts) => parts.filter(Boolean).join(' ');
  * motion they only change colour.
  */
 export function Button({ variant = 'filled', size = 'md', capsule = false, destructive = false, icon, fullWidth = false, haptic = false, className, type = 'button', onClick, children, ...rest }) {
-    return (_jsxs("button", { type: type, className: cx('aurum-button', 'aurum-squircle', className), "data-variant": variant, "data-size": size, "data-capsule": capsule || undefined, "data-destructive": destructive || undefined, "data-full-width": fullWidth || undefined, "data-icon-only": (icon && !children) || undefined, onClick: (e) => {
+    return (_jsxs("button", { type: type, className: cx('aurum-button', 'aurum-squircle', variant === 'glass' && 'aurum-glass', className), "data-variant": variant, "data-level": variant === 'glass' ? 'clear' : undefined, "data-size": size, "data-capsule": capsule || undefined, "data-destructive": destructive || undefined, "data-full-width": fullWidth || undefined, "data-icon-only": (icon && !children) || undefined, onClick: (e) => {
             if (haptic)
                 playHaptic(haptic);
             onClick?.(e);
@@ -33,7 +33,7 @@ export function Switch({ checked, onCheckedChange, label, description, className
  * Two to five mutually exclusive options shown side by side, such as views of
  * the same content. Arrow keys move the selection, like native radio groups.
  */
-export function SegmentedControl({ segments, value, onValueChange, size = 'md', className, style, ...rest }) {
+export function SegmentedControl({ segments, value, onValueChange, size = 'md', glass = false, className, style, ...rest }) {
     const refs = useRef([]);
     const index = Math.max(0, segments.findIndex((s) => s.value === value));
     const select = (i) => {
@@ -64,7 +64,7 @@ export function SegmentedControl({ segments, value, onValueChange, size = 'md', 
         select(next);
         refs.current[next]?.focus();
     };
-    return (_jsxs("div", { role: "radiogroup", className: cx('aurum-segmented', 'aurum-squircle', className), "data-size": size, style: { '--aurum-segments': segments.length, '--aurum-segment-index': index, ...style }, onKeyDown: onKeyDown, ...rest, children: [_jsx("span", { className: "aurum-segmented-thumb aurum-squircle", "aria-hidden": "true" }), segments.map((s, i) => (_jsx("button", { ref: (el) => {
+    return (_jsxs("div", { role: "radiogroup", className: cx('aurum-segmented', 'aurum-squircle', glass && 'aurum-glass', className), "data-size": size, "data-glass": glass || undefined, "data-level": glass ? 'clear' : undefined, style: { '--aurum-segments': segments.length, '--aurum-segment-index': index, ...style }, onKeyDown: onKeyDown, ...rest, children: [_jsx("span", { className: "aurum-segmented-thumb aurum-squircle", "aria-hidden": "true" }), segments.map((s, i) => (_jsx("button", { ref: (el) => {
                     refs.current[i] = el;
                 }, type: "button", role: "radio", "aria-checked": i === index, "aria-label": s.ariaLabel, tabIndex: i === index ? 0 : -1, disabled: s.disabled, className: "aurum-segment", onClick: () => select(i), children: _jsx("span", { className: "aurum-segment-label", children: s.label }) }, s.value)))] }));
 }

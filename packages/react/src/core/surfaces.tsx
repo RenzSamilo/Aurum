@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { Squircle } from './components';
 import { playHaptic } from '../haptics';
-import { gesture } from '../tokens/tokens';
+import { gesture, type MaterialLevel } from '../tokens/tokens';
 
 const cx = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(' ');
 
@@ -25,6 +25,11 @@ export interface CardProps extends ComponentPropsWithoutRef<'div'> {
   padding?: 'none' | 'md' | 'lg';
   /** Lifted cards cast a soft shadow; flat cards use a hairline border only. */
   elevation?: 'flat' | 'lifted';
+  /**
+   * Makes the card glass at this level, for cards over imagery or a coloured backdrop.
+   * Glass cards cast no shadow on the web: a shadow filter would stop the blur.
+   */
+  material?: MaterialLevel;
 }
 
 /**
@@ -32,21 +37,22 @@ export interface CardProps extends ComponentPropsWithoutRef<'div'> {
  * uses drop-shadow, so it follows the corner shape even where the corners are
  * clipped by the polyfill.
  */
-export function Card({ onPress, padding = 'lg', elevation = 'lifted', className, children, ...rest }: CardProps) {
+export function Card({ onPress, padding = 'lg', elevation = 'lifted', material, className, children, ...rest }: CardProps) {
   const interactive = Boolean(onPress);
   // One element, button or div; the polymorphic props are the same shape either way.
   const props = {
     as: interactive ? 'button' : 'div',
     type: interactive ? 'button' : undefined,
     radius: 'lg',
-    className: cx('aurum-card', className),
+    className: cx('aurum-card', material && 'aurum-glass', className),
+    'data-level': material,
     'data-padding': padding,
     'data-interactive': interactive || undefined,
     onClick: onPress,
     ...rest,
   } as ComponentPropsWithoutRef<typeof Squircle>;
   return (
-    <div className="aurum-card-shadow" data-elevation={elevation}>
+    <div className="aurum-card-shadow" data-elevation={material ? 'flat' : elevation}>
       <Squircle {...props}>
         {children}
       </Squircle>

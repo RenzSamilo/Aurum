@@ -1,5 +1,5 @@
 import { type AurumPreferences, Avatar, BackButton, Badge, Button, Card, Glass, ListRow, ListSection, Menu, ProgressRing, Sheet, SegmentedControl, Switch, TabBar, TextField, TopBar, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
-import { Archive, Barbell, Bell, ChartBar, CopySimple, DotsThree, Gear, Globe, House, Lock, MagnifyingGlass, Moon, PaperPlaneRight, PencilSimple, Plus, Sun, Trash, User, WifiHigh } from '@phosphor-icons/react';
+import { Archive, Barbell, Bell, ChartBar, CopySimple, DotsThree, Gear, Globe, Heart, House, Lock, MagnifyingGlass, Moon, PaperPlaneRight, PencilSimple, Play, Plus, Sun, Trash, User, WifiHigh } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
 const colorGroups: Record<string, string[]> = {
@@ -45,6 +45,7 @@ export function App() {
       <Controls />
       <Surfaces />
       <AppParts />
+      <GlassControls />
 
       <Section title="Colour" note="Semantic roles in OKLCH. Toggle dark and contrast above.">
         <div className="swatch-groups">
@@ -383,6 +384,48 @@ function AppParts() {
             />
           </div>
         </div>
+      </div>
+    </Section>
+  );
+}
+
+function GlassControls() {
+  const [speed, setSpeed] = useState<'1x' | '1.5x' | '2x'>('1x');
+  return (
+    <Section title="Glass controls" note="Clear-glass button, segmented track and glass card, for controls that float over imagery, video or a canvas.">
+      <div className="glass-stage aurum-squircle">
+        <div className="control-row">
+          <Button variant="glass" capsule icon={<Play weight="fill" />}>
+            Play
+          </Button>
+          <Button variant="glass" capsule icon={<Heart />} aria-label="Like" />
+          <Button variant="glass" capsule destructive>
+            Stop
+          </Button>
+        </div>
+        <SegmentedControl
+          aria-label="Playback speed"
+          glass
+          style={{ width: 'fit-content' }}
+          value={speed}
+          onValueChange={setSpeed}
+          segments={[
+            { value: '1x', label: '1x' },
+            { value: '1.5x', label: '1.5x' },
+            { value: '2x', label: '2x' },
+          ]}
+        />
+        <Card material="thin" padding="md">
+          <p className="aurum-type-card" style={{ margin: 0 }}>
+            Glass card
+          </p>
+          <p className="aurum-type-footnote" style={{ margin: 'var(--space-4) 0 0' }}>
+            material="thin". Toggle Solid surfaces above to see the fallback.
+          </p>
+        </Card>
+        <Glass level="thin" radius="md" tint="var(--color-accent)" className="glass-tinted">
+          <span className="aurum-type-subhead">Tinted glass</span>
+        </Glass>
       </div>
     </Section>
   );

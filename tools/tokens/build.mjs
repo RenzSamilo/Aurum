@@ -123,6 +123,7 @@ if (fontDisplay !== fontUi) {
   }
 }
 const levels = Object.keys(materialBlur);
+const RIM = ['material-rim-high', 'material-rim-low', 'material-rim-sheen'];
 /** Brand intent: 'translucent' glass, or 'opaque' solid surfaces everywhere (web and Flutter). */
 const opaque = brand.surfaces.material === 'opaque';
 
@@ -134,6 +135,8 @@ function semantic(mode) {
     // An opaque brand (surfaces.material) fills glass with the elevated surface in every mode.
     vals[`material-tint-${l}`] = opaque ? vals['color-surface-elevated'] : withAlpha(vals['material-tint-base'], vals[`material-alpha-${l}`]);
   }
+  // Solid surfaces have no light-catching rim.
+  if (opaque) for (const k of RIM) vals[k] = 'transparent';
   return vals;
 }
 const sem = Object.fromEntries(Object.keys(MODES).map((m) => [m, semantic(m)]));
@@ -203,6 +206,7 @@ const cssBase = {
 const reducedTransparency = {
   ...Object.fromEntries(levels.map((l) => [`material-blur-${l}`, '0px'])),
   ...Object.fromEntries(levels.map((l) => [`material-tint-${l}`, 'var(--color-surface-elevated)'])),
+  ...Object.fromEntries(RIM.map((k) => [k, 'transparent'])),
 };
 const reducedMotion = Object.fromEntries(Object.keys(press).map((k) => [`press-${k}`, 1]));
 const dark = { 'color-scheme': 'dark', ...diff('light', 'dark') };

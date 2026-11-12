@@ -9,20 +9,21 @@ const cx = (...parts) => parts.filter(Boolean).join(' ');
  * uses drop-shadow, so it follows the corner shape even where the corners are
  * clipped by the polyfill.
  */
-export function Card({ onPress, padding = 'lg', elevation = 'lifted', className, children, ...rest }) {
+export function Card({ onPress, padding = 'lg', elevation = 'lifted', material, className, children, ...rest }) {
     const interactive = Boolean(onPress);
     // One element, button or div; the polymorphic props are the same shape either way.
     const props = {
         as: interactive ? 'button' : 'div',
         type: interactive ? 'button' : undefined,
         radius: 'lg',
-        className: cx('aurum-card', className),
+        className: cx('aurum-card', material && 'aurum-glass', className),
+        'data-level': material,
         'data-padding': padding,
         'data-interactive': interactive || undefined,
         onClick: onPress,
         ...rest,
     };
-    return (_jsx("div", { className: "aurum-card-shadow", "data-elevation": elevation, children: _jsx(Squircle, { ...props, children: children }) }));
+    return (_jsx("div", { className: "aurum-card-shadow", "data-elevation": material ? 'flat' : elevation, children: _jsx(Squircle, { ...props, children: children }) }));
 }
 /** An inset, grouped list of rows: settings, details, menus. */
 export function ListSection({ header, footer, className, children, ...rest }) {

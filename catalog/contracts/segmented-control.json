@@ -37,9 +37,7 @@
       "todo": "Add a semanticLabel for the whole group in Flutter."
     },
     {
-      "name": "glass",
-      "react": null,
-      "todo": "Build the glass track for web."
+      "name": "glass"
     }
   ]
 }
