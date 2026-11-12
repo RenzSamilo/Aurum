@@ -7,9 +7,12 @@
 //   pnpm aurum tokens [group]                                    token names for CSS and Dart
 //   pnpm aurum kits                                              topic kits and candidates
 //   pnpm aurum rules                                             the house rules, in one screen
+//   pnpm aurum eject <component> --to <dir> [--platform react|flutter]   copy its source into an app to own
+//   pnpm aurum ejected <dir>                                     what changed upstream since each eject
 
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolveRoot();
@@ -126,11 +129,101 @@ const commands = {
 7. New pieces start in the app. They join the library when a second app needs them (rule of two).
 8. A component on both platforms has a contract (catalog/contracts). Change React and Flutter together.
 9. Borrowed code (vendor/astryx) keeps its license and copyright line.
+   Need one app to differ? pnpm aurum eject <component> --to <app folder>, instead of changing Aurum for everyone.
 10. After changing tokens or the catalog: pnpm tokens, pnpm catalog. CI runs the checks.`);
   },
 
+  // Copy a component's source file into an app, rewired to import the rest of Aurum from
+  // the package. The copy is the app's to change. ejected.json records where it came from,
+  // so `aurum ejected` can show what changed upstream since.
+  eject() {
+    const to = flag('to');
+    const platform = flag('platform');
+    const q = args.filter((a, i) => !a.startsWith('--') && !args[i - 1]?.startsWith('--')).join(' ');
+    const c = q && find(q);
+    if (!c || !to) {
+      out('Usage: pnpm aurum eject <component> --to <app folder> [--platform react|flutter]');
+      process.exitCode = 1;
+      return;
+    }
+    const sides = (platform ? [platform] : ['react', 'flutter']).filter((p) => c[p]);
+    if (!sides.length) {
+      out(`${c.name} has no ${platform} version.`);
+      process.exitCode = 1;
+      return;
+    }
+    const dest = resolve(to);
+    mkdirSync(dest, { recursive: true });
+    const commit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: root }).toString().trim();
+    const manifestPath = join(dest, 'ejected.json');
+    const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : { ejected: [] };
+    const header = (file, comment) =>
+      `${comment} Ejected from Aurum ${file} at ${commit} (\`pnpm aurum eject ${c.name}\`). This copy is yours to change.\n` +
+      `${comment} See what changed upstream since: pnpm aurum ejected ${dest}\n`;
+
+    let hidden = [];
+    for (const side of sides) {
+      const file = c[side].file;
+      let src = readFileSync(join(root, file), 'utf8');
+      const copied = [file];
+      if (side === 'react') {
+        // Borrowed code isn't exported by @aurum/react, so its folder travels with the copy, license and all.
+        for (const m of [...src.matchAll(/from '\.\.\/vendor\/([^/']+)\/[^']+'/g)]) {
+          const vendorDir = join(root, 'packages/react/src/vendor', m[1]);
+          const target = join(dest, 'vendor', m[1]);
+          mkdirSync(target, { recursive: true });
+          for (const f of readdirSync(vendorDir)) {
+            copyFileSync(join(vendorDir, f), join(target, f));
+            const relFile = relative(root, join(vendorDir, f));
+            if (!copied.includes(relFile)) copied.push(relFile);
+          }
+          src = src.replace(m[0], m[0].replace("'../vendor/", "'./vendor/"));
+        }
+        src = src.replace(/(from\s+)'\.{1,2}\/(?!vendor\/)[^']+'/g, "$1'@aurum/react'");
+        writeFileSync(join(dest, basename(file)), header(file, '//') + src);
+        const css = file.replace(/\.tsx$/, '.css');
+        if (existsSync(join(root, css))) {
+          writeFileSync(join(dest, basename(css)), header(css, '/*').replace(/\n/g, ' */\n') + readFileSync(join(root, css), 'utf8'));
+          copied.push(css);
+        }
+      } else {
+        const lines = src.split('\n');
+        const rel = lines.filter((l) => /^import '\.{0,2}\/?[^:']+\.dart';$/.test(l) && !l.includes('package:'));
+        src = lines.filter((l) => !rel.includes(l)).join('\n');
+        // Everything public in the copy would clash with aurum_ui's export of the same name.
+        const own = [...src.matchAll(/^(?:class|enum|typedef|mixin|extension)\s+([A-Z]\w*)|^[A-Za-z][\w<>?, ]*\s([a-z]\w*)(?:<[^>]*>)?\s*\(/gm)]
+          .map((m) => m[1] ?? m[2])
+          .filter((n) => n && !n.startsWith('_'));
+        hidden = [...new Set(own)];
+        if (rel.length) src = src.replace(/(import 'package:flutter\/[^']+';\n)/, `$1import 'package:aurum_ui/aurum_ui.dart' hide ${hidden.join(', ')};\n`);
+        writeFileSync(join(dest, basename(file)), header(file, '//') + src);
+      }
+      manifest.ejected = manifest.ejected.filter((e) => !(e.component === c.name && e.platform === side));
+      manifest.ejected.push({ component: c.name, platform: side, files: copied, commit, date: new Date().toISOString().slice(0, 10) });
+      out(`Ejected ${c.name} (${side}): ${copied.join(', ')} -> ${relative(process.cwd(), dest) || '.'}`);
+    }
+    writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+    if (sides.includes('flutter')) out(`Flutter: import your copy, and add \`hide ${hidden.join(', ')}\` where you import aurum_ui.`);
+    if (sides.includes('react')) out('React: import the copy instead of @aurum/react for this component, and its .css after aurum.css.');
+  },
+
+  ejected() {
+    const dir = resolve(args[0] ?? '.');
+    const manifestPath = join(dir, 'ejected.json');
+    if (!existsSync(manifestPath)) {
+      out(`No ejected.json in ${dir}.`);
+      process.exitCode = 1;
+      return;
+    }
+    for (const e of JSON.parse(readFileSync(manifestPath, 'utf8')).ejected) {
+      const changed = execFileSync('git', ['diff', '--stat', `${e.commit}..HEAD`, '--', ...e.files], { cwd: root }).toString().trim();
+      out(`\n${e.component} (${e.platform}), ejected ${e.date} at ${e.commit}`);
+      out(changed ? changed.replace(/^/gm, '  ') + `\n  Full diff: git -C ${root} diff ${e.commit}..HEAD -- ${e.files.join(' ')}` : '  No upstream changes.');
+    }
+  },
+
   help() {
-    out(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(1, 9).map((l) => l.replace(/^\/\/ ?/, '')).join('\n'));
+    out(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(1, 11).map((l) => l.replace(/^\/\/ ?/, '')).join('\n'));
   },
 };
 

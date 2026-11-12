@@ -80,3 +80,19 @@ Every component built for both platforms has a contract in [contracts/](contract
 4. **Open a PR.** Renz restyles or approves it, and merging it is the approval. Nothing borrowed joins the library without a merged PR.
 
 `pnpm catalog:check` fails if a borrowed file loses its copyright line, isn't in the vendor README, or isn't claimed by a component. Borrow only what we'll restyle: Astryx's own look (StyleX styles, its themes, its icons) stays out.
+
+## Eject: when one app needs a component to differ
+
+Don't change Aurum for everyone because one app needs something different. Copy the component into that app and change the copy:
+
+```sh
+pnpm aurum eject Button --to ../tren/lib/ui --platform flutter
+pnpm aurum eject Menu --to ../site/src/ui --platform react
+```
+
+- The copy imports the rest of Aurum from the package, so it keeps the tokens, theme and haptics. Borrowed Astryx code comes along with its license.
+- Flutter: the command prints the names to `hide` when you import `aurum_ui`, so your copy wins.
+- React: import your copy for that component, and its `.css` after `aurum.css`.
+- `ejected.json` in that folder records the source and commit. `pnpm aurum ejected <folder>` shows what changed upstream since, so you can pull in fixes by hand.
+
+If a second app wants the same change, that's the rule of two: bring it back into Aurum as an option instead.
