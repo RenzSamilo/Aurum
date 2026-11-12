@@ -54,3 +54,18 @@ Each component is filed by **what it does** (its shelf and group) and tagged wit
 - an import points up a shelf, or across kits,
 - a tag or kit isn't in kits.json,
 - CATALOG.md is out of date.
+
+## Contracts: React and Flutter stay matched
+
+Every component built for both platforms has a contract in [contracts/](contracts/): one list of props, with what each is called in React and in Flutter. The check reads the real React props interface and the real Flutter constructor, so:
+
+- a prop added on only one side fails CI until the contract says what the other side does,
+- an option added to one side (say a new button size) fails until the other side has it, or the contract lists it as missing,
+- every difference is written down: `why` when it's on purpose (Flutter disables by passing `onPressed: null`), `todo` when it's a gap to close.
+
+[CONTRACTS.md](CONTRACTS.md) is generated from them. Its "Gaps to close" list is the to-do list for keeping the two libraries matched.
+
+```json
+{ "name": "variant", "values": ["filled", "tinted", "gray", "plain", "glass"],
+  "missing": { "react": ["glass"] }, "todo": "Build the glass variant for web." }
+```

@@ -1,0 +1,10 @@
+{
+  "component": "List section",
+  "react": { "props": "ListSectionProps" },
+  "flutter": { "symbol": "AurumListSection" },
+  "props": [
+    { "name": "rows", "react": "children", "flutter": "children", "inherited": ["react"] },
+    { "name": "header" },
+    { "name": "footer" }
+  ]
+}

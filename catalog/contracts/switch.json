@@ -1,0 +1,13 @@
+{
+  "component": "Switch",
+  "react": { "props": "SwitchProps" },
+  "flutter": { "symbol": "AurumSwitch" },
+  "props": [
+    { "name": "value", "react": "checked", "flutter": "value" },
+    { "name": "onChange", "react": "onCheckedChange", "flutter": "onChanged" },
+    { "name": "label" },
+    { "name": "description" },
+    { "name": "disabled", "flutter": null, "inherited": ["react"], "why": "Flutter disables a switch by passing onChanged: null." },
+    { "name": "semanticLabel", "react": "aria-label", "inherited": ["react"] }
+  ]
+}

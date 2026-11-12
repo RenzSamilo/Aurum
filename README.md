@@ -20,7 +20,9 @@ tokens/
 catalog/
   components.json   every component: its shelf (core, pattern, kit), tags, React + Flutter files
   kits.json         topic kits (fitness, finance, learning, ...)
+  contracts/        one prop list per component, shared by React and Flutter
   CATALOG.md        generated list of everything; see catalog/README.md for how Aurum grows
+  CONTRACTS.md      generated: React vs Flutter props side by side, plus gaps to close
 tools/
   catalog/build.mjs checks the catalog and writes CATALOG.md
   tokens/build.mjs  Style Dictionary build -> CSS, TypeScript, Dart; fails on contrast

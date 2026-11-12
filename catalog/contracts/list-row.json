@@ -1,0 +1,16 @@
+{
+  "component": "List row",
+  "react": { "props": "ListRowProps" },
+  "flutter": { "symbol": "AurumListRow" },
+  "props": [
+    { "name": "title" },
+    { "name": "subtitle" },
+    { "name": "leading" },
+    { "name": "value" },
+    { "name": "trailing" },
+    { "name": "onPress", "react": "onPress", "flutter": "onPressed" },
+    { "name": "href", "flutter": null, "why": "Links are a web idea; in Flutter, navigate in onPressed." },
+    { "name": "chevron" },
+    { "name": "destructive" }
+  ]
+}

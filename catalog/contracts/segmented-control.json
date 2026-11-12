@@ -1,0 +1,45 @@
+{
+  "component": "Segmented control",
+  "react": {
+    "props": "SegmentedControlProps"
+  },
+  "flutter": {
+    "symbol": "AurumSegmentedControl"
+  },
+  "props": [
+    {
+      "name": "segments"
+    },
+    {
+      "name": "value"
+    },
+    {
+      "name": "onChange",
+      "react": "onValueChange",
+      "flutter": "onChanged"
+    },
+    {
+      "name": "size",
+      "flutter": "small",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "note": "Flutter takes a bool: small: true is sm.",
+      "unchecked": {
+        "flutter": "Flutter takes a bool, small."
+      }
+    },
+    {
+      "name": "groupLabel",
+      "react": "aria-label",
+      "flutter": null,
+      "todo": "Add a semanticLabel for the whole group in Flutter."
+    },
+    {
+      "name": "glass",
+      "react": null,
+      "todo": "Build the glass track for web."
+    }
+  ]
+}

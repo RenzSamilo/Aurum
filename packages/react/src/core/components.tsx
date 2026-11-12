@@ -34,11 +34,18 @@ export function Squircle<T extends ElementType = 'div'>({
  * user reduces transparency. Use it for bars, sheets and floating controls,
  * not for content.
  */
+/** Glass's own props; any prop of the rendered element (`as`) is also accepted. */
+export interface GlassOwnProps {
+  level?: MaterialLevel;
+  radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {});
+  children?: ReactNode;
+}
+
 export function Glass<T extends ElementType = 'div'>({
   level = 'regular',
   className,
   ...rest
-}: Polymorphic<T, { level?: MaterialLevel; radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {}); children?: ReactNode }>) {
+}: Polymorphic<T, GlassOwnProps>) {
   // Generic props cannot be checked through a second polymorphic component; they are the same shape.
   const props = rest as ComponentPropsWithoutRef<typeof Squircle>;
   return <Squircle {...props} className={['aurum-glass', className].filter(Boolean).join(' ')} data-level={level} />;

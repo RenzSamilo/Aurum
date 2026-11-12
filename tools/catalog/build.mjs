@@ -13,10 +13,13 @@
 //      core uses neither. A kit never imports another kit.
 //   4. Rule of two: a pattern or kit component needs two apps in `usedBy`.
 //   5. Tags and kits must be listed in catalog/kits.json.
+//   6. Contracts: every component built for both platforms has catalog/contracts/<name>.json,
+//      and its React props and Flutter params match it (see contracts.mjs).
 
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkContracts, renderContracts } from './contracts.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const check = process.argv.includes('--check');
@@ -154,6 +157,9 @@ for (const [p, plat] of Object.entries(PLATFORMS)) {
   }
 }
 
+// --- 6. contracts: React and Flutter props match ------------------------------
+const contracts = checkContracts(root, components, fail);
+
 if (errors.length) {
   console.error(`Catalog check failed (${errors.length}):\n  - ${errors.join('\n  - ')}`);
   process.exit(1);
@@ -228,14 +234,19 @@ ${candRows.join('\n')}
 ${tagParts.join('\n')}
 `;
 
-const out = join(root, 'catalog/CATALOG.md');
+const outputs = [
+  ['catalog/CATALOG.md', md],
+  ['catalog/CONTRACTS.md', renderContracts(contracts)],
+];
+const summary = `${components.length} components, ${candidates.length} candidates, ${kits.length} kits, ${contracts.length} contracts`;
 if (check) {
-  if (!existsSync(out) || readFileSync(out, 'utf8') !== md) {
-    console.error('catalog/CATALOG.md is out of date. Run `pnpm catalog` and commit it.');
+  const stale = outputs.filter(([f, text]) => !existsSync(join(root, f)) || readFileSync(join(root, f), 'utf8') !== text);
+  if (stale.length) {
+    console.error(`${stale.map(([f]) => f).join(' and ')} out of date. Run \`pnpm catalog\` and commit.`);
     process.exit(1);
   }
-  console.log(`Catalog OK: ${components.length} components, ${candidates.length} candidates, ${kits.length} kits.`);
+  console.log(`Catalog OK: ${summary}.`);
 } else {
-  writeFileSync(out, md);
-  console.log(`Wrote catalog/CATALOG.md: ${components.length} components, ${candidates.length} candidates, ${kits.length} kits.`);
+  for (const [f, text] of outputs) writeFileSync(join(root, f), text);
+  console.log(`Wrote catalog/CATALOG.md and catalog/CONTRACTS.md: ${summary}.`);
 }
