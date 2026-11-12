@@ -16,6 +16,19 @@
 - **React and Flutter stay matched.** Every shared component has a contract (one prop list for both platforms), and CI fails when the two drift. See [CONTRACTS.md](catalog/CONTRACTS.md).
 - **Contrast is checked at build time.** Every brand is tested against WCAG in light, dark and both high-contrast modes, and the build refuses one that fails, naming the pair and the ratio.
 
+## See it
+
+<p align="center">
+  <img src="docs/assets/screens/web-light-desktop.png" alt="Aurum web preview in light mode: buttons, switches and segmented controls" width="100%">
+</p>
+<p align="center">
+  <img src="docs/assets/screens/flutter-money-light.png" alt="Flutter sample money app, light" width="32%">
+  <img src="docs/assets/screens/flutter-assistant-dark.png" alt="Flutter sample assistant app, dark" width="32%">
+  <img src="docs/assets/screens/flutter-course-dark.png" alt="Flutter sample course app, dark, with glass tab bar" width="32%">
+</p>
+
+The web preview (top) is `apps/docs`; the phones are the Flutter example app's sample screens, built only from Aurum parts. More in [docs/assets/screens](docs/assets/screens).
+
 ## Quick start (60 seconds)
 
 Pin a release tag, never `main`. The full guide, including brand files and updates, is [docs/USING-AURUM.md](docs/USING-AURUM.md).

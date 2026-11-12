@@ -59,6 +59,10 @@ Change a value in `tokens/`, run `pnpm tokens`, and both the web preview and the
 
 Checks CI runs: `pnpm catalog:check && pnpm guard && pnpm typecheck && pnpm test`, plus `flutter analyze && flutter test` in `packages/flutter` and `packages/flutter/example`.
 
+## Screenshots
+
+README images live in `docs/assets/screens/` and stay under 300 KB each. If a Flutter screen with big gradients comes out larger, shrink it with `convert in.png -colors 256 -dither FloydSteinberg out.png` (ImageMagick).
+
 ## Docs site
 
 `apps/docs` builds to a static site with relative paths, so it works under `https://<owner>.github.io/Aurum/`. `.github/workflows/pages.yml` builds and deploys it on every push to `main` once GitHub Pages is set to **GitHub Actions** in the repo settings.
