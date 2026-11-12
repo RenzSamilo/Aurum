@@ -352,7 +352,7 @@ function AppParts() {
                 ))}
               </ListSection>
               <div className="part-row">
-                <Avatar name="Renz" size={64} ring />
+                <Avatar name="Keiz" size={64} ring />
                 <Avatar name="Grace Hopper" size={40} />
                 <Avatar name="Alan Turing" size={24} />
                 <Badge tone="danger" appearance="solid">

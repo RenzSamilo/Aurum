@@ -5,7 +5,7 @@ import 'package:phosphor_glyphs/phosphor_glyphs.dart';
 import 'common.dart';
 
 const _app = 'Ledger';
-const _user = 'Renz Samilo';
+const _user = 'Keiz';
 
 /// The money app shell: three tabs and the tab bar.
 class MoneyApp extends StatefulWidget {
@@ -203,7 +203,7 @@ class _MoneyHomeState extends State<MoneyHome> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Good morning, Renz', style: context.aurumText(AurumType.headline)),
+                    Text('Good morning, Keiz', style: context.aurumText(AurumType.headline)),
                     Text('Welcome to $_app', style: context.aurumText(AurumType.footnote, color: c.textSecondary)),
                   ],
                 ),

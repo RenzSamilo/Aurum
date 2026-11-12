@@ -5,7 +5,7 @@ import 'package:phosphor_glyphs/phosphor_glyphs.dart';
 import 'common.dart';
 
 const _assistant = 'Sage';
-const _user = 'Renz Samilo';
+const _user = 'Keiz';
 
 /// The assistant's mark and version, as a pill that opens a model picker.
 class _ModelPicker extends StatelessWidget {
@@ -75,7 +75,7 @@ class AssistantHome extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AurumSpace.s32),
-            Text('Hello Renz', style: context.aurumText(AurumType.page)),
+            Text('Hello Keiz', style: context.aurumText(AurumType.page)),
             const SizedBox(height: AurumSpace.s4),
             Text(
               'Make your day easier with $_assistant',
