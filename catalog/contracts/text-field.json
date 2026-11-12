@@ -1,0 +1,79 @@
+{
+  "component": "Text field",
+  "react": {
+    "props": "TextFieldProps"
+  },
+  "flutter": {
+    "symbol": "AurumTextField"
+  },
+  "props": [
+    {
+      "name": "label",
+      "note": "Read by screen readers (aria-label / Semantics label). The placeholder is only a hint."
+    },
+    {
+      "name": "value",
+      "flutter": "controller",
+      "note": "React takes the text (controlled) or defaultValue. Flutter takes a TextEditingController."
+    },
+    {
+      "name": "defaultValue",
+      "flutter": null,
+      "why": "Flutter sets the starting text on the TextEditingController."
+    },
+    {
+      "name": "placeholder",
+      "inherited": [
+        "react"
+      ]
+    },
+    {
+      "name": "leading"
+    },
+    {
+      "name": "trailing"
+    },
+    {
+      "name": "onChange",
+      "react": "onValueChange",
+      "flutter": "onChanged"
+    },
+    {
+      "name": "onSubmit",
+      "react": "onValueSubmit",
+      "flutter": "onSubmitted",
+      "note": "Web: Enter in a one-line field, Cmd/Ctrl+Enter in a multi-line one."
+    },
+    {
+      "name": "maxLines",
+      "note": "More than 1 grows up to that many lines (a textarea on the web)."
+    },
+    {
+      "name": "inputAction",
+      "react": "enterKeyHint",
+      "flutter": "textInputAction",
+      "inherited": [
+        "react"
+      ]
+    },
+    {
+      "name": "keyboardType",
+      "react": "inputMode",
+      "flutter": "keyboardType",
+      "inherited": [
+        "react"
+      ]
+    },
+    {
+      "name": "capsule"
+    },
+    {
+      "name": "disabled",
+      "flutter": "enabled",
+      "inherited": [
+        "react"
+      ],
+      "note": "Flutter takes enabled: false."
+    }
+  ]
+}

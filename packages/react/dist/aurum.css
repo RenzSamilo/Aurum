@@ -1,0 +1,120 @@
+/* Aurum base styles. Import once at the app root: import '@aurum/react/aurum.css'. */
+
+/* Inter Variable with the optical-size axis (Display designs at large sizes). OFL-1.1. */
+@import '@fontsource-variable/inter/opsz.css';
+/* Fraunces Variable, the display serif for title roles. OFL-1.1. */
+@import '@fontsource-variable/fraunces/opsz.css';
+@import './tokens/tokens.css';
+@import './core/controls.css';
+@import './core/surfaces.css';
+@import './core/menu.css';
+@import './core/text-field.css';
+@import './core/navigation.css';
+@import './core/identity.css';
+
+html {
+  font-family: var(--font-family-ui);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: var(--color-surface-canvas);
+  color: var(--color-text-primary);
+}
+
+body {
+  margin: 0;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line-height);
+  letter-spacing: var(--type-body-tracking);
+}
+
+/* Numbers that change (counters, timers, prices) never shift width. */
+.aurum-numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Continuous corners. Chromium 139+ draws them natively. In other browsers,
+   <Squircle> or useSquircle() clips the element to the same shape. */
+.aurum-squircle {
+  border-radius: var(--aurum-radius, var(--radius-lg));
+}
+@supports (corner-shape: superellipse(2)) {
+  .aurum-squircle {
+    border-radius: calc(var(--aurum-radius, var(--radius-lg)) * var(--shape-radius-scale));
+    corner-shape: superellipse(var(--shape-superellipse));
+  }
+}
+
+:focus-visible {
+  outline: var(--size-focus-width) solid var(--color-focus);
+  outline-offset: var(--size-focus-offset);
+}
+
+/* Glass: a translucent material over content. Levels: clear, ultralight, thin, regular, thick.
+   Reduced transparency (system or data-transparency="reduced") turns it solid. */
+.aurum-glass {
+  --aurum-glass-tint: var(--material-tint-regular);
+  --aurum-glass-blur: var(--material-blur-regular);
+  --aurum-glass-saturation: var(--material-saturation-regular);
+  --_glass-fill: var(--aurum-glass-tint);
+  /* A sheen over the top half, then the tinted fill. */
+  background:
+    linear-gradient(to bottom, var(--material-rim-sheen), transparent 50%),
+    var(--_glass-fill);
+  /* The edge catches light: bright at the top-left, faint at the bottom-right. Inset, so the
+     squircle clip in Safari and Firefox keeps it. Reduced transparency turns the rim tokens off. */
+  box-shadow:
+    inset 1px 1px 0 var(--material-rim-high),
+    inset -1px -1px 0 var(--material-rim-low);
+  /* --material-backdrop is none for solid surfaces (reduced transparency, opaque brands). */
+  -webkit-backdrop-filter: var(--material-backdrop, blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation)));
+  backdrop-filter: var(--material-backdrop, blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation)));
+  border: 1px solid var(--color-border-decorative);
+}
+.aurum-glass[data-level='clear'] {
+  --aurum-glass-tint: var(--material-tint-clear);
+  --aurum-glass-blur: var(--material-blur-clear);
+  --aurum-glass-saturation: var(--material-saturation-clear);
+}
+.aurum-glass[data-level='ultralight'] {
+  --aurum-glass-tint: var(--material-tint-ultralight);
+  --aurum-glass-blur: var(--material-blur-ultralight);
+  --aurum-glass-saturation: var(--material-saturation-ultralight);
+}
+.aurum-glass[data-level='thin'] {
+  --aurum-glass-tint: var(--material-tint-thin);
+  --aurum-glass-blur: var(--material-blur-thin);
+  --aurum-glass-saturation: var(--material-saturation-thin);
+}
+.aurum-glass[data-level='thick'] {
+  --aurum-glass-tint: var(--material-tint-thick);
+  --aurum-glass-blur: var(--material-blur-thick);
+  --aurum-glass-saturation: var(--material-saturation-thick);
+}
+.aurum-glass[data-rim='off'] {
+  background: var(--_glass-fill);
+  box-shadow: none;
+}
+/* tint: mixed into the glass at the same strength as Flutter (32%, 16% when solid). */
+.aurum-glass[data-tinted] {
+  --_glass-fill: color-mix(in oklch, var(--aurum-glass-tint), var(--aurum-glass-tint-color) 32%);
+}
+:root[data-transparency='reduced'] .aurum-glass[data-tinted] {
+  --_glass-fill: color-mix(in oklch, var(--aurum-glass-tint), var(--aurum-glass-tint-color) 16%);
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root:not([data-transparency='normal']) .aurum-glass[data-tinted] {
+    --_glass-fill: color-mix(in oklch, var(--aurum-glass-tint), var(--aurum-glass-tint-color) 16%);
+  }
+}
+/* No backdrop-filter support: a solid surface reads better than see-through without blur. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  /* Same specificity as the level and tint rules above, and later, so it wins. */
+  .aurum-glass,
+  .aurum-glass[data-level],
+  .aurum-glass[data-tinted] {
+    --aurum-glass-tint: var(--color-surface-elevated);
+    --_glass-fill: var(--color-surface-elevated);
+  }
+}

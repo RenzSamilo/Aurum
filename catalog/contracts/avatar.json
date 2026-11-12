@@ -1,0 +1,26 @@
+{
+  "component": "Avatar",
+  "react": {
+    "props": "AvatarProps"
+  },
+  "flutter": {
+    "symbol": "AurumAvatar"
+  },
+  "props": [
+    {
+      "name": "name"
+    },
+    {
+      "name": "image",
+      "react": "src",
+      "flutter": "image",
+      "note": "React takes a URL and falls back to initials if it fails; Flutter takes an ImageProvider."
+    },
+    {
+      "name": "size"
+    },
+    {
+      "name": "ring"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import { type AurumPreferences, Button, Card, Glass, ListRow, ListSection, Menu, Sheet, SegmentedControl, Switch, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
-import { Archive, Bell, CopySimple, DotsThree, Gear, Globe, House, Lock, MagnifyingGlass, Moon, PencilSimple, Plus, Sun, Trash, WifiHigh } from '@phosphor-icons/react';
+import { type AurumPreferences, Avatar, BackButton, Badge, Button, Card, Glass, ListRow, ListSection, Menu, ProgressRing, Sheet, SegmentedControl, Switch, TabBar, TextField, TopBar, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
+import { Archive, Barbell, Bell, ChartBar, CopySimple, DotsThree, Gear, Globe, Heart, House, Lock, MagnifyingGlass, Moon, PaperPlaneRight, PencilSimple, Play, Plus, Sun, Trash, User, WifiHigh } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
 const colorGroups: Record<string, string[]> = {
@@ -44,6 +44,8 @@ export function App() {
 
       <Controls />
       <Surfaces />
+      <AppParts />
+      <GlassControls />
 
       <Section title="Colour" note="Semantic roles in OKLCH. Toggle dark and contrast above.">
         <div className="swatch-groups">
@@ -303,6 +305,128 @@ function Surfaces() {
           ))}
         </ListSection>
       </Sheet>
+    </Section>
+  );
+}
+
+function AppParts() {
+  const [tab, setTab] = useState(0);
+  const [query, setQuery] = useState('');
+  const [message, setMessage] = useState('');
+  const people = ['Ada Lovelace', 'Grace Hopper', 'Alan Turing'];
+  return (
+    <Section title="Fields, navigation and identity" note="Top bar, text field, avatar, badge, progress ring and a glass tab bar that sticks to the bottom of its screen.">
+      <div className="controls-grid">
+        <div className="phone aurum-squircle">
+          <div className="phone-scroll">
+            <TopBar
+              leading={<BackButton onClick={() => setTab(0)} />}
+              title="Training"
+              trailing={<Button variant="gray" capsule icon={<Plus weight="bold" />} aria-label="New workout" />}
+            />
+            <div className="control-stack phone-body">
+              <TextField label="Search workouts" placeholder="Search" capsule leading={<MagnifyingGlass />} value={query} onValueChange={setQuery} />
+              <Card padding="md">
+                <div className="part-row">
+                  <ProgressRing value={0.5} size={56} stroke={5} aria-label="Today's sets">
+                    <span className="aurum-type-caption">3/6</span>
+                  </ProgressRing>
+                  <div>
+                    <p className="aurum-type-headline" style={{ margin: 0 }}>
+                      Push day <Badge>New</Badge>
+                    </p>
+                    <p className="aurum-type-footnote meta" style={{ margin: 0 }}>
+                      3 of 6 sets done
+                    </p>
+                  </div>
+                </div>
+              </Card>
+              <ListSection header="Training partners">
+                {people.map((p, i) => (
+                  <ListRow
+                    key={p}
+                    leading={<Avatar name={p} size={32} />}
+                    title={p}
+                    trailing={i === 0 ? <Badge tone="secondary">Coach</Badge> : i === 2 ? <Badge appearance="outline">Away</Badge> : undefined}
+                  />
+                ))}
+              </ListSection>
+              <div className="part-row">
+                <Avatar name="Renz" size={64} ring />
+                <Avatar name="Grace Hopper" size={40} />
+                <Avatar name="Alan Turing" size={24} />
+                <Badge tone="danger" appearance="solid">
+                  Live
+                </Badge>
+                <Badge tone="neutral">Free</Badge>
+                <ProgressRing value={0.8} color="var(--color-success)" aria-label="Weekly goal" />
+              </div>
+              <TextField
+                label="Message"
+                placeholder="Message your coach"
+                maxLines={4}
+                value={message}
+                onValueChange={setMessage}
+                onValueSubmit={() => setMessage('')}
+                trailing={<Button size="sm" capsule icon={<PaperPlaneRight weight="fill" />} aria-label="Send" disabled={!message} />}
+              />
+            </div>
+            <TabBar
+              aria-label="Main"
+              selectedIndex={tab}
+              onSelectedChange={setTab}
+              tabs={[
+                { label: 'Today', icon: <House />, selectedIcon: <House weight="fill" /> },
+                { label: 'Train', icon: <Barbell />, selectedIcon: <Barbell weight="fill" /> },
+                { label: 'Progress', icon: <ChartBar />, selectedIcon: <ChartBar weight="fill" /> },
+                { label: 'Profile', icon: <User />, selectedIcon: <User weight="fill" /> },
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function GlassControls() {
+  const [speed, setSpeed] = useState<'1x' | '1.5x' | '2x'>('1x');
+  return (
+    <Section title="Glass controls" note="Clear-glass button, segmented track and glass card, for controls that float over imagery, video or a canvas.">
+      <div className="glass-stage aurum-squircle">
+        <div className="control-row">
+          <Button variant="glass" capsule icon={<Play weight="fill" />}>
+            Play
+          </Button>
+          <Button variant="glass" capsule icon={<Heart />} aria-label="Like" />
+          <Button variant="glass" capsule destructive>
+            Stop
+          </Button>
+        </div>
+        <SegmentedControl
+          aria-label="Playback speed"
+          glass
+          style={{ width: 'fit-content' }}
+          value={speed}
+          onValueChange={setSpeed}
+          segments={[
+            { value: '1x', label: '1x' },
+            { value: '1.5x', label: '1.5x' },
+            { value: '2x', label: '2x' },
+          ]}
+        />
+        <Card material="thin" padding="md">
+          <p className="aurum-type-card" style={{ margin: 0 }}>
+            Glass card
+          </p>
+          <p className="aurum-type-footnote" style={{ margin: 'var(--space-4) 0 0' }}>
+            material="thin". Toggle Solid surfaces above to see the fallback.
+          </p>
+        </Card>
+        <Glass level="thin" radius="md" tint="var(--color-accent)" className="glass-tinted">
+          <span className="aurum-type-subhead">Tinted glass</span>
+        </Glass>
+      </div>
     </Section>
   );
 }

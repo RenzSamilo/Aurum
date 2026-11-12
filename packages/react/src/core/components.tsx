@@ -1,4 +1,4 @@
-import { type ComponentPropsWithoutRef, type ElementType, type ReactNode, useRef } from 'react';
+import { type ComponentPropsWithoutRef, type CSSProperties, type ElementType, type ReactNode, useRef } from 'react';
 import type { MaterialLevel } from '../tokens/tokens';
 import { useSquircle } from '../squircle';
 
@@ -38,15 +38,30 @@ export function Squircle<T extends ElementType = 'div'>({
 export interface GlassOwnProps {
   level?: MaterialLevel;
   radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {});
+  /** Mixed into the glass, e.g. 'var(--color-accent)' for a selected or primary control. */
+  tint?: string;
+  /** Light-catching rim and top sheen. Off leaves a flat hairline border. */
+  rim?: boolean;
   children?: ReactNode;
 }
 
 export function Glass<T extends ElementType = 'div'>({
   level = 'regular',
+  tint,
+  rim = true,
   className,
   ...rest
 }: Polymorphic<T, GlassOwnProps>) {
   // Generic props cannot be checked through a second polymorphic component; they are the same shape.
-  const props = rest as ComponentPropsWithoutRef<typeof Squircle>;
-  return <Squircle {...props} className={['aurum-glass', className].filter(Boolean).join(' ')} data-level={level} />;
+  const { style, ...props } = rest as ComponentPropsWithoutRef<typeof Squircle> & { style?: CSSProperties };
+  return (
+    <Squircle
+      {...props}
+      className={['aurum-glass', className].filter(Boolean).join(' ')}
+      data-level={level}
+      data-rim={rim ? undefined : 'off'}
+      data-tinted={tint ? true : undefined}
+      style={tint ? { '--aurum-glass-tint-color': tint, ...style } : style}
+    />
+  );
 }

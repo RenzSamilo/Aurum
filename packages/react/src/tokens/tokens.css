@@ -132,6 +132,9 @@
   --color-fill-pressed: rgb(0 0 0 / 0.06);
   --color-focus: oklch(0.42 0.06 152);
   --color-scrim: rgb(0 0 0 / 0.32);
+  --material-rim-high: rgb(255 255 255 / 0.85);
+  --material-rim-low: rgb(255 255 255 / 0.22);
+  --material-rim-sheen: rgb(255 255 255 / 0.16);
   --material-tint-base: oklch(0.99 0.011 88);
   --material-alpha-clear: 0.22;
   --material-alpha-ultralight: 0.56;
@@ -166,6 +169,9 @@
     --color-fill-pressed: rgb(255 255 255 / 0.08);
     --color-focus: oklch(0.74 0.045 152);
     --color-scrim: rgb(0 0 0 / 0.48);
+    --material-rim-high: rgb(255 255 255 / 0.34);
+    --material-rim-low: rgb(255 255 255 / 0.06);
+    --material-rim-sheen: rgb(255 255 255 / 0.06);
     --material-tint-base: oklch(0.2 0.022 160);
     --material-alpha-clear: 0.26;
     --material-alpha-ultralight: 0.64;
@@ -200,6 +206,9 @@
   --color-fill-pressed: rgb(255 255 255 / 0.08);
   --color-focus: oklch(0.74 0.045 152);
   --color-scrim: rgb(0 0 0 / 0.48);
+  --material-rim-high: rgb(255 255 255 / 0.34);
+  --material-rim-low: rgb(255 255 255 / 0.06);
+  --material-rim-sheen: rgb(255 255 255 / 0.06);
   --material-tint-base: oklch(0.2 0.022 160);
   --material-alpha-clear: 0.26;
   --material-alpha-ultralight: 0.64;
@@ -270,6 +279,10 @@
     --material-tint-thin: var(--color-surface-elevated);
     --material-tint-regular: var(--color-surface-elevated);
     --material-tint-thick: var(--color-surface-elevated);
+    --material-rim-high: transparent;
+    --material-rim-low: transparent;
+    --material-rim-sheen: transparent;
+    --material-backdrop: none;
   }
 }
 
@@ -284,6 +297,10 @@
   --material-tint-thin: var(--color-surface-elevated);
   --material-tint-regular: var(--color-surface-elevated);
   --material-tint-thick: var(--color-surface-elevated);
+  --material-rim-high: transparent;
+  --material-rim-low: transparent;
+  --material-rim-sheen: transparent;
+  --material-backdrop: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

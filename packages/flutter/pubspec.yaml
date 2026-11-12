@@ -1,6 +1,6 @@
 name: aurum_ui
 description: Aurum design system for Flutter. Tokens, theme and (from Phase 1) widgets, generated from the same source as @aurum/react.
-version: 0.0.1
+version: 0.1.0
 publish_to: none
 
 environment:

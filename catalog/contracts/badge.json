@@ -1,0 +1,39 @@
+{
+  "component": "Badge",
+  "react": {
+    "props": "BadgeProps"
+  },
+  "flutter": {
+    "symbol": "AurumBadge"
+  },
+  "props": [
+    {
+      "name": "label",
+      "react": "children",
+      "flutter": "label",
+      "inherited": [
+        "react"
+      ]
+    },
+    {
+      "name": "tone",
+      "values": [
+        "accent",
+        "secondary",
+        "neutral",
+        "danger"
+      ]
+    },
+    {
+      "name": "style",
+      "react": "appearance",
+      "flutter": "style",
+      "values": [
+        "soft",
+        "solid",
+        "outline"
+      ],
+      "note": "React calls it appearance, because style is taken."
+    }
+  ]
+}

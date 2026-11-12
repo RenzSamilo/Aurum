@@ -1,0 +1,28 @@
+name: Release check
+
+# Runs when a release tag (aurum-vX.Y.Z) is pushed or a GitHub release is made.
+# Apps pin these tags, so a tag whose versions don't match fails loudly.
+on:
+  push:
+    tags: ['aurum-v*']
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Tag matches package versions and CHANGELOG
+        run: node tools/release-check.mjs "${GITHUB_REF_NAME}"
+      - name: Built React package (dist/) is current
+        run: |
+          pnpm --filter @aurum/react build
+          git diff --exit-code -- packages/react/dist
+          test -z "$(git status --porcelain -- packages/react/dist)"
+      - name: A fresh app can install and build it
+        run: pnpm consumer:check

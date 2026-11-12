@@ -1,0 +1,27 @@
+{
+  "component": "Top bar",
+  "react": {
+    "props": "TopBarProps"
+  },
+  "flutter": {
+    "symbol": "AurumTopBar"
+  },
+  "props": [
+    {
+      "name": "leading"
+    },
+    {
+      "name": "title",
+      "note": "React: text becomes the page's h1, or pass an element. Flutter: a widget."
+    },
+    {
+      "name": "titleText",
+      "react": null,
+      "why": "React's title takes text directly."
+    },
+    {
+      "name": "trailing",
+      "note": "React takes nodes; Flutter takes a list of widgets."
+    }
+  ]
+}

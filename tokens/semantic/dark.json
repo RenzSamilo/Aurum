@@ -30,6 +30,13 @@
     "scrim": { "$value": "rgb(0 0 0 / 0.48)" }
   },
   "material": {
+    "rim": {
+      "$type": "color",
+      "$description": "Glass edge that catches light: bright at the top-left (high), faint along the sides (low), and a sheen over the top half.",
+      "high":  { "$value": "rgb(255 255 255 / 0.34)" },
+      "low":   { "$value": "rgb(255 255 255 / 0.06)" },
+      "sheen": { "$value": "rgb(255 255 255 / 0.06)" }
+    },
     "tint-base": { "$type": "color", "$value": "{color.cool.20}" },
     "alpha": {
       "$type": "number",

@@ -1,0 +1,37 @@
+{
+  "component": "Progress ring",
+  "react": {
+    "props": "ProgressRingProps"
+  },
+  "flutter": {
+    "symbol": "AurumProgressRing"
+  },
+  "props": [
+    {
+      "name": "value",
+      "note": "0 to 1."
+    },
+    {
+      "name": "size"
+    },
+    {
+      "name": "stroke"
+    },
+    {
+      "name": "color",
+      "note": "React takes a CSS colour (use a token var); Flutter a Color."
+    },
+    {
+      "name": "trackColor"
+    },
+    {
+      "name": "content",
+      "react": "children",
+      "flutter": "child"
+    },
+    {
+      "name": "semanticLabel",
+      "react": "aria-label"
+    }
+  ]
+}

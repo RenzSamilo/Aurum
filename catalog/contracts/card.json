@@ -47,8 +47,7 @@
     },
     {
       "name": "material",
-      "react": null,
-      "todo": "Build the glass card (material level) for web."
+      "note": "Glass at this level. On the web a glass card casts no shadow (a shadow filter would stop the blur), and tints with className instead of color."
     }
   ]
 }

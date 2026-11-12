@@ -4,17 +4,42 @@
 
 Each component has one list of props shared by React and Flutter. A prop added on only one side fails CI until its contract says what the other side does: a different name, an intentional difference (why), or a gap to close (to do).
 
-## Gaps to close (7)
+## Gaps to close (2)
 
-- [ ] **Button**: Build the glass variant for web.
-- [ ] **Card**: Build the glass card (material level) for web.
-- [ ] **Glass**: Add a tint override for web glass.
-- [ ] **Glass**: Add the specular rim to web glass.
-- [ ] **Glass**: Add the lifted shadow to web glass.
+- [ ] **Glass**: Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card.
 - [ ] **Segmented control**: Add a semanticLabel for the whole group in Flutter.
-- [ ] **Segmented control**: Build the glass track for web.
 
 ## Components
+
+### Avatar
+
+`AvatarProps` · `AurumAvatar`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| name | `name` | `name` |  |
+| image | `src` | `image` | React takes a URL and falls back to initials if it fails; Flutter takes an ImageProvider. |
+| size | `size` | `size` |  |
+| ring | `ring` | `ring` |  |
+
+### Back button
+
+`BackButtonProps` · `AurumBackButton`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| onPress | `onClick` | `onPressed` | Without it, React goes back in history and Flutter pops the route. |
+| semanticLabel | `aria-label` | `semanticLabel` | Defaults to "Back". |
+
+### Badge
+
+`BadgeProps` · `AurumBadge`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| label | `children` | `label` |  |
+| tone | `tone` | `tone` | accent / secondary / neutral / danger. |
+| style | `appearance` | `style` | soft / solid / outline. React calls it appearance, because style is taken. |
 
 ### Button
 
@@ -26,7 +51,7 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | icon | `icon` | `icon` |  |
 | onPress | `onClick` | `onPressed` |  |
 | disabled | `disabled` | — | Flutter disables a button by passing onPressed: null. |
-| variant | `variant` (no glass) | `variant` | filled / tinted / gray / plain / glass. **To do:** Build the glass variant for web. |
+| variant | `variant` | `variant` | filled / tinted / gray / plain / glass. glass is clear glass for controls over imagery or video. |
 | size | `size` | `size` | sm / md / lg. |
 | capsule | `capsule` | `capsule` |  |
 | destructive | `destructive` | `destructive` |  |
@@ -46,7 +71,7 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | padding | `padding` | `padding` | React takes none | md | lg. Flutter takes any EdgeInsets (default 24). |
 | elevation | `elevation` | `lifted` | flat / lifted. Flutter takes a bool: lifted: false is flat. |
 | color | — | `color` | On the web, override the fill with className. |
-| material | — | `material` | **To do:** Build the glass card (material level) for web. |
+| material | `material` | `material` | Glass at this level. On the web a glass card casts no shadow (a shadow filter would stop the blur), and tints with className instead of color. |
 
 ### Glass
 
@@ -59,9 +84,9 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | radius | `radius` | `radius` | React takes sm | md | lg | xl or any CSS length. Flutter takes a number. |
 | solid | — | `solid` | On the web, solid surfaces follow setAurumPreferences({ transparency }). |
 | padding | — | `padding` | On the web, pad with CSS. |
-| tint | — | `tint` | **To do:** Add a tint override for web glass. |
-| rim | — | `rim` | **To do:** Add the specular rim to web glass. |
-| lifted | — | `lifted` | **To do:** Add the lifted shadow to web glass. |
+| tint | `tint` | `tint` | React takes a CSS colour (use a token var). |
+| rim | `rim` | `rim` | On by default. Off leaves a flat hairline. |
+| lifted | — | `lifted` | **To do:** Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card. |
 
 ### List row
 
@@ -100,6 +125,20 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | align | `align` | `align` | start / end. |
 | semanticLabel | `aria-label` | `semanticLabel` |  |
 
+### Progress ring
+
+`ProgressRingProps` · `AurumProgressRing`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| value | `value` | `value` | 0 to 1. |
+| size | `size` | `size` |  |
+| stroke | `stroke` | `stroke` |  |
+| color | `color` | `color` | React takes a CSS colour (use a token var); Flutter a Color. |
+| trackColor | `trackColor` | `trackColor` |  |
+| content | `children` | `child` |  |
+| semanticLabel | `aria-label` | `semanticLabel` |  |
+
 ### Segmented control
 
 `SegmentedControlProps` · `AurumSegmentedControl`
@@ -111,7 +150,7 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | onChange | `onValueChange` | `onChanged` |  |
 | size | `size` | `small` | sm / md. Flutter takes a bool: small: true is sm. |
 | groupLabel | `aria-label` | — | **To do:** Add a semanticLabel for the whole group in Flutter. |
-| glass | — | `glass` | **To do:** Build the glass track for web. |
+| glass | `glass` | `glass` |  |
 
 ### Sheet
 
@@ -139,3 +178,46 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | description | `description` | `description` |  |
 | disabled | `disabled` | — | Flutter disables a switch by passing onChanged: null. |
 | semanticLabel | `aria-label` | `semanticLabel` |  |
+
+### Tab bar
+
+`TabBarProps` · `AurumTabBar`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| tabs | `tabs` | `tabs` | Each tab: label, icon, selectedIcon. React tabs can also take href (a link); Flutter tabs can take child (replaces the icon). |
+| selectedIndex | `selectedIndex` | `selectedIndex` |  |
+| onSelected | `onSelectedChange` | `onSelected` |  |
+| landmarkLabel | `aria-label` | — | The web bar is a nav landmark and needs a name; Flutter has no landmarks, each tab reads "Tab n of m". |
+| solid | — | `solid` | On the web, solid surfaces follow setAurumPreferences({ transparency }). |
+
+### Text field
+
+`TextFieldProps` · `AurumTextField`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| label | `label` | `label` | Read by screen readers (aria-label / Semantics label). The placeholder is only a hint. |
+| value | `value` | `controller` | React takes the text (controlled) or defaultValue. Flutter takes a TextEditingController. |
+| defaultValue | `defaultValue` | — | Flutter sets the starting text on the TextEditingController. |
+| placeholder | `placeholder` | `placeholder` |  |
+| leading | `leading` | `leading` |  |
+| trailing | `trailing` | `trailing` |  |
+| onChange | `onValueChange` | `onChanged` |  |
+| onSubmit | `onValueSubmit` | `onSubmitted` | Web: Enter in a one-line field, Cmd/Ctrl+Enter in a multi-line one. |
+| maxLines | `maxLines` | `maxLines` | More than 1 grows up to that many lines (a textarea on the web). |
+| inputAction | `enterKeyHint` | `textInputAction` |  |
+| keyboardType | `inputMode` | `keyboardType` |  |
+| capsule | `capsule` | `capsule` |  |
+| disabled | `disabled` | `enabled` | Flutter takes enabled: false. |
+
+### Top bar
+
+`TopBarProps` · `AurumTopBar`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| leading | `leading` | `leading` |  |
+| title | `title` | `title` | React: text becomes the page's h1, or pass an element. Flutter: a widget. |
+| titleText | — | `titleText` | React's title takes text directly. |
+| trailing | `trailing` | `trailing` | React takes nodes; Flutter takes a list of widgets. |

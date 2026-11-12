@@ -123,6 +123,7 @@ if (fontDisplay !== fontUi) {
   }
 }
 const levels = Object.keys(materialBlur);
+const RIM = ['material-rim-high', 'material-rim-low', 'material-rim-sheen'];
 /** Brand intent: 'translucent' glass, or 'opaque' solid surfaces everywhere (web and Flutter). */
 const opaque = brand.surfaces.material === 'opaque';
 
@@ -134,6 +135,8 @@ function semantic(mode) {
     // An opaque brand (surfaces.material) fills glass with the elevated surface in every mode.
     vals[`material-tint-${l}`] = opaque ? vals['color-surface-elevated'] : withAlpha(vals['material-tint-base'], vals[`material-alpha-${l}`]);
   }
+  // Solid surfaces have no light-catching rim.
+  if (opaque) for (const k of RIM) vals[k] = 'transparent';
   return vals;
 }
 const sem = Object.fromEntries(Object.keys(MODES).map((m) => [m, semantic(m)]));
@@ -196,6 +199,8 @@ const cssBase = {
   ),
   ...Object.fromEntries(Object.entries(press).map(([k, v]) => [`press-${k}`, v])),
   ...Object.fromEntries(Object.entries(materialBlur).map(([k, v]) => [`material-blur-${k}`, opaque ? '0px' : v])),
+  // Solid surfaces skip the backdrop filter entirely: even blur(0) makes the browser re-read what is behind.
+  ...(opaque ? { 'material-backdrop': 'none' } : {}),
   ...Object.fromEntries(Object.entries(materialSat).map(([k, v]) => [`material-saturation-${k}`, v])),
   ...Object.fromEntries(Object.entries(shadows).map(([k, v]) => [`shadow-${k}`, shadowCss(v)])),
 };
@@ -203,6 +208,8 @@ const cssBase = {
 const reducedTransparency = {
   ...Object.fromEntries(levels.map((l) => [`material-blur-${l}`, '0px'])),
   ...Object.fromEntries(levels.map((l) => [`material-tint-${l}`, 'var(--color-surface-elevated)'])),
+  ...Object.fromEntries(RIM.map((k) => [k, 'transparent'])),
+  'material-backdrop': 'none',
 };
 const reducedMotion = Object.fromEntries(Object.keys(press).map((k) => [`press-${k}`, 1]));
 const dark = { 'color-scheme': 'dark', ...diff('light', 'dark') };

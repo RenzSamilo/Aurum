@@ -38,6 +38,12 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
+      - name: Built React package (packages/react/dist) is committed and current
+        run: |
+          git diff --exit-code -- packages/react/dist
+          test -z "$(git status --porcelain -- packages/react/dist)" || (echo "Run pnpm build and commit packages/react/dist" && git status --porcelain -- packages/react/dist && exit 1)
+      - name: A fresh Vite app (strict tsconfig) installs and builds @aurum/react
+        run: pnpm consumer:check
 
   flutter:
     name: Flutter

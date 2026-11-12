@@ -1,0 +1,90 @@
+/* Aurum TextField. Imported by aurum.css. */
+
+.aurum-text-field {
+  --aurum-radius: var(--radius-md);
+  --_line: var(--type-body-line-height);
+  --_pad-y: var(--space-12);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  box-sizing: border-box;
+  min-height: calc(var(--size-target) + var(--space-8));
+  padding-inline: var(--space-16);
+  background: var(--color-surface-inset);
+  color: var(--color-text-primary);
+  /* Inset shadows instead of a border, so the outline survives the squircle clip in Safari and Firefox. */
+  box-shadow: inset 0 0 0 1px var(--color-border-decorative);
+  cursor: text;
+  transition: box-shadow var(--duration-hover) var(--ease-standard);
+}
+.aurum-text-field[data-capsule] {
+  --aurum-radius: var(--radius-pill);
+}
+.aurum-text-field[data-leading] {
+  padding-inline-start: var(--space-8);
+}
+.aurum-text-field[data-trailing] {
+  padding-inline-end: var(--space-4);
+}
+.aurum-text-field:focus-within {
+  box-shadow: inset 0 0 0 var(--size-focus-width) var(--color-focus);
+}
+.aurum-text-field[data-disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.aurum-text-field-input {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: var(--_pad-y) 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-body-size);
+  line-height: var(--_line);
+  letter-spacing: var(--type-body-tracking);
+  caret-color: var(--color-accent);
+  outline: none;
+  resize: none;
+}
+textarea.aurum-text-field-input {
+  box-sizing: border-box;
+  max-height: calc(var(--aurum-text-field-lines) * var(--_line) + 2 * var(--_pad-y));
+  overflow-y: auto;
+}
+.aurum-text-field-input::placeholder {
+  color: var(--color-text-tertiary);
+  opacity: 1;
+}
+.aurum-text-field-input:disabled {
+  cursor: default;
+}
+.aurum-text-field-leading,
+.aurum-text-field-trailing {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--color-text-secondary);
+}
+/* Multi-line: the slots stay with the last line, like a chat composer. */
+.aurum-text-field[data-multiline] {
+  align-items: flex-end;
+}
+.aurum-text-field[data-multiline] .aurum-text-field-leading,
+.aurum-text-field[data-multiline] .aurum-text-field-trailing {
+  min-height: calc(var(--size-target) + var(--space-8));
+}
+.aurum-text-field-leading > svg,
+.aurum-text-field-trailing > svg {
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+}
+
+@media (forced-colors: active) {
+  .aurum-text-field {
+    border: 1px solid CanvasText;
+  }
+}

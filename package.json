@@ -19,7 +19,9 @@
     "build": "pnpm -r build",
     "dev": "pnpm --filter @aurum/docs dev",
     "brands": "node tools/tokens/build-examples.mjs",
-    "palettes": "node tools/tokens/palettes.mjs"
+    "palettes": "node tools/tokens/palettes.mjs",
+    "consumer:check": "node tools/consumer/check.mjs",
+    "bench:glass": "node tools/bench/glass.mjs"
   },
   "devDependencies": {
     "style-dictionary": "5.7.1"

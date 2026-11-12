@@ -14,11 +14,14 @@ const cx = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).j
 // ---------------------------------------------------------------------------
 // Button
 
-export type ButtonVariant = 'filled' | 'tinted' | 'gray' | 'plain';
+export type ButtonVariant = 'filled' | 'tinted' | 'gray' | 'plain' | 'glass';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
-  /** filled: the one main action. tinted / gray: secondary. plain: text only. */
+  /**
+   * filled: the one main action. tinted / gray: secondary. plain: text only.
+   * glass: clear glass, for a control floating over imagery, video or a busy background.
+   */
   variant?: ButtonVariant;
   /** sm 32px tall (still a 44px hit area), md 48px, lg 64px. */
   size?: ButtonSize;
@@ -55,8 +58,9 @@ export function Button({
   return (
     <button
       type={type}
-      className={cx('aurum-button', 'aurum-squircle', className)}
+      className={cx('aurum-button', 'aurum-squircle', variant === 'glass' && 'aurum-glass', className)}
       data-variant={variant}
+      data-level={variant === 'glass' ? 'clear' : undefined}
       data-size={size}
       data-capsule={capsule || undefined}
       data-destructive={destructive || undefined}
@@ -153,6 +157,8 @@ export interface SegmentedControlProps<T extends string> extends Omit<ComponentP
   /** Names the group for screen readers. */
   'aria-label': string;
   size?: 'sm' | 'md';
+  /** A capsule of clear glass with a glass thumb, for a control floating over imagery or a busy background. */
+  glass?: boolean;
 }
 
 /**
@@ -164,6 +170,7 @@ export function SegmentedControl<T extends string>({
   value,
   onValueChange,
   size = 'md',
+  glass = false,
   className,
   style,
   ...rest
@@ -202,8 +209,10 @@ export function SegmentedControl<T extends string>({
   return (
     <div
       role="radiogroup"
-      className={cx('aurum-segmented', 'aurum-squircle', className)}
+      className={cx('aurum-segmented', 'aurum-squircle', glass && 'aurum-glass', className)}
       data-size={size}
+      data-glass={glass || undefined}
+      data-level={glass ? 'clear' : undefined}
       style={{ '--aurum-segments': segments.length, '--aurum-segment-index': index, ...style }}
       onKeyDown={onKeyDown}
       {...rest}

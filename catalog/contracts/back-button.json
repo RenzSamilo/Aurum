@@ -1,0 +1,25 @@
+{
+  "component": "Back button",
+  "react": {
+    "props": "BackButtonProps"
+  },
+  "flutter": {
+    "symbol": "AurumBackButton"
+  },
+  "props": [
+    {
+      "name": "onPress",
+      "react": "onClick",
+      "flutter": "onPressed",
+      "inherited": [
+        "react"
+      ],
+      "note": "Without it, React goes back in history and Flutter pops the route."
+    },
+    {
+      "name": "semanticLabel",
+      "react": "aria-label",
+      "note": "Defaults to \"Back\"."
+    }
+  ]
+}

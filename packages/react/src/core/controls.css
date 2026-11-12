@@ -74,6 +74,12 @@
   --_bg: transparent;
   --_fg: var(--color-accent);
 }
+.aurum-button[data-variant='glass'] {
+  --_fg: var(--color-text-primary);
+}
+.aurum-button[data-variant='glass'][data-destructive] {
+  --_fg: var(--color-danger);
+}
 .aurum-button[data-destructive][data-variant='filled'] {
   --_bg: var(--color-danger);
   --_fg: var(--color-on-accent);
@@ -248,6 +254,13 @@
 .aurum-segmented[data-size='sm'] {
   --_height: 28px;
 }
+.aurum-segmented[data-glass] {
+  --aurum-radius: var(--radius-pill);
+  --_pad: 4px;
+}
+.aurum-segmented[data-glass] .aurum-segment {
+  border-radius: var(--radius-pill);
+}
 .aurum-segmented-thumb {
   --aurum-radius: calc(var(--radius-sm) - 2px);
   position: absolute;
@@ -263,6 +276,18 @@
     0 0 0 0.5px rgb(0 0 0 / 0.04);
   transform: translateX(calc(100% * var(--aurum-segment-index)));
   transition: transform var(--spring-control-duration) var(--spring-control-easing);
+}
+/* Glass track: a frosted thumb with a bright hairline edge. */
+.aurum-segmented[data-glass] .aurum-segmented-thumb {
+  --aurum-radius: var(--radius-pill);
+  border-radius: var(--radius-pill);
+  background: light-dark(
+    color-mix(in oklch, var(--color-surface-elevated) 72%, transparent),
+    color-mix(in oklch, var(--color-text-primary) 18%, transparent)
+  );
+  box-shadow:
+    inset 0 0 0 1px var(--material-rim-high),
+    0 2px 6px rgb(0 0 0 / 0.08);
 }
 .aurum-segmented:dir(rtl) .aurum-segmented-thumb {
   left: auto;

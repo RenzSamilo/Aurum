@@ -39,9 +39,8 @@
       "shelf": "core",
       "group": "controls",
       "tags": ["any"],
-      "react": null,
-      "flutter": { "symbol": "AurumTextField", "file": "packages/flutter/lib/src/core/controls/aurum_text_field.dart" },
-      "notes": "React version not built yet."
+      "react": { "symbol": "TextField", "file": "packages/react/src/core/text-field.tsx" },
+      "flutter": { "symbol": "AurumTextField", "file": "packages/flutter/lib/src/core/controls/aurum_text_field.dart" }
     },
     {
       "name": "Menu",
@@ -110,7 +109,7 @@
       "shelf": "core",
       "group": "navigation",
       "tags": ["any"],
-      "react": null,
+      "react": { "symbol": "TopBar", "file": "packages/react/src/core/navigation.tsx" },
       "flutter": { "symbol": "AurumTopBar", "file": "packages/flutter/lib/src/core/navigation/aurum_top_bar.dart" }
     },
     {
@@ -118,7 +117,7 @@
       "shelf": "core",
       "group": "navigation",
       "tags": ["any"],
-      "react": null,
+      "react": { "symbol": "BackButton", "file": "packages/react/src/core/navigation.tsx" },
       "flutter": { "symbol": "AurumBackButton", "file": "packages/flutter/lib/src/core/navigation/aurum_top_bar.dart" }
     },
     {
@@ -126,7 +125,7 @@
       "shelf": "core",
       "group": "navigation",
       "tags": ["any"],
-      "react": null,
+      "react": { "symbol": "TabBar", "file": "packages/react/src/core/navigation.tsx" },
       "flutter": { "symbol": "AurumTabBar", "file": "packages/flutter/lib/src/core/navigation/aurum_tab_bar.dart" }
     },
     {
@@ -142,7 +141,7 @@
       "shelf": "core",
       "group": "feedback",
       "tags": ["any"],
-      "react": null,
+      "react": { "symbol": "ProgressRing", "file": "packages/react/src/core/feedback.tsx" },
       "flutter": { "symbol": "AurumProgressRing", "file": "packages/flutter/lib/src/core/feedback/aurum_progress_ring.dart" }
     },
     {
@@ -150,7 +149,7 @@
       "shelf": "core",
       "group": "identity",
       "tags": ["any"],
-      "react": null,
+      "react": { "symbol": "Avatar", "file": "packages/react/src/core/identity.tsx" },
       "flutter": { "symbol": "AurumAvatar", "file": "packages/flutter/lib/src/core/identity/aurum_avatar.dart" }
     },
     {
@@ -158,7 +157,7 @@
       "shelf": "core",
       "group": "identity",
       "tags": ["any"],
-      "react": null,
+      "react": { "symbol": "Badge", "file": "packages/react/src/core/identity.tsx" },
       "flutter": { "symbol": "AurumBadge", "file": "packages/flutter/lib/src/core/identity/aurum_badge.dart" }
     }
   ],
