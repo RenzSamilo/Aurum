@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-All four tasks are in one PR, one commit each, because this session can push only one branch: [#13](https://github.com/RenzSamilo/Viridian/pull/13).
+All four tasks are in one PR, one commit each, because this session can push only one branch: [#13](https://github.com/RenzSamilo/Aurum/pull/13).
 
 - **Installable from another repo: done.** `@aurum/react` ships a built `dist/` (JS, types, CSS). Tested from outside the repo: pnpm install pinned to a commit and to a tag, a strict-tsconfig Vite app, the Flutter git dependency, a brand build and eject.
 - **Web gaps: done.** TextField, TabBar, TopBar + BackButton, ProgressRing, Avatar and Badge each have a contract, axe tests and a docs preview.
@@ -15,14 +15,14 @@ Pin **`aurum-v0.1.0`**. The tag doesn't exist yet: after merging, publish a GitH
 
 ```sh
 # React
-pnpm add "github:RenzSamilo/Viridian#aurum-v0.1.0&path:/packages/react"
+pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.0&path:/packages/react"
 # Tools (token build, cheat sheet), ignored by git
-git clone --depth 1 --branch aurum-v0.1.0 https://github.com/RenzSamilo/Viridian.git .aurum
+git clone --depth 1 --branch aurum-v0.1.0 https://github.com/RenzSamilo/Aurum.git .aurum
 pnpm --dir .aurum install --frozen-lockfile --filter aurum
 node .aurum/tools/tokens/build.mjs --brand aurum.brand.json --css src/aurum-tokens.css   # or --dart lib/aurum_brand.g.dart
 ```
 
-Flutter `pubspec.yaml`: `aurum_ui: { git: { url: https://github.com/RenzSamilo/Viridian.git, path: packages/flutter, ref: aurum-v0.1.0 } }`
+Flutter `pubspec.yaml`: `aurum_ui: { git: { url: https://github.com/RenzSamilo/Aurum.git, path: packages/flutter, ref: aurum-v0.1.0 } }`
 
 ## 3. Gaps still open
 
