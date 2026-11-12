@@ -6,8 +6,8 @@ import {
   useId,
   useRef,
 } from 'react';
-import { playHaptic } from './haptics';
-import type { HapticIntent } from './tokens/tokens';
+import { playHaptic } from '../haptics';
+import type { HapticIntent } from '../tokens/tokens';
 
 const cx = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(' ');
 

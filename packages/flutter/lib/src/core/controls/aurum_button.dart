@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/aurum_glass.dart';
-import '../foundations/aurum_haptics.dart';
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../foundations/aurum_glass.dart';
+import '../../foundations/aurum_haptics.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 import 'aurum_pressable.dart';
 
 /// filled: the one main action. tinted / gray: secondary. plain: text only.

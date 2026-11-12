@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../foundations/aurum_springs.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../foundations/aurum_springs.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// Scales its child down while pressed and springs back on release, keeping
 /// the release velocity. With animations turned off it does not scale.

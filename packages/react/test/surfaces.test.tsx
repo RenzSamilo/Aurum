@@ -3,9 +3,9 @@ import axe from 'axe-core';
 import { act, createElement as h, createRef, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { Switch } from '../src/controls';
+import { Switch } from '../src/core/controls';
 import * as haptics from '../src/haptics';
-import { Card, ListRow, ListSection, Sheet } from '../src/surfaces';
+import { Card, ListRow, ListSection, Sheet } from '../src/core/surfaces';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// An inset, grouped list of rows: settings, details, menus. Separators are
 /// inset to the row text, like a native grouped list.

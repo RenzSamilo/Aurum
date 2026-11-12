@@ -9,8 +9,8 @@ import {
   useState,
 } from 'react';
 import { Squircle } from './components';
-import { playHaptic } from './haptics';
-import { gesture } from './tokens/tokens';
+import { playHaptic } from '../haptics';
+import { gesture } from '../tokens/tokens';
 
 const cx = (...parts: (string | false | undefined)[]) => parts.filter(Boolean).join(' ');
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// A single or multi-line text input on an inset fill with continuous
 /// corners. [label] is read by screen readers; [placeholder] is shown while

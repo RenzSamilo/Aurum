@@ -5,8 +5,8 @@
 /* Fraunces Variable, the display serif for title roles. OFL-1.1. */
 @import '@fontsource-variable/fraunces/opsz.css';
 @import './tokens/tokens.css';
-@import './controls.css';
-@import './surfaces.css';
+@import './core/controls.css';
+@import './core/surfaces.css';
 
 html {
   font-family: var(--font-family-ui);

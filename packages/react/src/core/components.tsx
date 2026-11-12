@@ -1,6 +1,6 @@
 import { type ComponentPropsWithoutRef, type ElementType, type ReactNode, useRef } from 'react';
-import type { MaterialLevel } from './tokens/tokens';
-import { useSquircle } from './squircle';
+import type { MaterialLevel } from '../tokens/tokens';
+import { useSquircle } from '../squircle';
 
 type Polymorphic<T extends ElementType, P> = P & { as?: T } & Omit<ComponentPropsWithoutRef<T>, keyof P | 'as'>;
 

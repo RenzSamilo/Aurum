@@ -10,7 +10,9 @@
   "exports": {
     ".": "./src/index.ts",
     "./aurum.css": "./src/aurum.css",
-    "./tokens.css": "./src/tokens/tokens.css"
+    "./tokens.css": "./src/tokens/tokens.css",
+    "./patterns": "./src/patterns/index.ts",
+    "./kits/*": "./src/kits/*/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

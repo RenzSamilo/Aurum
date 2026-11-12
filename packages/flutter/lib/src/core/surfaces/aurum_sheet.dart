@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
-import '../foundations/aurum_haptics.dart';
-import '../foundations/aurum_springs.dart';
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../foundations/aurum_haptics.dart';
+import '../../foundations/aurum_springs.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// Shows a modal sheet that rises from the bottom on the surface spring.
 /// Drag the top area down to close; a fast flick closes it from anywhere in
