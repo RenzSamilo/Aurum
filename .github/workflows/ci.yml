@@ -27,6 +27,8 @@ jobs:
         run: pnpm guard
       - name: Component catalog is complete, shelves are respected, CATALOG.md is current
         run: pnpm catalog:check
+      - name: Cheat sheet runs (pnpm aurum)
+        run: pnpm -s aurum list > /dev/null && pnpm -s aurum show Button > /dev/null && pnpm -s aurum tokens > /dev/null
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build

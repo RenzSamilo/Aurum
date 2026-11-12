@@ -13,6 +13,7 @@
     "guard": "node tools/license-guard.mjs",
     "catalog": "node tools/catalog/build.mjs",
     "catalog:check": "node tools/catalog/build.mjs --check",
+    "aurum": "node tools/aurum.mjs",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "build": "pnpm -r build",

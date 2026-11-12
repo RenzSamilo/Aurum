@@ -47,6 +47,7 @@ pnpm tokens          # rebuild tokens for every platform
 pnpm dev             # web preview at localhost:5173
 pnpm guard           # license guard
 pnpm catalog         # check the component catalog, rewrite catalog/CATALOG.md
+pnpm aurum list      # cheat sheet: components, props (show <name>), tokens, kits, rules
 pnpm typecheck && pnpm build
 
 cd packages/flutter/example && flutter run   # Flutter preview
