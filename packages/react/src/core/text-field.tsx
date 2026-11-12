@@ -58,13 +58,15 @@ export function TextField({
   useSquircle(box, undefined, capsule ? 'var(--radius-pill)' : 'var(--radius-md)');
   const multiline = maxLines > 1;
 
-  // Grow the text area with its content, up to maxLines.
-  useLayoutEffect(() => {
+  // Grow the text area with its content, up to maxLines: after renders (controlled value)
+  // and on every input (uncontrolled fields don't re-render while typing).
+  const grow = () => {
     const el = area.current;
     if (!el) return;
     el.style.height = 'auto';
     el.style.height = `${el.scrollHeight}px`;
-  });
+  };
+  useLayoutEffect(grow);
 
   const handleKey = (e: KeyboardEvent<HTMLInputElement & HTMLTextAreaElement>) => {
     onKeyDown?.(e as KeyboardEvent<HTMLInputElement>);
@@ -73,7 +75,10 @@ export function TextField({
     e.preventDefault();
     onValueSubmit(e.currentTarget.value);
   };
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onValueChange?.(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (multiline) grow();
+    onValueChange?.(e.target.value);
+  };
 
   const shared = {
     'aria-label': label,

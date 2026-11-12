@@ -70,6 +70,14 @@ describe('TextField', () => {
     await noAxeViolations();
   });
 
+  it('grows an uncontrolled multi-line field while typing', async () => {
+    await render(h(TextField, { label: 'Notes', defaultValue: '', maxLines: 4 }));
+    const area = host.querySelector('textarea')!;
+    Object.defineProperty(area, 'scrollHeight', { configurable: true, get: () => (area.value.split('\n').length * 24) });
+    await type(area, 'one\ntwo\nthree');
+    expect(area.style.height).toBe('72px');
+  });
+
   it('passes input attributes through and can be disabled', async () => {
     await render(
       h(TextField, { label: 'Amount', inputMode: 'decimal', enterKeyHint: 'done', disabled: true, capsule: true, trailing: h('span', null, 'kg') }),

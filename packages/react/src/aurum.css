@@ -110,7 +110,11 @@ body {
 }
 /* No backdrop-filter support: a solid surface reads better than see-through without blur. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .aurum-glass {
+  /* Same specificity as the level and tint rules above, and later, so it wins. */
+  .aurum-glass,
+  .aurum-glass[data-level],
+  .aurum-glass[data-tinted] {
     --aurum-glass-tint: var(--color-surface-elevated);
+    --_glass-fill: var(--color-surface-elevated);
   }
 }

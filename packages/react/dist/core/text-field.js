@@ -11,14 +11,16 @@ export function TextField({ label, value, defaultValue, leading, trailing, onVal
     const area = useRef(null);
     useSquircle(box, undefined, capsule ? 'var(--radius-pill)' : 'var(--radius-md)');
     const multiline = maxLines > 1;
-    // Grow the text area with its content, up to maxLines.
-    useLayoutEffect(() => {
+    // Grow the text area with its content, up to maxLines: after renders (controlled value)
+    // and on every input (uncontrolled fields don't re-render while typing).
+    const grow = () => {
         const el = area.current;
         if (!el)
             return;
         el.style.height = 'auto';
         el.style.height = `${el.scrollHeight}px`;
-    });
+    };
+    useLayoutEffect(grow);
     const handleKey = (e) => {
         onKeyDown?.(e);
         if (e.defaultPrevented || e.key !== 'Enter' || e.nativeEvent.isComposing || !onValueSubmit)
@@ -28,7 +30,11 @@ export function TextField({ label, value, defaultValue, leading, trailing, onVal
         e.preventDefault();
         onValueSubmit(e.currentTarget.value);
     };
-    const handleChange = (e) => onValueChange?.(e.target.value);
+    const handleChange = (e) => {
+        if (multiline)
+            grow();
+        onValueChange?.(e.target.value);
+    };
     const shared = {
         'aria-label': label,
         className: 'aurum-text-field-input',
