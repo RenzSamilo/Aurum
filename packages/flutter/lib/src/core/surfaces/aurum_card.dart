@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../controls/aurum_pressable.dart';
-import '../foundations/aurum_glass.dart';
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../foundations/aurum_glass.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// A grouped surface with continuous corners. With [onPressed] the whole card
 /// is one button that scales slightly on press; put no other buttons inside it.

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// A round picture of a person or thing. Without an [image], it shows the
 /// initials of [name] on an accent tint. Screen readers read [name].

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/aurum_glass.dart';
+import '../../foundations/aurum_glass.dart';
 import '../controls/aurum_pressable.dart';
-import '../foundations/aurum_haptics.dart';
-import '../foundations/aurum_springs.dart';
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../foundations/aurum_haptics.dart';
+import '../../foundations/aurum_springs.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// One destination in an [AurumTabBar].
 @immutable

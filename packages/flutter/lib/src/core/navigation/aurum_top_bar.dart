@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_glyphs/phosphor_glyphs.dart';
 
 import '../controls/aurum_button.dart';
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// The bar at the top of a screen: an optional [leading] control, a centred
 /// title and optional [trailing] controls. The title stays centred on the

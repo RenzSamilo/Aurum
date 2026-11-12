@@ -25,6 +25,8 @@ jobs:
         run: pnpm tokens:check
       - name: No Apple assets or Apple.com colours
         run: pnpm guard
+      - name: Component catalog is complete, shelves are respected, CATALOG.md is current
+        run: pnpm catalog:check
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build

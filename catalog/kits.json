@@ -1,0 +1,15 @@
+{
+  "$comment": "Topic kits: the third shelf. A kit holds pieces that only make sense for one kind of app. Adding a kit = adding an entry here. 'planned' kits have no components yet.",
+  "kits": [
+    { "id": "fitness", "name": "Fitness", "status": "active", "description": "Workouts, sets and reps, streaks, body stats, nutrition logging. First real app: TREN." },
+    { "id": "finance", "name": "Finance", "status": "active", "description": "Balances, bank cards, transactions, budgets, money entry." },
+    { "id": "productivity", "name": "Productivity", "status": "planned", "description": "Tasks, checklists, calendars, notes, timers and focus sessions." },
+    { "id": "learning", "name": "Learning", "status": "active", "description": "Courses, lessons, schedules, quizzes and progress." },
+    { "id": "assistant", "name": "AI assistant", "status": "active", "description": "Chat bubbles, composer, model picker, tool results and suggestion chips." },
+    { "id": "social", "name": "Social", "status": "planned", "description": "Profiles, feeds, posts, comments, reactions and direct messages." },
+    { "id": "commerce", "name": "Shopping", "status": "planned", "description": "Product cards, cart, checkout, order tracking and reviews." },
+    { "id": "media", "name": "Media", "status": "planned", "description": "Audio and video players, galleries, reading views and playlists." },
+    { "id": "travel", "name": "Travel and places", "status": "planned", "description": "Maps, place cards, bookings, tickets and itineraries." },
+    { "id": "marketing", "name": "Marketing sites", "status": "planned", "description": "Website-only pieces: hero, feature grid, pricing table, testimonials, FAQ, footer." }
+  ]
+}

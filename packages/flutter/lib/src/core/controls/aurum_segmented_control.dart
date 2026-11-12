@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../foundations/aurum_glass.dart';
-import '../foundations/aurum_haptics.dart';
-import '../foundations/aurum_springs.dart';
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../foundations/aurum_glass.dart';
+import '../../foundations/aurum_haptics.dart';
+import '../../foundations/aurum_springs.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// One option in an [AurumSegmentedControl].
 @immutable

@@ -3,7 +3,7 @@ export * from './tokens/tokens';
 export { setAurumPreferences, type AurumPreferences } from './preferences';
 export { hapticsEnabled, playHaptic, setHapticsEnabled } from './haptics';
 export { squirclePath, supportsNativeSquircle, useSquircle } from './squircle';
-export { Glass, Squircle } from './components';
+export { Glass, Squircle } from './core/components';
 export {
   Button,
   type ButtonProps,
@@ -14,7 +14,7 @@ export {
   type SegmentedControlProps,
   Switch,
   type SwitchProps,
-} from './controls';
+} from './core/controls';
 export {
   Card,
   type CardProps,
@@ -24,4 +24,4 @@ export {
   type ListSectionProps,
   Sheet,
   type SheetProps,
-} from './surfaces';
+} from './core/surfaces';

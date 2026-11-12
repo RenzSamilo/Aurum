@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../foundations/aurum_haptics.dart';
-import '../foundations/aurum_springs.dart';
-import '../theme/aurum_theme.dart';
-import '../tokens/aurum_tokens.g.dart';
+import '../../foundations/aurum_haptics.dart';
+import '../../foundations/aurum_springs.dart';
+import '../../theme/aurum_theme.dart';
+import '../../tokens/aurum_tokens.g.dart';
 
 /// An on/off switch for settings that apply immediately. Tap it or drag the
 /// thumb. With a [label], the whole row is the tap target and screen readers

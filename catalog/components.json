@@ -1,0 +1,238 @@
+{
+  "$comment": "Source of truth for every Aurum component. Run `pnpm catalog` after editing to rebuild catalog/CATALOG.md. Shelves: core (any app), pattern (bigger pieces, still any topic), kit (one topic, see kits.json). Candidates live in an app and wait for a second app before joining the library (rule of two).",
+  "components": [
+    {
+      "name": "Button",
+      "shelf": "core",
+      "group": "controls",
+      "tags": ["any"],
+      "react": { "symbol": "Button", "file": "packages/react/src/core/controls.tsx" },
+      "flutter": { "symbol": "AurumButton", "file": "packages/flutter/lib/src/core/controls/aurum_button.dart" }
+    },
+    {
+      "name": "Press scale",
+      "shelf": "core",
+      "group": "controls",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumPressScale", "file": "packages/flutter/lib/src/core/controls/aurum_pressable.dart" },
+      "notes": "Web gets the same effect from CSS :active on each control."
+    },
+    {
+      "name": "Segmented control",
+      "shelf": "core",
+      "group": "controls",
+      "tags": ["any"],
+      "react": { "symbol": "SegmentedControl", "file": "packages/react/src/core/controls.tsx" },
+      "flutter": { "symbol": "AurumSegmentedControl", "file": "packages/flutter/lib/src/core/controls/aurum_segmented_control.dart" }
+    },
+    {
+      "name": "Switch",
+      "shelf": "core",
+      "group": "controls",
+      "tags": ["any"],
+      "react": { "symbol": "Switch", "file": "packages/react/src/core/controls.tsx" },
+      "flutter": { "symbol": "AurumSwitch", "file": "packages/flutter/lib/src/core/controls/aurum_switch.dart" }
+    },
+    {
+      "name": "Text field",
+      "shelf": "core",
+      "group": "controls",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumTextField", "file": "packages/flutter/lib/src/core/controls/aurum_text_field.dart" },
+      "notes": "React version not built yet."
+    },
+    {
+      "name": "Card",
+      "shelf": "core",
+      "group": "surfaces",
+      "tags": ["any"],
+      "react": { "symbol": "Card", "file": "packages/react/src/core/surfaces.tsx" },
+      "flutter": { "symbol": "AurumCard", "file": "packages/flutter/lib/src/core/surfaces/aurum_card.dart" }
+    },
+    {
+      "name": "List section",
+      "shelf": "core",
+      "group": "surfaces",
+      "tags": ["any"],
+      "react": { "symbol": "ListSection", "file": "packages/react/src/core/surfaces.tsx" },
+      "flutter": { "symbol": "AurumListSection", "file": "packages/flutter/lib/src/core/surfaces/aurum_list.dart" }
+    },
+    {
+      "name": "List row",
+      "shelf": "core",
+      "group": "surfaces",
+      "tags": ["any"],
+      "react": { "symbol": "ListRow", "file": "packages/react/src/core/surfaces.tsx" },
+      "flutter": { "symbol": "AurumListRow", "file": "packages/flutter/lib/src/core/surfaces/aurum_list.dart" }
+    },
+    {
+      "name": "Sheet",
+      "shelf": "core",
+      "group": "surfaces",
+      "tags": ["any"],
+      "react": { "symbol": "Sheet", "file": "packages/react/src/core/surfaces.tsx" },
+      "flutter": { "symbol": "showAurumSheet", "file": "packages/flutter/lib/src/core/surfaces/aurum_sheet.dart" }
+    },
+    {
+      "name": "Glass",
+      "shelf": "core",
+      "group": "surfaces",
+      "tags": ["any"],
+      "react": { "symbol": "Glass", "file": "packages/react/src/core/components.tsx" },
+      "flutter": { "symbol": "AurumGlass", "file": "packages/flutter/lib/src/foundations/aurum_glass.dart" }
+    },
+    {
+      "name": "Squircle",
+      "shelf": "core",
+      "group": "surfaces",
+      "tags": ["any"],
+      "react": { "symbol": "Squircle", "file": "packages/react/src/core/components.tsx" },
+      "flutter": null,
+      "notes": "Flutter gets continuous corners from the theme's shape, so it needs no widget."
+    },
+    {
+      "name": "Top bar",
+      "shelf": "core",
+      "group": "navigation",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumTopBar", "file": "packages/flutter/lib/src/core/navigation/aurum_top_bar.dart" }
+    },
+    {
+      "name": "Back button",
+      "shelf": "core",
+      "group": "navigation",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumBackButton", "file": "packages/flutter/lib/src/core/navigation/aurum_top_bar.dart" }
+    },
+    {
+      "name": "Tab bar",
+      "shelf": "core",
+      "group": "navigation",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumTabBar", "file": "packages/flutter/lib/src/core/navigation/aurum_tab_bar.dart" }
+    },
+    {
+      "name": "Floating tab bar",
+      "shelf": "core",
+      "group": "navigation",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumFloatingTabBar", "file": "packages/flutter/lib/src/core/navigation/aurum_tab_bar.dart" }
+    },
+    {
+      "name": "Progress ring",
+      "shelf": "core",
+      "group": "feedback",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumProgressRing", "file": "packages/flutter/lib/src/core/feedback/aurum_progress_ring.dart" }
+    },
+    {
+      "name": "Avatar",
+      "shelf": "core",
+      "group": "identity",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumAvatar", "file": "packages/flutter/lib/src/core/identity/aurum_avatar.dart" }
+    },
+    {
+      "name": "Badge",
+      "shelf": "core",
+      "group": "identity",
+      "tags": ["any"],
+      "react": null,
+      "flutter": { "symbol": "AurumBadge", "file": "packages/flutter/lib/src/core/identity/aurum_badge.dart" }
+    }
+  ],
+  "candidates": [
+    {
+      "name": "Section header",
+      "target": "core",
+      "group": "surfaces",
+      "tags": ["any"],
+      "foundIn": [{ "app": "example", "symbol": "SectionHeader", "file": "packages/flutter/example/lib/screens/common.dart" }]
+    },
+    {
+      "name": "Icon disc",
+      "target": "core",
+      "group": "identity",
+      "tags": ["any"],
+      "foundIn": [{ "app": "example", "symbol": "IconDisc", "file": "packages/flutter/example/lib/screens/common.dart" }]
+    },
+    {
+      "name": "Avatar stack",
+      "target": "pattern",
+      "group": "identity",
+      "tags": ["learning", "social", "productivity"],
+      "foundIn": [{ "app": "example", "symbol": "AvatarStack", "file": "packages/flutter/example/lib/screens/course.dart" }]
+    },
+    {
+      "name": "Day strip with rings",
+      "target": "pattern",
+      "group": "data",
+      "tags": ["fitness", "learning", "productivity"],
+      "foundIn": [{ "app": "example", "symbol": "_DayRing", "file": "packages/flutter/example/lib/screens/course.dart" }]
+    },
+    {
+      "name": "Plan picker",
+      "target": "pattern",
+      "group": "selection",
+      "tags": ["assistant", "marketing", "commerce"],
+      "foundIn": [{ "app": "example", "symbol": "_PlanCard", "file": "packages/flutter/example/lib/screens/assistant.dart" }]
+    },
+    {
+      "name": "Bank card",
+      "target": "kit",
+      "kit": "finance",
+      "tags": ["finance"],
+      "foundIn": [{ "app": "example", "symbol": "BankCard", "file": "packages/flutter/example/lib/screens/money.dart" }]
+    },
+    {
+      "name": "Transaction row",
+      "target": "kit",
+      "kit": "finance",
+      "tags": ["finance"],
+      "foundIn": [{ "app": "example", "symbol": "_Transaction", "file": "packages/flutter/example/lib/screens/money.dart" }]
+    },
+    {
+      "name": "Course cover",
+      "target": "kit",
+      "kit": "learning",
+      "tags": ["learning"],
+      "foundIn": [{ "app": "example", "symbol": "_CourseCover", "file": "packages/flutter/example/lib/screens/course.dart" }]
+    },
+    {
+      "name": "Lesson card",
+      "target": "kit",
+      "kit": "learning",
+      "tags": ["learning"],
+      "foundIn": [{ "app": "example", "symbol": "_LessonCard", "file": "packages/flutter/example/lib/screens/course.dart" }]
+    },
+    {
+      "name": "Player bar",
+      "target": "kit",
+      "kit": "media",
+      "tags": ["media", "learning"],
+      "foundIn": [{ "app": "example", "symbol": "_PlayerBar", "file": "packages/flutter/example/lib/screens/course.dart" }]
+    },
+    {
+      "name": "Chat bubble",
+      "target": "kit",
+      "kit": "assistant",
+      "tags": ["assistant", "social"],
+      "foundIn": [{ "app": "example", "symbol": "_Bubble", "file": "packages/flutter/example/lib/screens/assistant.dart" }]
+    },
+    {
+      "name": "Model picker",
+      "target": "kit",
+      "kit": "assistant",
+      "tags": ["assistant"],
+      "foundIn": [{ "app": "example", "symbol": "_ModelPicker", "file": "packages/flutter/example/lib/screens/assistant.dart" }]
+    }
+  ]
+}

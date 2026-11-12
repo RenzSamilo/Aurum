@@ -17,7 +17,12 @@ tokens/
   brand/examples/   sample brands (CI builds them to prove re-skinning works)
   primitive/        raw values that never change per brand: space, type, motion, materials, haptics
   semantic/         meaning per mode: light, dark, contrast-light, contrast-dark
+catalog/
+  components.json   every component: its shelf (core, pattern, kit), tags, React + Flutter files
+  kits.json         topic kits (fitness, finance, learning, ...)
+  CATALOG.md        generated list of everything; see catalog/README.md for how Aurum grows
 tools/
+  catalog/build.mjs checks the catalog and writes CATALOG.md
   tokens/build.mjs  Style Dictionary build -> CSS, TypeScript, Dart; fails on contrast
   license-guard.mjs fails on Apple fonts, SF Symbols or Apple.com brand colours
 packages/
@@ -39,6 +44,7 @@ pnpm install
 pnpm tokens          # rebuild tokens for every platform
 pnpm dev             # web preview at localhost:5173
 pnpm guard           # license guard
+pnpm catalog         # check the component catalog, rewrite catalog/CATALOG.md
 pnpm typecheck && pnpm build
 
 cd packages/flutter/example && flutter run   # Flutter preview

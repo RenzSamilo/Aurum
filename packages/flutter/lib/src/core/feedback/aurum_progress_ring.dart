@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../theme/aurum_theme.dart';
+import '../../theme/aurum_theme.dart';
 
 /// Progress as a ring that fills clockwise from the top, with an optional
 /// [child] in the middle, e.g. "3/6". Screen readers read [semanticLabel] and
