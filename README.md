@@ -76,6 +76,8 @@ Fonts: `font.ui` sets the UI font and `font.display` the title font (display, pa
 
 ## Using it
 
+**In another app repo:** follow [docs/USING-AURUM.md](docs/USING-AURUM.md) (install from a pinned tag, brand file, token build, imports, updates).
+
 **React**
 
 ```ts
@@ -127,6 +129,14 @@ RoundedSuperellipseBorder(borderRadius: BorderRadius.circular(context.aurumRadii
 The Flutter example app has **Sample screens**: an assistant app (home, chat, plans) and a money app (home, add money, profile), built only from these parts to test the template on real layouts.
 
 Every component works with a keyboard and a screen reader, honours reduced motion, and is checked by tests (axe-core on the web, Flutter's accessibility guidelines on mobile).
+
+## Releasing
+
+Apps pin git tags named `aurum-vX.Y.Z`.
+
+1. Bump `version` in `packages/react/package.json` and `packages/flutter/pubspec.yaml` to the same number, and add a `## X.Y.Z` section to [CHANGELOG.md](CHANGELOG.md).
+2. `pnpm build` (rebuilds `packages/react/dist`, which is committed), then merge to `main`.
+3. On GitHub, **Releases → Draft a new release**, tag `aurum-vX.Y.Z` on `main`, publish. The *Release check* workflow confirms the tag matches both versions and the changelog, and that a fresh app can install it.
 
 ## Assets and licences
 
