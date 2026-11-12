@@ -1,0 +1,38 @@
+name: Bug report
+description: Something in Aurum looks or behaves wrong.
+labels: [bug]
+body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options: [React (web), Flutter, Tokens / brand build, Docs]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Aurum tag
+      placeholder: aurum-v0.1.0
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      placeholder: Button, Sheet, ...
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+      description: Include theme (light/dark), contrast and reduced-motion settings if they matter. Screenshots help.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: Smallest code or steps that show it. Browser, OS or device too.
+    validations:
+      required: true
