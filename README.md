@@ -10,6 +10,8 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Latest release](https://img.shields.io/github/v/release/RenzSamilo/Aurum?label=release)](https://github.com/RenzSamilo/Aurum/releases/latest)
 
+**[Live docs and component preview →](https://renzsamilo.github.io/Aurum/)**
+
 ## Why Aurum
 
 - **One token file.** Colour, type, spacing, corners, springs, materials and haptics live in `tokens/` and build to CSS, TypeScript and Dart.
@@ -130,6 +132,7 @@ Assets and licences:
 
 ## More
 
+- [Live docs](https://renzsamilo.github.io/Aurum/): every component and token, with dark, contrast and motion toggles.
 - [docs/USING-AURUM.md](docs/USING-AURUM.md): install Aurum in an app, add a brand, update.
 - [docs/DEVELOPING.md](docs/DEVELOPING.md): repo layout, commands, releasing.
 - [catalog/README.md](catalog/README.md): shelves, kits, contracts, how Aurum grows.

@@ -8,7 +8,7 @@ import 'package:phosphor_glyphs/phosphor_glyphs.dart';
 /// Names and art are placeholder; the art is drawn from gradients.
 
 const _teacher = 'Mara Quill';
-const _me = 'Renz Samilo';
+const _me = 'Keiz';
 
 // ---------------------------------------------------------------------------
 // Shared pieces
