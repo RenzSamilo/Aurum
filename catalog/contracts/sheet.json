@@ -1,0 +1,14 @@
+{
+  "component": "Sheet",
+  "react": { "props": "SheetProps" },
+  "flutter": { "symbol": "showAurumSheet" },
+  "props": [
+    { "name": "title" },
+    { "name": "hideTitle" },
+    { "name": "content", "react": "children", "flutter": "builder" },
+    { "name": "dismissible" },
+    { "name": "closeLabel" },
+    { "name": "open", "flutter": null, "why": "Flutter opens a sheet by calling showAurumSheet and closes it with Navigator.pop." },
+    { "name": "onOpenChange", "flutter": null, "why": "Flutter gets the result from the Future that showAurumSheet returns." }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "component": "Button",
+  "react": { "props": "ButtonProps" },
+  "flutter": { "symbol": "AurumButton" },
+  "props": [
+    { "name": "label", "react": "children", "flutter": "label", "inherited": ["react"] },
+    { "name": "icon" },
+    { "name": "onPress", "react": "onClick", "flutter": "onPressed", "inherited": ["react"] },
+    { "name": "disabled", "flutter": null, "inherited": ["react"], "why": "Flutter disables a button by passing onPressed: null." },
+    { "name": "variant", "values": ["filled", "tinted", "gray", "plain", "glass"], "missing": { "react": ["glass"] }, "todo": "Build the glass variant for web." },
+    { "name": "size", "values": ["sm", "md", "lg"] },
+    { "name": "capsule" },
+    { "name": "destructive" },
+    { "name": "fullWidth" },
+    { "name": "haptic" },
+    { "name": "semanticLabel", "react": "aria-label", "inherited": ["react"] }
+  ]
+}

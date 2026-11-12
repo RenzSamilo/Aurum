@@ -1,0 +1,15 @@
+{
+  "component": "Glass",
+  "react": { "props": "GlassOwnProps" },
+  "flutter": { "symbol": "AurumGlass" },
+  "props": [
+    { "name": "content", "react": "children", "flutter": "child" },
+    { "name": "level", "values": ["clear", "ultralight", "thin", "regular", "thick"] },
+    { "name": "radius", "note": "React takes sm | md | lg | xl or any CSS length. Flutter takes a number." },
+    { "name": "solid", "react": null, "why": "On the web, solid surfaces follow setAurumPreferences({ transparency })." },
+    { "name": "padding", "react": null, "why": "On the web, pad with CSS." },
+    { "name": "tint", "react": null, "todo": "Add a tint override for web glass." },
+    { "name": "rim", "react": null, "todo": "Add the specular rim to web glass." },
+    { "name": "lifted", "react": null, "todo": "Add the lifted shadow to web glass." }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "component": "Card",
+  "react": { "props": "CardProps" },
+  "flutter": { "symbol": "AurumCard" },
+  "props": [
+    { "name": "content", "react": "children", "flutter": "child", "inherited": ["react"] },
+    { "name": "onPress", "react": "onPress", "flutter": "onPressed" },
+    { "name": "semanticLabel", "react": "aria-label" },
+    { "name": "padding", "note": "React takes none | md | lg. Flutter takes any EdgeInsets (default 24)." },
+    { "name": "elevation", "flutter": "lifted", "values": ["flat", "lifted"], "note": "Flutter takes a bool: lifted: false is flat." },
+    { "name": "color", "react": null, "why": "On the web, override the fill with className." },
+    { "name": "material", "react": null, "todo": "Build the glass card (material level) for web." }
+  ]
+}
