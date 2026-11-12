@@ -11,3 +11,16 @@ build/
 .flutter-plugins-dependencies
 *.iml
 .idea/
+
+# Secrets and local config (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+key.properties
+GoogleService-Info.plist
+google-services.json
