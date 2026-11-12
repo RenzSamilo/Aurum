@@ -53,14 +53,13 @@ class AurumMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = context.aurum;
     final radii = context.aurumRadii;
-    final rtl = Directionality.of(context) == TextDirection.rtl;
-    final alignEnd = (align == AurumMenuAlign.end) != rtl;
 
     return MenuAnchor(
       alignmentOffset: const Offset(0, AurumSpace.s4),
       crossAxisUnconstrained: false,
       style: MenuStyle(
-        alignment: alignEnd ? AlignmentDirectional.bottomEnd : AlignmentDirectional.bottomStart,
+        // Directional alignments already flip in right-to-left layouts.
+        alignment: align == AurumMenuAlign.end ? AlignmentDirectional.bottomEnd : AlignmentDirectional.bottomStart,
         backgroundColor: WidgetStatePropertyAll(c.surfaceElevated),
         surfaceTintColor: const WidgetStatePropertyAll(Color(0x00000000)),
         elevation: const WidgetStatePropertyAll(8),

@@ -116,6 +116,16 @@ describe('Menu', () => {
     expect(document.activeElement).toBe(trigger);
   });
 
+  it('keeps focus where it is when the parent re-renders with new items', async () => {
+    const { items } = setup();
+    const trigger = await open(items);
+    await press('ArrowDown', trigger);
+    await press('ArrowDown');
+    expect(focusedLabel()).toBe('Duplicate');
+    await act(async () => root.render(createElement(Menu, { trigger: 'More', items: [...items] })));
+    expect(focusedLabel()).toBe('Duplicate');
+  });
+
   it('has no axe violations while open', async () => {
     const trigger = await open(setup().items);
     await press('ArrowDown', trigger);

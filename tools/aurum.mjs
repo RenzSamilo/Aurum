@@ -7,11 +7,11 @@
 //   pnpm aurum tokens [group]                                    token names for CSS and Dart
 //   pnpm aurum kits                                              topic kits and candidates
 //   pnpm aurum rules                                             the house rules, in one screen
-//   pnpm aurum eject <component> --to <dir> [--platform react|flutter]   copy its source into an app to own
+//   pnpm aurum eject <component> --to <dir> [--platform react|flutter] [--force]   copy its source into an app to own
 //   pnpm aurum ejected <dir>                                     what changed upstream since each eject
 
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -139,10 +139,12 @@ const commands = {
   eject() {
     const to = flag('to');
     const platform = flag('platform');
-    const q = args.filter((a, i) => !a.startsWith('--') && !args[i - 1]?.startsWith('--')).join(' ');
+    const force = args.includes('--force');
+    const valued = new Set(['--to', '--platform']);
+    const q = args.filter((a, i) => !a.startsWith('--') && !valued.has(args[i - 1])).join(' ');
     const c = q && find(q);
     if (!c || !to) {
-      out('Usage: pnpm aurum eject <component> --to <app folder> [--platform react|flutter]');
+      out('Usage: pnpm aurum eject <component> --to <app folder> [--platform react|flutter] [--force]');
       process.exitCode = 1;
       return;
     }
@@ -153,7 +155,6 @@ const commands = {
       return;
     }
     const dest = resolve(to);
-    mkdirSync(dest, { recursive: true });
     const commit = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: root }).toString().trim();
     const manifestPath = join(dest, 'ejected.json');
     const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : { ejected: [] };
@@ -161,6 +162,9 @@ const commands = {
       `${comment} Ejected from Aurum ${file} at ${commit} (\`pnpm aurum eject ${c.name}\`). This copy is yours to change.\n` +
       `${comment} See what changed upstream since: pnpm aurum ejected ${dest}\n`;
 
+    // Plan every write first, so a refusal leaves the app folder untouched.
+    const writes = []; // { from: repo path, to: absolute path, body }
+    const plans = [];
     let hidden = [];
     for (const side of sides) {
       const file = c[side].file;
@@ -170,20 +174,19 @@ const commands = {
         // Borrowed code isn't exported by @aurum/react, so its folder travels with the copy, license and all.
         for (const m of [...src.matchAll(/from '\.\.\/vendor\/([^/']+)\/[^']+'/g)]) {
           const vendorDir = join(root, 'packages/react/src/vendor', m[1]);
-          const target = join(dest, 'vendor', m[1]);
-          mkdirSync(target, { recursive: true });
           for (const f of readdirSync(vendorDir)) {
-            copyFileSync(join(vendorDir, f), join(target, f));
             const relFile = relative(root, join(vendorDir, f));
-            if (!copied.includes(relFile)) copied.push(relFile);
+            if (copied.includes(relFile)) continue;
+            writes.push({ from: relFile, to: join(dest, 'vendor', m[1], f), body: readFileSync(join(vendorDir, f)) });
+            copied.push(relFile);
           }
           src = src.replace(m[0], m[0].replace("'../vendor/", "'./vendor/"));
         }
         src = src.replace(/(from\s+)'\.{1,2}\/(?!vendor\/)[^']+'/g, "$1'@aurum/react'");
-        writeFileSync(join(dest, basename(file)), header(file, '//') + src);
+        writes.push({ from: file, to: join(dest, basename(file)), body: header(file, '//') + src });
         const css = file.replace(/\.tsx$/, '.css');
         if (existsSync(join(root, css))) {
-          writeFileSync(join(dest, basename(css)), header(css, '/*').replace(/\n/g, ' */\n') + readFileSync(join(root, css), 'utf8'));
+          writes.push({ from: css, to: join(dest, basename(css)), body: header(css, '/*').replace(/\n/g, ' */\n') + readFileSync(join(root, css), 'utf8') });
           copied.push(css);
         }
       } else {
@@ -196,12 +199,42 @@ const commands = {
           .filter((n) => n && !n.startsWith('_'));
         hidden = [...new Set(own)];
         if (rel.length) src = src.replace(/(import 'package:flutter\/[^']+';\n)/, `$1import 'package:aurum_ui/aurum_ui.dart' hide ${hidden.join(', ')};\n`);
-        writeFileSync(join(dest, basename(file)), header(file, '//') + src);
+        writes.push({ from: file, to: join(dest, basename(file)), body: header(file, '//') + src });
       }
+      plans.push({ side, copied });
+    }
+
+    // Several components share one source file (Button, Switch and SegmentedControl live in
+    // controls.tsx). A file this folder already holds is the app's own copy, maybe changed, so
+    // it is never overwritten without --force. If an earlier eject wrote it from the same source
+    // file, the copy already contains this component and is kept as it is.
+    const recorded = new Set(manifest.ejected.flatMap((e) => e.files));
+    const kept = [];
+    const clashes = [];
+    for (const w of writes) {
+      if (force || !existsSync(w.to)) continue;
+      if (recorded.has(w.from)) kept.push(w);
+      else clashes.push(w);
+    }
+    if (clashes.length) {
+      out(`Not ejecting ${c.name}: these files already exist and weren't written by an eject. Move them, or pass --force to overwrite them.`);
+      for (const w of clashes) out(`  ${relative(process.cwd(), w.to) || w.to}`);
+      process.exitCode = 1;
+      return;
+    }
+    for (const w of writes) {
+      if (kept.includes(w)) continue;
+      mkdirSync(dirname(w.to), { recursive: true });
+      writeFileSync(w.to, w.body);
+    }
+    for (const w of kept) out(`Kept your copy of ${relative(process.cwd(), w.to) || w.to}: it already has ${c.name} from an earlier eject (--force overwrites it).`);
+
+    for (const { side, copied } of plans) {
       manifest.ejected = manifest.ejected.filter((e) => !(e.component === c.name && e.platform === side));
       manifest.ejected.push({ component: c.name, platform: side, files: copied, commit, date: new Date().toISOString().slice(0, 10) });
       out(`Ejected ${c.name} (${side}): ${copied.join(', ')} -> ${relative(process.cwd(), dest) || '.'}`);
     }
+    mkdirSync(dest, { recursive: true });
     writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
     if (sides.includes('flutter')) out(`Flutter: import your copy, and add \`hide ${hidden.join(', ')}\` where you import aurum_ui.`);
     if (sides.includes('react')) out('React: import the copy instead of @aurum/react for this component, and its .css after aurum.css.');

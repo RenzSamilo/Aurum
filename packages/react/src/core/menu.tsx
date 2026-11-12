@@ -54,27 +54,36 @@ export function Menu({ trigger, 'aria-label': ariaLabel, items, align = 'start',
     isDisabled: (i) => !!items[i]?.disabled,
   });
 
+  const resetTypeahead = typeahead.reset;
   const close = useCallback(
     (returnFocus = true) => {
-      typeahead.reset();
+      resetTypeahead();
       setState('closing');
       setOpen(false);
       if (returnFocus) triggerRef.current?.focus();
     },
-    [typeahead],
+    [resetTypeahead],
   );
 
+  // Focus lands on the first or last item once, when the menu opens. Read the latest items
+  // through a ref so a parent re-render (new items array) doesn't pull focus back.
+  const enabledRef = useRef(enabled);
+  enabledRef.current = enabled;
   useEffect(() => {
     if (!open) return;
     setState('open');
-    const list = enabled();
+    const list = enabledRef.current();
     if (list.length) focusItem(focusOnOpen.current === 'first' ? list[0]! : list[list.length - 1]!);
+  }, [open, focusItem]);
+
+  useEffect(() => {
+    if (!open) return;
     const onPointerDown = (e: PointerEvent) => {
       if (!rootRef.current?.contains(e.target as Node)) close(false);
     };
     document.addEventListener('pointerdown', onPointerDown);
     return () => document.removeEventListener('pointerdown', onPointerDown);
-  }, [open, enabled, focusItem, close]);
+  }, [open, close]);
 
   const openAt = (where: 'first' | 'last') => {
     focusOnOpen.current = where;

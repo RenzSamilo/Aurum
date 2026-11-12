@@ -86,6 +86,40 @@ void main() {
     expect(picked, ['Duplicate']);
   });
 
+  testWidgets('align end follows the reading direction', (tester) async {
+    Future<double> itemX(TextDirection dir) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: aurumTheme(Brightness.light),
+          home: Directionality(
+            textDirection: dir,
+            child: Scaffold(
+              body: Center(
+                child: AurumMenu(
+                  trigger: const Text('More'),
+                  align: AurumMenuAlign.end,
+                  items: [AurumMenuItem(label: 'Rename', onSelected: () {})],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('More'));
+      await tester.pumpAndSettle();
+      final x = tester.getCenter(find.text('Rename')).dx - tester.getCenter(find.text('More')).dx;
+      await tester.tapAt(Offset.zero);
+      await tester.pumpAndSettle();
+      return x;
+    }
+
+    final ltr = await itemX(TextDirection.ltr);
+    final rtl = await itemX(TextDirection.rtl);
+    // The menu sits on opposite sides of the button, mirrored.
+    expect(ltr.sign, isNot(rtl.sign));
+    expect(rtl, closeTo(-ltr, 1));
+  });
+
   testWidgets('meets tap target and labelling guidelines', (tester) async {
     final handle = tester.ensureSemantics();
     await tester.pumpWidget(

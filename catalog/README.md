@@ -94,5 +94,6 @@ pnpm aurum eject Menu --to ../site/src/ui --platform react
 - Flutter: the command prints the names to `hide` when you import `aurum_ui`, so your copy wins.
 - React: import your copy for that component, and its `.css` after `aurum.css`.
 - `ejected.json` in that folder records the source and commit. `pnpm aurum ejected <folder>` shows what changed upstream since, so you can pull in fixes by hand.
+- Eject never overwrites a file already in that folder. Components that share a source file (Button, Switch and Segmented control are all in `controls`) share the copy: ejecting the second one keeps your edited copy. Pass `--force` to overwrite with a fresh copy.
 
 If a second app wants the same change, that's the rule of two: bring it back into Aurum as an option instead.
