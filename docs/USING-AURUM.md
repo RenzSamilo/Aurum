@@ -2,7 +2,7 @@
 
 For an app repo (React or Flutter) that wants Aurum's components and its own brand. Aurum lives in the public repo [`RenzSamilo/Aurum`](https://github.com/RenzSamilo/Aurum) and is released as git tags named `aurum-vX.Y.Z`. Always pin a tag, never `main`.
 
-Current tag: **`aurum-v0.1.0`**. What changed in each tag: [CHANGELOG.md](../CHANGELOG.md).
+Install pin: **`aurum-v0.1.1`**. What changed in each tag: [CHANGELOG.md](../CHANGELOG.md).
 
 ## 1. Get access
 
@@ -13,7 +13,7 @@ Nothing to set up: the repo is public, so any machine (laptop, CI, Vercel, Codem
 **React** (Vite, Next, react-three-fiber):
 
 ```sh
-pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.0&path:/packages/react"
+pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.1&path:/packages/react"
 ```
 
 The package ships built JavaScript, type declarations and CSS, so there is no build step and no `transpilePackages`. It needs React 19.
@@ -26,7 +26,7 @@ dependencies:
     git:
       url: https://github.com/RenzSamilo/Aurum.git
       path: packages/flutter
-      ref: aurum-v0.1.0
+      ref: aurum-v0.1.1
 ```
 
 Then `flutter pub get`. Fonts (Inter, Fraunces) and icons come with the package.
@@ -36,7 +36,7 @@ Then `flutter pub get`. Fonts (Inter, Fraunces) and icons come with the package.
 The brand build and the `aurum` cheat sheet run from a checkout of the same tag. Keep it in the app folder, ignored by git:
 
 ```sh
-git clone --depth 1 --branch aurum-v0.1.0 https://github.com/RenzSamilo/Aurum.git .aurum
+git clone --depth 1 --branch aurum-v0.1.1 https://github.com/RenzSamilo/Aurum.git .aurum
 pnpm --dir .aurum install --frozen-lockfile --filter aurum   # only the token tools, a few seconds
 echo ".aurum/" >> .gitignore
 ```
@@ -55,6 +55,14 @@ Copy `.aurum/tokens/brand/aurum.json` (or one of `.aurum/tokens/brand/examples/*
   "surfaces": { "material": "translucent" }
 }
 ```
+
+Success follows the resolved accent by default, including dark chroma. Omit `success` or use `{}` to keep that behaviour. An independent green can be added as:
+
+```json
+"success": { "hue": 148, "chroma": 0.14, "lightnessLight": 0.46, "lightnessDark": 0.74, "chromaDark": 0.17 }
+```
+
+All five fields are optional. `hue` accepts 0–360, `chroma`/`chromaDark` 0–0.37, and `lightnessLight`/`lightnessDark` 0–1. Hue and lightness inherit their matching accent fields; light chroma inherits `accent.chroma`. Dark chroma falls back through `success.chromaDark`, `success.chroma`, `accent.chromaDark`, then `accent.chroma`. Nulls, unknown keys, nonnumeric or out-of-range values are rejected. Generated success colours must still pass contrast in every mode.
 
 ## 5. Build your tokens
 

@@ -1,6 +1,6 @@
 {
   "name": "@aurum/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Aurum design system for React: tokens, base styles and components.",
   "license": "MIT",
   "repository": {

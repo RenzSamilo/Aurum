@@ -38,7 +38,7 @@ Pin a release tag, never `main`. The full guide, including brand files and updat
 **React** (React 19; built JS, types and CSS ship in the package):
 
 ```sh
-pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.0&path:/packages/react"
+pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.1&path:/packages/react"
 ```
 
 ```tsx
@@ -57,7 +57,7 @@ dependencies:
     git:
       url: https://github.com/RenzSamilo/Aurum.git
       path: packages/flutter
-      ref: aurum-v0.1.0
+      ref: aurum-v0.1.1
 ```
 
 ```dart
@@ -98,9 +98,11 @@ The default look is **Viridian**, an old green: bottle green on parchment, green
 
 ## Make it yours (one file per app)
 
-1. Copy `tokens/brand/aurum.json` (or a palette from `tokens/brand/examples/`) into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `danger`/`warning` hues, `font`, `radius.scale`, and `surfaces.material`: `"translucent"` (glass, the default) or `"opaque"` (every glass surface solid, for apps that should feel flat and calm).
+1. Copy `tokens/brand/aurum.json` (or a palette from `tokens/brand/examples/`) into your app as `my.brand.json`. Change `name`, `accent.hue` (0 to 360) and `accent.chroma`. Optional: `secondary` (the ornament colour), `neutral` tint, `success` (an independent status colour), `danger`/`warning` hues, `font`, `radius.scale`, and `surfaces.material`: `"translucent"` (glass, the default) or `"opaque"` (every glass surface solid, for apps that should feel flat and calm).
 2. Build it: `node path/to/aurum/tools/tokens/build.mjs --brand my.brand.json --css src/aurum-tokens.css --dart lib/my_brand.g.dart`.
 3. Web: import your `aurum-tokens.css` after `@aurum/react/aurum.css`. Flutter: `aurumTheme(Brightness.light, brand: myBrand)`.
+
+Success tracks the resolved accent when `success` is omitted or `{}`. To opt into green, for example, add `"success": { "hue": 148, "chroma": 0.14, "lightnessLight": 0.46, "lightnessDark": 0.74, "chromaDark": 0.17 }`. Each field is optional: hue and lightness inherit the matching accent field, light chroma inherits `accent.chroma`, and dark chroma uses `success.chromaDark`, then `success.chroma`, then `accent.chromaDark`, then `accent.chroma`. The build checks contrast in all four modes.
 
 Text roles, spacing, springs, materials and haptics stay the same across brands, so every app still feels like Aurum. Fonts: `font.ui` sets the UI font and `font.display` the title font; delete `font.display` for an all-sans look. Inter and Fraunces ship with Aurum; any other font must be a variable font with a `wght` axis.
 

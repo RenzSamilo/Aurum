@@ -15,7 +15,7 @@
     "catalog:check": "node tools/catalog/build.mjs --check",
     "aurum": "node tools/aurum.mjs",
     "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test",
+    "test": "node --test tools/tokens/brand.test.mjs && pnpm -r test",
     "build": "pnpm -r build",
     "dev": "pnpm --filter @aurum/docs dev",
     "brands": "node tools/tokens/build-examples.mjs",

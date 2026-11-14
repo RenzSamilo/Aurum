@@ -32,7 +32,19 @@ export async function loadBrand(path) {
   if (typeof raw.name !== 'string' || !/^[A-Za-z][A-Za-z0-9 ]*$/.test(raw.name)) {
     throw new Error(`${path}: "name" must start with a letter and use only letters, digits and spaces.`);
   }
-  const brand = { name: raw.name };
+  if (raw.success !== undefined) {
+    if (raw.success === null || typeof raw.success !== 'object' || Array.isArray(raw.success)) {
+      throw new Error(`${path}: "success" must be an object.`);
+    }
+    const bounds = { hue: 360, chroma: 0.37, lightnessLight: 1, lightnessDark: 1, chromaDark: 0.37 };
+    for (const [key, value] of Object.entries(raw.success)) {
+      if (!Object.hasOwn(bounds, key)) throw new Error(`${path}: "success.${key}" is not supported.`);
+      if (!Number.isFinite(value) || value < 0 || value > bounds[key]) {
+        throw new Error(`${path}: "success.${key}" must be a finite number from 0 to ${bounds[key]}.`);
+      }
+    }
+  }
+  const brand = { name: raw.name, success: raw.success ?? {} };
   for (const [key, defaults] of Object.entries(DEFAULTS)) brand[key] = { ...defaults, ...(raw[key] ?? {}) };
   if (!['translucent', 'opaque'].includes(brand.surfaces.material)) {
     throw new Error(`${path}: "surfaces.material" must be "translucent" or "opaque".`);
@@ -42,7 +54,7 @@ export async function loadBrand(path) {
 
 /** DTCG tokens for colour, radius and font, ready to merge into Style Dictionary. */
 export function brandTokens(brand) {
-  const { accent, secondary, neutral, danger, warning, font, radius } = brand;
+  const { accent, success = {}, secondary, neutral, danger, warning, font, radius } = brand;
   const value = ($value) => ({ $value });
   const steps = (list, hue) => Object.fromEntries(list.map(([n, l, c]) => [n, value(oklch(l, c * neutral.chroma, hue))]));
   return {
@@ -54,6 +66,10 @@ export function brandTokens(brand) {
       'brand-accent': {
         light: value(oklch(accent.lightnessLight, accent.chroma, accent.hue)),
         dark: value(oklch(accent.lightnessDark, accent.chromaDark ?? accent.chroma, accent.hue)),
+      },
+      'brand-success': {
+        light: value(oklch(success.lightnessLight ?? accent.lightnessLight, success.chroma ?? accent.chroma, success.hue ?? accent.hue)),
+        dark: value(oklch(success.lightnessDark ?? accent.lightnessDark, success.chromaDark ?? success.chroma ?? accent.chromaDark ?? accent.chroma, success.hue ?? accent.hue)),
       },
       'brand-secondary': {
         light: value(oklch(0.5, secondary.chroma, secondary.hue)),
