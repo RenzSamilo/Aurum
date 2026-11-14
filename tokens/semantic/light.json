@@ -21,7 +21,7 @@
     "on-accent": { "$value": "{color.warm.99}" },
     "danger":    { "$value": "{color.brand-danger.light}" },
     "warning":   { "$value": "{color.brand-warning.light}" },
-    "success":   { "$value": "{color.brand-accent.light}" },
+    "success":   { "$value": "{color.brand-success.light}" },
     "fill": {
       "hover":   { "$value": "rgb(0 0 0 / 0.04)" },
       "pressed": { "$value": "rgb(0 0 0 / 0.06)" }

@@ -29,6 +29,18 @@
         "chromaDark": { "type": "number", "minimum": 0, "maximum": 0.37, "description": "Accent chroma in dark mode. Defaults to chroma; lower it for a muted, antique dark theme." }
       }
     },
+    "success": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional success colour. Omitted or empty tracks the resolved accent in every mode.",
+      "properties": {
+        "hue": { "type": "number", "minimum": 0, "maximum": 360, "description": "OKLCH success hue. Defaults to accent.hue." },
+        "chroma": { "type": "number", "minimum": 0, "maximum": 0.37, "description": "OKLCH success chroma. Defaults to accent.chroma." },
+        "lightnessLight": { "type": "number", "minimum": 0, "maximum": 1, "description": "Success lightness in light mode. Defaults to accent.lightnessLight." },
+        "lightnessDark": { "type": "number", "minimum": 0, "maximum": 1, "description": "Success lightness in dark mode. Defaults to accent.lightnessDark." },
+        "chromaDark": { "type": "number", "minimum": 0, "maximum": 0.37, "description": "Success dark chroma. Falls back to success.chroma, then accent.chromaDark, then accent.chroma." }
+      }
+    },
     "neutral": {
       "type": "object",
       "additionalProperties": false,
