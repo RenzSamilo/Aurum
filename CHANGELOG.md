@@ -6,6 +6,8 @@ Versions follow semver. Before 1.0, a minor bump (0.1 → 0.2) may change a publ
 
 ## Unreleased
 
+- **Lens glass:** `Glass lens` and `FloatingTabBar lens` bend the content behind the glass near its edge, like thick glass, as well as blurring it. Chromium only (Chrome, Edge, Android browsers): Safari and Firefox can't draw it and keep plain glass, so every iPhone browser does too. `GlassLens`, `lensMap` and `supportsGlassLens` are exported for custom glass.
+- **`FloatingTabBar level`:** pick how frosted the bar is (`clear` | `ultralight` | `thin` | `regular` | `thick`; default `thin`). `clear` shows the most of the content behind it.
 - **Brand colours as hex:** `build.mjs --brand <file> --hex <out.json>` writes every colour token as `#RRGGBB` (`#RRGGBBAA` when see-through), per mode. For tools that can't read CSS or Dart, such as KeizArt's pixel-art style packs.
 - **Floating tab bar on the web:** `FloatingTabBar`, the React twin of Flutter's `AurumFloatingTabBar`: a glass capsule inset from the screen edges, a bubble that slides to the selected tab, optional round glass `action`. Web extras: `showLabels` (default on) and `selection="filled"` for a solid accent pill. Content clears it with `padding-bottom: var(--aurum-floating-tab-bar-space)`.
 - **Continuous corners for app markup:** `autoSquircle()` gives every `.aurum-squircle` element continuous corners in Safari and Firefox (Chromium draws them natively). Call it once at startup.

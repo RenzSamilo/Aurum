@@ -4,6 +4,7 @@ export { setAurumPreferences, type AurumPreferences } from './preferences';
 export { hapticsEnabled, playHaptic, setHapticsEnabled } from './haptics';
 export { autoSquircle, squirclePath, supportsNativeSquircle, useSquircle } from './squircle';
 export { Glass, type GlassOwnProps, Squircle } from './core/components';
+export { GlassLens, type GlassLensProps, lensMap, supportsGlassLens } from './lens';
 export {
   Button,
   type ButtonProps,

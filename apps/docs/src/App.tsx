@@ -410,6 +410,8 @@ function FloatingPhone() {
       </div>
       <FloatingTabBar
         aria-label="Main"
+        level="clear"
+        lens
         selectedIndex={tab}
         onSelectedChange={setTab}
         action={{ icon: <Plus weight="bold" />, label: 'New routine', onClick: () => {} }}

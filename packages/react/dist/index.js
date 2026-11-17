@@ -4,6 +4,7 @@ export { setAurumPreferences } from './preferences.js';
 export { hapticsEnabled, playHaptic, setHapticsEnabled } from './haptics.js';
 export { autoSquircle, squirclePath, supportsNativeSquircle, useSquircle } from './squircle.js';
 export { Glass, Squircle } from './core/components.js';
+export { GlassLens, lensMap, supportsGlassLens } from './lens.js';
 export { Button, SegmentedControl, Switch, } from './core/controls.js';
 export { Card, ListRow, ListSection, Sheet, } from './core/surfaces.js';
 export { Menu } from './core/menu.js';

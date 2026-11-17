@@ -120,12 +120,14 @@ describe('FloatingTabBar', () => {
         onSelectedChange: () => {},
         showLabels: false,
         selection: 'filled',
+        level: 'clear',
         action: { icon: icon('plus'), label: 'Add workout', onClick: onAction },
       }),
     );
     const bar = host.querySelector('.aurum-floating-tab-bar')!;
     expect(bar.getAttribute('data-labels')).toBe('hidden');
     expect(bar.getAttribute('data-selection')).toBe('filled');
+    expect(host.querySelector('nav')!.getAttribute('data-level')).toBe('clear');
     const labels = [...host.querySelectorAll('.aurum-tab-label')];
     expect(labels.every((l) => l.classList.contains('aurum-visually-hidden'))).toBe(true);
     const add = host.querySelector<HTMLButtonElement>('.aurum-floating-tab-bar-action')!;

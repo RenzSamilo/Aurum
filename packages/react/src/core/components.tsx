@@ -1,6 +1,7 @@
 import { type ComponentPropsWithoutRef, type CSSProperties, type ElementType, type ReactNode, useRef } from 'react';
 import type { MaterialLevel } from '../tokens/tokens';
 import { useSquircle } from '../squircle';
+import { GlassLens } from '../lens';
 
 type Polymorphic<T extends ElementType, P> = P & { as?: T } & Omit<ComponentPropsWithoutRef<T>, keyof P | 'as'>;
 
@@ -45,6 +46,11 @@ export interface GlassOwnProps {
   tint?: string;
   /** Light-catching rim and top sheen. Off leaves a flat hairline border. */
   rim?: boolean;
+  /**
+   * Bend the backdrop near the edge, like thick glass, instead of only blurring it.
+   * Chromium only (Chrome, Edge, Android); Safari and Firefox keep plain glass.
+   */
+  lens?: boolean;
   children?: ReactNode;
 }
 
@@ -52,7 +58,9 @@ export function Glass<T extends ElementType = 'div'>({
   level = 'regular',
   tint,
   rim = true,
+  lens = false,
   className,
+  children,
   ...rest
 }: Polymorphic<T, GlassOwnProps>) {
   // Generic props cannot be checked through a second polymorphic component; they are the same shape.
@@ -65,6 +73,9 @@ export function Glass<T extends ElementType = 'div'>({
       data-rim={rim ? undefined : 'off'}
       data-tinted={tint ? true : undefined}
       style={tint ? { '--aurum-glass-tint-color': tint, ...style } : style}
-    />
+    >
+      {children}
+      {lens && <GlassLens />}
+    </Squircle>
   );
 }

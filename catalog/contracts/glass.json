@@ -48,6 +48,11 @@
       "name": "lifted",
       "react": null,
       "todo": "Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card."
+    },
+    {
+      "name": "lens",
+      "flutter": null,
+      "todo": "Bend the backdrop near the edge on Flutter too (a fragment shader with BackdropFilter). On the web it is Chromium only; Safari and Firefox keep plain glass."
     }
   ]
 }

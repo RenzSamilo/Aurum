@@ -25,7 +25,12 @@ export interface GlassOwnProps {
     tint?: string;
     /** Light-catching rim and top sheen. Off leaves a flat hairline border. */
     rim?: boolean;
+    /**
+     * Bend the backdrop near the edge, like thick glass, instead of only blurring it.
+     * Chromium only (Chrome, Edge, Android); Safari and Firefox keep plain glass.
+     */
+    lens?: boolean;
     children?: ReactNode;
 }
-export declare function Glass<T extends ElementType = 'div'>({ level, tint, rim, className, ...rest }: Polymorphic<T, GlassOwnProps>): import("react").JSX.Element;
+export declare function Glass<T extends ElementType = 'div'>({ level, tint, rim, lens, className, children, ...rest }: Polymorphic<T, GlassOwnProps>): import("react").JSX.Element;
 export {};

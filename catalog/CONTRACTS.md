@@ -4,11 +4,14 @@
 
 Each component has one list of props shared by React and Flutter. A prop added on only one side fails CI until its contract says what the other side does: a different name, an intentional difference (why), or a gap to close (to do).
 
-## Gaps to close (4)
+## Gaps to close (7)
 
+- [ ] **Floating tab bar**: Flutter's bar is always thin; add the level parameter.
 - [ ] **Floating tab bar**: Flutter shows icons only; add visible labels under the icons.
 - [ ] **Floating tab bar**: Flutter only draws the glass bubble; add the filled accent pill.
+- [ ] **Floating tab bar**: Flutter's bar has no lens yet. On the web it is Chromium only; iPhone keeps plain glass.
 - [ ] **Glass**: Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card.
+- [ ] **Glass**: Bend the backdrop near the edge on Flutter too (a fragment shader with BackdropFilter). On the web it is Chromium only; Safari and Firefox keep plain glass.
 - [ ] **Segmented control**: Add a semanticLabel for the whole group in Flutter.
 
 ## Components
@@ -85,10 +88,12 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | selectedIndex | `selectedIndex` | `selectedIndex` |  |
 | onSelected | `onSelectedChange` | `onSelected` |  |
 | action | `action` | `action` | One round glass button beside the bar, for an action that is not a destination. React: { icon, label, onClick }. Flutter: AurumTabBarAction. |
+| level | `level` | — | clear / ultralight / thin / regular / thick. **To do:** Flutter's bar is always thin; add the level parameter. |
 | showLabels | `showLabels` | — | **To do:** Flutter shows icons only; add visible labels under the icons. |
 | selection | `selection` | — | glass / filled. **To do:** Flutter only draws the glass bubble; add the filled accent pill. |
 | landmarkLabel | `aria-label` | — | The web bar is a nav landmark and needs a name; Flutter has no landmarks, each tab reads "Tab n of m". |
 | solid | — | `solid` | On the web, solid surfaces follow setAurumPreferences({ transparency }). |
+| lens | `lens` | — | **To do:** Flutter's bar has no lens yet. On the web it is Chromium only; iPhone keeps plain glass. |
 
 ### Glass
 
@@ -104,6 +109,7 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | tint | `tint` | `tint` | React takes a CSS colour (use a token var). |
 | rim | `rim` | `rim` | On by default. Off leaves a flat hairline. |
 | lifted | — | `lifted` | **To do:** Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card. |
+| lens | `lens` | — | **To do:** Bend the backdrop near the edge on Flutter too (a fragment shader with BackdropFilter). On the web it is Chromium only; Safari and Firefox keep plain glass. |
 
 ### List row
 

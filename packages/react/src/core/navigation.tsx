@@ -1,4 +1,5 @@
 import { type ComponentPropsWithoutRef, type CSSProperties, type ReactNode, type Ref } from 'react';
+import type { MaterialLevel } from '../tokens/tokens';
 import { Glass } from './components';
 import { Button, type ButtonProps } from './controls';
 import { playHaptic } from '../haptics';
@@ -104,6 +105,10 @@ export interface FloatingTabBarProps extends Omit<ComponentPropsWithoutRef<'nav'
    * filled: a solid accent pill with on-accent text, for brands that want a bold selection.
    */
   selection?: 'glass' | 'filled';
+  /** How frosted the bar is. clear and ultralight show more of the content behind; thin (default) reads best over busy content. */
+  level?: MaterialLevel;
+  /** Bend the content behind the bar near its edge (Chromium and Android only; iPhone keeps plain glass). */
+  lens?: boolean;
   action?: FloatingTabBarAction;
   /** Names the navigation landmark. */
   'aria-label'?: string;
@@ -124,6 +129,8 @@ export function FloatingTabBar({
   onSelectedChange,
   showLabels = true,
   selection = 'glass',
+  level = 'thin',
+  lens = false,
   action,
   className,
   style,
@@ -138,7 +145,7 @@ export function FloatingTabBar({
       style={{ '--aurum-tab-count': tabs.length, '--aurum-tab-index': selectedIndex, ...style } as CSSProperties}
     >
       <div className="aurum-floating-tab-bar-pill">
-        <Glass as="nav" level="thin" radius="pill" className="aurum-floating-tab-bar-glass" aria-label={ariaLabel} {...rest}>
+        <Glass as="nav" level={level} lens={lens} radius="pill" className="aurum-floating-tab-bar-glass" aria-label={ariaLabel} {...rest}>
           {selectedIndex >= 0 && selectedIndex < tabs.length && <span className="aurum-floating-tab-indicator" aria-hidden="true" />}
           <ul className="aurum-tab-bar-list" role="list">
             {tabs.map((tab, i) => {

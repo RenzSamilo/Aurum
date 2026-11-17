@@ -20,7 +20,7 @@ In an app outside this repo, run the same CLI from the Aurum checkout: `node <pa
 
 Aurum gives these for free only when you use its pieces. Hand-built CSS falls back to flat, opaque bars and circular corners.
 
-- **Bottom navigation:** `FloatingTabBar` (glass capsule over content) or `TabBar` (full-width glass). Never a hand-built `<nav>`.
+- **Bottom navigation:** `FloatingTabBar` (glass capsule over content) or `TabBar` (full-width glass). Never a hand-built `<nav>`. `level="clear"` is the least frosted; `lens` bends the content behind it (Chromium and Android only, iPhone keeps plain glass).
 - **Floating buttons** over imagery, video or a busy screen: `Button variant="glass"`. Top bar actions: `Button variant="gray" capsule`.
 - **Your own rounded boxes** (tiles, chips with corners, image frames): class `aurum-squircle` plus `--aurum-radius: var(--radius-*)` in CSS, and `autoSquircle()` once in `main.tsx`. Prefer `Card` or `<Squircle>` when they fit.
 - **Capsules and circles** (`--radius-pill`, `50%`) stay plain `border-radius`; continuous corners only change rectangles.

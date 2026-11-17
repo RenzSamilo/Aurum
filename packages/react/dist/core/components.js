@@ -1,6 +1,7 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef } from 'react';
 import { useSquircle } from '../squircle.js';
+import { GlassLens } from '../lens.js';
 /**
  * A box with continuous corners in every browser. Set the radius with the
  * `radius` prop (a token name or any CSS length) or with CSS border-radius.
@@ -12,8 +13,8 @@ export function Squircle({ as, radius = 'lg', className, style, ...rest }) {
     useSquircle(ref, undefined, value);
     return (_jsx(Tag, { ref: ref, "data-capsule": value === 'var(--radius-pill)' || undefined, className: ['aurum-squircle', className].filter(Boolean).join(' '), style: { '--aurum-radius': value, ...style }, ...rest }));
 }
-export function Glass({ level = 'regular', tint, rim = true, className, ...rest }) {
+export function Glass({ level = 'regular', tint, rim = true, lens = false, className, children, ...rest }) {
     // Generic props cannot be checked through a second polymorphic component; they are the same shape.
     const { style, ...props } = rest;
-    return (_jsx(Squircle, { ...props, className: ['aurum-glass', className].filter(Boolean).join(' '), "data-level": level, "data-rim": rim ? undefined : 'off', "data-tinted": tint ? true : undefined, style: tint ? { '--aurum-glass-tint-color': tint, ...style } : style }));
+    return (_jsxs(Squircle, { ...props, className: ['aurum-glass', className].filter(Boolean).join(' '), "data-level": level, "data-rim": rim ? undefined : 'off', "data-tinted": tint ? true : undefined, style: tint ? { '--aurum-glass-tint-color': tint, ...style } : style, children: [children, lens && _jsx(GlassLens, {})] }));
 }
