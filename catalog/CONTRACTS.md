@@ -4,8 +4,10 @@
 
 Each component has one list of props shared by React and Flutter. A prop added on only one side fails CI until its contract says what the other side does: a different name, an intentional difference (why), or a gap to close (to do).
 
-## Gaps to close (2)
+## Gaps to close (4)
 
+- [ ] **Floating tab bar**: Flutter shows icons only; add visible labels under the icons.
+- [ ] **Floating tab bar**: Flutter only draws the glass bubble; add the filled accent pill.
 - [ ] **Glass**: Add the lifted shadow to web glass. In Safari the squircle clip cuts off a box-shadow, so it needs a wrapper like Card.
 - [ ] **Segmented control**: Add a semanticLabel for the whole group in Flutter.
 
@@ -72,6 +74,21 @@ Each component has one list of props shared by React and Flutter. A prop added o
 | elevation | `elevation` | `lifted` | flat / lifted. Flutter takes a bool: lifted: false is flat. |
 | color | — | `color` | On the web, override the fill with className. |
 | material | `material` | `material` | Glass at this level. On the web a glass card casts no shadow (a shadow filter would stop the blur), and tints with className instead of color. |
+
+### Floating tab bar
+
+`FloatingTabBarProps` · `AurumFloatingTabBar`
+
+| Prop | React | Flutter | Notes |
+| --- | --- | --- | --- |
+| tabs | `tabs` | `tabs` | 2 to 5 tabs, same shape as Tab bar. |
+| selectedIndex | `selectedIndex` | `selectedIndex` |  |
+| onSelected | `onSelectedChange` | `onSelected` |  |
+| action | `action` | `action` | One round glass button beside the bar, for an action that is not a destination. React: { icon, label, onClick }. Flutter: AurumTabBarAction. |
+| showLabels | `showLabels` | — | **To do:** Flutter shows icons only; add visible labels under the icons. |
+| selection | `selection` | — | glass / filled. **To do:** Flutter only draws the glass bubble; add the filled accent pill. |
+| landmarkLabel | `aria-label` | — | The web bar is a nav landmark and needs a name; Flutter has no landmarks, each tab reads "Tab n of m". |
+| solid | — | `solid` | On the web, solid surfaces follow setAurumPreferences({ transparency }). |
 
 ### Glass
 

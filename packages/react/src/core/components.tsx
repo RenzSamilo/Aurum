@@ -14,14 +14,16 @@ export function Squircle<T extends ElementType = 'div'>({
   className,
   style,
   ...rest
-}: Polymorphic<T, { radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {}); children?: ReactNode }>) {
+}: Polymorphic<T, { radius?: 'sm' | 'md' | 'lg' | 'xl' | 'pill' | (string & {}); children?: ReactNode }>) {
   const Tag: ElementType = as ?? 'div';
   const ref = useRef<HTMLElement>(null);
-  const value = ['sm', 'md', 'lg', 'xl'].includes(radius) ? `var(--radius-${radius})` : radius;
+  const value = ['sm', 'md', 'lg', 'xl', 'pill'].includes(radius) ? `var(--radius-${radius})` : radius;
   useSquircle(ref, undefined, value);
   return (
     <Tag
       ref={ref}
+      // A capsule keeps round ends (aurum.css); only rectangles get the superellipse.
+      data-capsule={value === 'var(--radius-pill)' || undefined}
       className={['aurum-squircle', className].filter(Boolean).join(' ')}
       style={{ '--aurum-radius': value, ...style }}
       {...rest}
@@ -37,7 +39,8 @@ export function Squircle<T extends ElementType = 'div'>({
 /** Glass's own props; any prop of the rendered element (`as`) is also accepted. */
 export interface GlassOwnProps {
   level?: MaterialLevel;
-  radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {});
+  /** A radius token (pill makes a capsule) or any CSS length. */
+  radius?: 'sm' | 'md' | 'lg' | 'xl' | 'pill' | (string & {});
   /** Mixed into the glass, e.g. 'var(--color-accent)' for a selected or primary control. */
   tint?: string;
   /** Light-catching rim and top sheen. Off leaves a flat hairline border. */

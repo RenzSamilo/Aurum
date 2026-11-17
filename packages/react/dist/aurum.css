@@ -44,6 +44,13 @@ body {
     border-radius: calc(var(--aurum-radius, var(--radius-lg)) * var(--shape-radius-scale));
     corner-shape: superellipse(var(--shape-superellipse));
   }
+  /* Capsules keep true semicircle ends, as on iOS: a superellipse would square them off.
+     The clip-path fallback already draws a plain capsule when the radius is half the height. */
+  .aurum-squircle[data-capsule],
+  .aurum-segmented[data-glass],
+  .aurum-segmented[data-glass] .aurum-segmented-thumb {
+    corner-shape: round;
+  }
 }
 
 :focus-visible {

@@ -8,7 +8,7 @@ type Polymorphic<T extends ElementType, P> = P & {
  * `radius` prop (a token name or any CSS length) or with CSS border-radius.
  */
 export declare function Squircle<T extends ElementType = 'div'>({ as, radius, className, style, ...rest }: Polymorphic<T, {
-    radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {});
+    radius?: 'sm' | 'md' | 'lg' | 'xl' | 'pill' | (string & {});
     children?: ReactNode;
 }>): import("react").JSX.Element;
 /**
@@ -19,7 +19,8 @@ export declare function Squircle<T extends ElementType = 'div'>({ as, radius, cl
 /** Glass's own props; any prop of the rendered element (`as`) is also accepted. */
 export interface GlassOwnProps {
     level?: MaterialLevel;
-    radius?: 'sm' | 'md' | 'lg' | 'xl' | (string & {});
+    /** A radius token (pill makes a capsule) or any CSS length. */
+    radius?: 'sm' | 'md' | 'lg' | 'xl' | 'pill' | (string & {});
     /** Mixed into the glass, e.g. 'var(--color-accent)' for a selected or primary control. */
     tint?: string;
     /** Light-catching rim and top sheen. Off leaves a flat hairline border. */

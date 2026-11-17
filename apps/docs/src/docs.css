@@ -305,6 +305,32 @@ code {
   flex: 1;
   padding: var(--space-8) var(--space-16) var(--space-24);
 }
+/* contain: layout makes the phone the box the fixed tab bar sits in. */
+.phone-floating {
+  position: relative;
+  contain: layout;
+}
+.floating-body {
+  display: grid;
+  gap: var(--space-12);
+  padding-bottom: var(--aurum-floating-tab-bar-space);
+}
+.floating-tile {
+  --aurum-radius: var(--radius-lg);
+  display: grid;
+  gap: var(--space-4);
+  min-height: var(--space-64);
+  padding: var(--space-16);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+.floating-tile[data-tone='1'] {
+  background: var(--color-accent-secondary);
+}
+.floating-tile[data-tone='2'] {
+  background: var(--color-surface-inset);
+  color: var(--color-text-primary);
+}
 .part-row {
   display: flex;
   flex-wrap: wrap;

@@ -84,8 +84,17 @@ Commit the generated file. The build refuses a brand that fails WCAG contrast in
 ```ts
 import '@aurum/react/aurum.css';   // base styles, fonts, default tokens
 import './aurum-tokens.css';        // your brand, overrides the defaults
-import { Button, Card, setAurumPreferences } from '@aurum/react';
+import { autoSquircle, Button, Card, setAurumPreferences } from '@aurum/react';
+
+autoSquircle(); // continuous corners on your own .aurum-squircle boxes in Safari and Firefox
 ```
+
+Aurum components already have continuous (G2) corners and glass where it belongs. For your own markup:
+
+- **Rounded boxes:** add `className="aurum-squircle"` and set the radius in CSS with `--aurum-radius: var(--radius-lg);`. A plain `border-radius` gives circular corners. Capsules and circles (`--radius-pill`, `50%`) are fine with plain `border-radius`.
+- **Bottom tabs:** use `FloatingTabBar` (a glass capsule that floats over content) or `TabBar` (a full-width glass bar). Give the scrolling content `padding-bottom: var(--aurum-floating-tab-bar-space)`.
+- **Buttons over imagery or a busy background:** `Button variant="glass"`.
+- **Check your app:** `node .aurum/tools/aurum.mjs check .` lists plain corners, hand-built nav bars and raw colours, with the fix for each.
 
 **Flutter:**
 

@@ -16,6 +16,17 @@ Aurum is one design system with two libraries: `@aurum/react` for websites and `
 
 In an app outside this repo, run the same CLI from the Aurum checkout: `node <path-to-aurum>/tools/aurum.mjs list`.
 
+## The iOS look: glass and continuous corners
+
+Aurum gives these for free only when you use its pieces. Hand-built CSS falls back to flat, opaque bars and circular corners.
+
+- **Bottom navigation:** `FloatingTabBar` (glass capsule over content) or `TabBar` (full-width glass). Never a hand-built `<nav>`.
+- **Floating buttons** over imagery, video or a busy screen: `Button variant="glass"`. Top bar actions: `Button variant="gray" capsule`.
+- **Your own rounded boxes** (tiles, chips with corners, image frames): class `aurum-squircle` plus `--aurum-radius: var(--radius-*)` in CSS, and `autoSquircle()` once in `main.tsx`. Prefer `Card` or `<Squircle>` when they fit.
+- **Capsules and circles** (`--radius-pill`, `50%`) stay plain `border-radius`; continuous corners only change rectangles.
+- **Before you say a screen is done:** run `pnpm aurum check <app folder>` and fix or justify every finding (mark a deliberate one with `/* aurum-check: ignore */`).
+- **Flutter:** use `AurumFloatingTabBar`; `aurumTheme` already gives every Material shape continuous corners.
+
 ## Changing Aurum itself
 
 - Components sit on three shelves: `core/`, `patterns/<group>/` and `kits/<kit>/`. See `catalog/README.md`.

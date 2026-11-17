@@ -1,4 +1,4 @@
-/* Aurum navigation: TabBar, TopBar, BackButton. Imported by aurum.css. */
+/* Aurum navigation: TabBar, FloatingTabBar, TopBar, BackButton. Imported by aurum.css. */
 
 /* ----------------------------------------------------------------- Tab bar */
 
@@ -79,6 +79,109 @@
 @media (forced-colors: active) {
   .aurum-tab[aria-current='page'] {
     color: Highlight;
+  }
+}
+
+/* -------------------------------------------------------- Floating tab bar */
+
+:root {
+  /* Height of the capsule. Tabs keep a 48px target inside its 4px inset. */
+  --aurum-floating-tab-bar-height: var(--size-target-large);
+  /* Room to leave under scrolling content so its last item clears the bar. */
+  --aurum-floating-tab-bar-space: calc(
+    var(--aurum-floating-tab-bar-height) + var(--space-16) + max(env(safe-area-inset-bottom, 0px), var(--space-16))
+  );
+}
+.aurum-floating-tab-bar {
+  --_inset: var(--space-4);
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: var(--z-navigation);
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: 0 var(--size-gutter-phone) max(env(safe-area-inset-bottom, 0px), var(--space-16));
+  /* Only the bar and the action take taps; content beside them stays reachable. */
+  pointer-events: none;
+}
+.aurum-floating-tab-bar-pill,
+.aurum-floating-tab-bar-action {
+  pointer-events: auto;
+}
+.aurum-floating-tab-bar-pill {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  /* Tabs stop growing at 96px each, so the bar stays a capsule on a tablet. */
+  max-width: calc(var(--aurum-tab-count) * var(--space-48) * 2);
+}
+/* The lift lives on a layer behind the glass: the squircle clip in Safari and Firefox would cut off a shadow on the glass itself. */
+.aurum-floating-tab-bar-pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-2);
+  pointer-events: none;
+}
+.aurum-floating-tab-bar-glass {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  height: var(--aurum-floating-tab-bar-height);
+  padding: var(--_inset);
+}
+.aurum-floating-tab-bar-glass > .aurum-tab-bar-list {
+  position: relative;
+  height: 100%;
+}
+.aurum-floating-tab {
+  height: 100%;
+  min-height: 0;
+  padding-block: 0;
+  gap: 0;
+  border-radius: var(--radius-pill);
+}
+.aurum-floating-tab .aurum-tab-label {
+  font-size: var(--type-micro-size);
+}
+/* The bubble under the selected tab slides between tabs with the control spring. */
+.aurum-floating-tab-indicator {
+  position: absolute;
+  inset-block: var(--_inset);
+  inset-inline-start: var(--_inset);
+  width: calc((100% - 2 * var(--_inset)) / var(--aurum-tab-count));
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklch, var(--color-text-primary) 12%, transparent);
+  box-shadow:
+    inset 1px 1px 0 var(--material-rim-high),
+    inset -1px -1px 0 var(--material-rim-low);
+  transform: translateX(calc(100% * var(--aurum-tab-index)));
+  transition: transform var(--spring-control-duration) var(--spring-control-easing);
+  pointer-events: none;
+}
+.aurum-floating-tab-indicator:dir(rtl) {
+  transform: translateX(calc(-100% * var(--aurum-tab-index)));
+}
+.aurum-floating-tab-bar[data-selection='filled'] .aurum-floating-tab-indicator {
+  background: var(--color-accent);
+  box-shadow: none;
+}
+.aurum-floating-tab-bar[data-selection='filled'] .aurum-floating-tab[aria-current='page'] {
+  color: var(--color-on-accent);
+}
+/* A round button as tall as the bar; Button sizes an icon-only button from --_height. */
+.aurum-floating-tab-bar .aurum-floating-tab-bar-action {
+  --_height: var(--aurum-floating-tab-bar-height);
+  flex: none;
+}
+@media (forced-colors: active) {
+  .aurum-floating-tab-indicator {
+    background: Highlight;
+  }
+  .aurum-floating-tab[aria-current='page'] {
+    color: HighlightText;
   }
 }
 

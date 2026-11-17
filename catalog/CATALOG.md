@@ -37,7 +37,7 @@ Building blocks for any app.
 | Top bar | ✓ | ✓ | any |  |
 | Back button | ✓ | ✓ | any |  |
 | Tab bar | ✓ | ✓ | any |  |
-| Floating tab bar | — | ✓ | any |  |
+| Floating tab bar | ✓ | ✓ | any |  |
 
 ### Feedback
 

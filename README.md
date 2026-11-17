@@ -80,8 +80,8 @@ MaterialApp(
 | Card, Grouped list (section + row), Sheet, Glass | ✓ | ✓ |
 | Top bar, Back button, Tab bar | ✓ | ✓ |
 | Avatar, Badge, Progress ring | ✓ | ✓ |
-| Floating tab bar | next | ✓ |
-| Continuous corners | `<Squircle>` | theme shape |
+| Floating tab bar | ✓ | ✓ |
+| Continuous corners | `<Squircle>`, `autoSquircle()` | theme shape |
 | Haptics | `playHaptic(intent)` | `AurumHaptics.play(intent)` |
 
 Every component works with a keyboard and a screen reader, honours reduced motion, and is tested (axe-core on the web, Flutter's accessibility guidelines on mobile).

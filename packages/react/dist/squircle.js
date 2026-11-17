@@ -7,6 +7,8 @@
 // ease reaches along the edge; 0 is a plain rounded rectangle.
 import { useLayoutEffect } from 'react';
 import { shapeSmoothing } from './tokens/tokens.js';
+/** Marks an element whose corners useSquircle already handles, so autoSquircle leaves it alone. */
+const HOOK_FLAG = 'data-squircle-hook';
 const rad = (deg) => (deg * Math.PI) / 180;
 const n = (v) => +v.toFixed(3);
 function corner(radius, smoothing, budget) {
@@ -86,10 +88,88 @@ radiusKey) {
         };
         const observer = new ResizeObserver(apply);
         observer.observe(el);
+        el.setAttribute(HOOK_FLAG, '');
         apply();
         return () => {
             observer.disconnect();
+            el.removeAttribute(HOOK_FLAG);
             el.style.clipPath = '';
         };
     }, [ref, smoothing, radiusKey]);
+}
+/**
+ * Continuous corners for plain app markup. Add `className="aurum-squircle"`
+ * to any element and set its radius with `--aurum-radius` (a radius token),
+ * then call this once at startup, for example in main.tsx.
+ *
+ * Chromium draws the shape natively and this does nothing there. Safari and
+ * Firefox get the same clip-path fallback as useSquircle, kept up to date as
+ * elements appear, resize or leave. Returns a function that stops it.
+ *
+ * Clipping hides outer box-shadows and borders; use inset shadows or put the
+ * shadow on a wrapper, as Card does.
+ */
+export function autoSquircle(root = document, smoothing = shapeSmoothing) {
+    if (supportsNativeSquircle() || typeof ResizeObserver === 'undefined' || typeof MutationObserver === 'undefined') {
+        return () => { };
+    }
+    const tracked = new Set();
+    const clip = (el) => {
+        const radius = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
+        el.style.clipPath = `path("${squirclePath(el.offsetWidth, el.offsetHeight, radius, smoothing)}")`;
+    };
+    const sizes = new ResizeObserver((entries) => {
+        for (const entry of entries)
+            clip(entry.target);
+    });
+    const track = (el) => {
+        if (tracked.has(el) || el.hasAttribute(HOOK_FLAG))
+            return;
+        tracked.add(el);
+        sizes.observe(el);
+        clip(el);
+    };
+    const scan = (node) => {
+        if (node instanceof HTMLElement && node.classList.contains('aurum-squircle'))
+            track(node);
+        node.querySelectorAll('.aurum-squircle').forEach(track);
+    };
+    const changes = new MutationObserver((records) => {
+        for (const record of records) {
+            if (record.type === 'attributes') {
+                const el = record.target;
+                if (el.classList.contains('aurum-squircle'))
+                    track(el);
+                else if (tracked.has(el))
+                    release(el);
+                continue;
+            }
+            record.addedNodes.forEach((node) => {
+                if (node instanceof HTMLElement)
+                    scan(node);
+            });
+        }
+        // Forget elements that left the document.
+        for (const el of tracked)
+            if (!el.isConnected)
+                release(el);
+    });
+    const release = (el) => {
+        tracked.delete(el);
+        sizes.unobserve(el);
+        el.style.clipPath = '';
+    };
+    scan(root);
+    changes.observe(root instanceof Document ? root.documentElement : root, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class'],
+    });
+    return () => {
+        changes.disconnect();
+        sizes.disconnect();
+        for (const el of [...tracked])
+            release(el);
+    };
 }
