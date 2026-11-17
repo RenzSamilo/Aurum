@@ -1,4 +1,5 @@
 import { type ComponentPropsWithoutRef, type ReactNode, type Ref } from 'react';
+import type { MaterialLevel } from '../tokens/tokens.js';
 import { type ButtonProps } from './controls.js';
 /** One destination in a TabBar. */
 export interface TabBarItem {
@@ -43,6 +44,8 @@ export interface FloatingTabBarProps extends Omit<ComponentPropsWithoutRef<'nav'
      * filled: a solid accent pill with on-accent text, for brands that want a bold selection.
      */
     selection?: 'glass' | 'filled';
+    /** How frosted the bar is. clear and ultralight show more of the content behind; thin (default) reads best over busy content. */
+    level?: MaterialLevel;
     action?: FloatingTabBarAction;
     /** Names the navigation landmark. */
     'aria-label'?: string;
@@ -56,7 +59,7 @@ export interface FloatingTabBarProps extends Omit<ComponentPropsWithoutRef<'nav'
  * the last item can scroll clear of it. The React twin of Flutter's
  * AurumFloatingTabBar.
  */
-export declare function FloatingTabBar({ tabs, selectedIndex, onSelectedChange, showLabels, selection, action, className, style, 'aria-label': ariaLabel, ...rest }: FloatingTabBarProps): import("react").JSX.Element;
+export declare function FloatingTabBar({ tabs, selectedIndex, onSelectedChange, showLabels, selection, level, action, className, style, 'aria-label': ariaLabel, ...rest }: FloatingTabBarProps): import("react").JSX.Element;
 export interface TopBarProps extends Omit<ComponentPropsWithoutRef<'header'>, 'title'> {
     /** Usually a BackButton. */
     leading?: ReactNode;

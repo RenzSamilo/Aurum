@@ -24,13 +24,28 @@
       "note": "One round glass button beside the bar, for an action that is not a destination. React: { icon, label, onClick }. Flutter: AurumTabBarAction."
     },
     {
+      "name": "level",
+      "values": [
+        "clear",
+        "ultralight",
+        "thin",
+        "regular",
+        "thick"
+      ],
+      "flutter": null,
+      "todo": "Flutter's bar is always thin; add the level parameter."
+    },
+    {
       "name": "showLabels",
       "flutter": null,
       "todo": "Flutter shows icons only; add visible labels under the icons."
     },
     {
       "name": "selection",
-      "values": ["glass", "filled"],
+      "values": [
+        "glass",
+        "filled"
+      ],
       "flutter": null,
       "todo": "Flutter only draws the glass bubble; add the filled accent pill."
     },
