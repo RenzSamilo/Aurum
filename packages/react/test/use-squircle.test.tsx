@@ -84,6 +84,13 @@ describe('autoSquircle', () => {
     await flush();
     expect(plain.style.clipPath).toContain('path(');
 
+    // A class change that swaps the radius without resizing re-clips.
+    const before = first.style.clipPath;
+    first.style.borderTopLeftRadius = '40px';
+    first.classList.add('big');
+    await flush();
+    expect(first.style.clipPath).not.toBe(before);
+
     stop();
     expect(first.style.clipPath).toBe('');
     expect(later.style.clipPath).toBe('');

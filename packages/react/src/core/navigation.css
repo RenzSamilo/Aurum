@@ -161,6 +161,14 @@
   transition: transform var(--spring-control-duration) var(--spring-control-easing);
   pointer-events: none;
 }
+:root[data-motion='reduced'] .aurum-floating-tab-indicator {
+  transition-duration: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='normal']) .aurum-floating-tab-indicator {
+    transition-duration: 0s;
+  }
+}
 .aurum-floating-tab-indicator:dir(rtl) {
   transform: translateX(calc(-100% * var(--aurum-tab-index)));
 }

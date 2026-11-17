@@ -138,10 +138,16 @@ export function autoSquircle(root = document, smoothing = shapeSmoothing) {
         for (const record of records) {
             if (record.type === 'attributes') {
                 const el = record.target;
-                if (el.classList.contains('aurum-squircle'))
+                if (!el.classList.contains('aurum-squircle')) {
+                    if (tracked.has(el))
+                        release(el);
+                }
+                else if (tracked.has(el)) {
+                    // A class change can swap --aurum-radius without resizing, so ResizeObserver stays quiet.
+                    clip(el);
+                }
+                else
                     track(el);
-                else if (tracked.has(el))
-                    release(el);
                 continue;
             }
             record.addedNodes.forEach((node) => {
