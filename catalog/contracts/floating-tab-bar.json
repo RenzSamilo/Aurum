@@ -59,6 +59,11 @@
       "name": "solid",
       "react": null,
       "why": "On the web, solid surfaces follow setAurumPreferences({ transparency })."
+    },
+    {
+      "name": "lens",
+      "flutter": null,
+      "todo": "Flutter's bar has no lens yet. On the web it is Chromium only; iPhone keeps plain glass."
     }
   ]
 }

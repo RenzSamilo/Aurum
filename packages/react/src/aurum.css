@@ -79,6 +79,18 @@ body {
   backdrop-filter: var(--material-backdrop, blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation)));
   border: 1px solid var(--color-border-decorative);
 }
+/* Lens glass (Chromium only, see lens.tsx): the backdrop bends near the edge before it blurs. */
+.aurum-glass[data-lens] {
+  -webkit-backdrop-filter: var(--material-backdrop, var(--aurum-glass-lens) blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation)));
+  backdrop-filter: var(--material-backdrop, var(--aurum-glass-lens) blur(var(--aurum-glass-blur)) saturate(var(--aurum-glass-saturation)));
+}
+.aurum-glass-lens {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
 .aurum-glass[data-level='clear'] {
   --aurum-glass-tint: var(--material-tint-clear);
   --aurum-glass-blur: var(--material-blur-clear);
