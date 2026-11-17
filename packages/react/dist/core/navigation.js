@@ -1,8 +1,8 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import {} from 'react';
-import { Glass } from './components';
-import { Button } from './controls';
-import { playHaptic } from '../haptics';
+import { Glass } from './components.js';
+import { Button } from './controls.js';
+import { playHaptic } from '../haptics.js';
 const cx = (...parts) => parts.filter(Boolean).join(' ');
 /**
  * Bottom navigation between 2 to 5 top-level screens, on a glass material.

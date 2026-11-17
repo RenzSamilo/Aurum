@@ -6,7 +6,7 @@
 // straight edges with two cubic curves. `smoothing` (0 to 1) is how far the
 // ease reaches along the edge; 0 is a plain rounded rectangle.
 import { useLayoutEffect } from 'react';
-import { shapeSmoothing } from './tokens/tokens';
+import { shapeSmoothing } from './tokens/tokens.js';
 /** Marks an element whose corners useSquircle already handles, so autoSquircle leaves it alone. */
 const HOOK_FLAG = 'data-squircle-hook';
 const rad = (deg) => (deg * Math.PI) / 180;

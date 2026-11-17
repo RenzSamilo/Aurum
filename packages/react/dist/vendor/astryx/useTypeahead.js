@@ -12,7 +12,7 @@
  * - /packages/core/src/hooks/index.ts
  */
 import { useCallback, useEffect, useRef } from 'react';
-import { findTypeaheadMatch, nextTypeaheadBuffer } from './typeaheadMatch';
+import { findTypeaheadMatch, nextTypeaheadBuffer } from './typeaheadMatch.js';
 /**
  * Whether a key event represents a single printable character (a type-to-focus
  * candidate) rather than a control/navigation key or a shortcut chord.

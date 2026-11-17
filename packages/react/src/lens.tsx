@@ -23,11 +23,11 @@ export function supportsGlassLens(): boolean {
  * The displacement map for a w x h rounded rectangle with corner radius r: red is the
  * horizontal shift and green the vertical, 128 meaning none. Returns RGBA bytes.
  */
-export function lensMap(width: number, height: number, radius: number, bezel: number): Uint8ClampedArray {
+export function lensMap(width: number, height: number, radius: number, bezel: number): Uint8ClampedArray<ArrayBuffer> {
   const w = Math.max(1, Math.round(width));
   const h = Math.max(1, Math.round(height));
   const r = Math.min(radius, w / 2, h / 2);
-  const data = new Uint8ClampedArray(w * h * 4);
+  const data = new Uint8ClampedArray(new ArrayBuffer(w * h * 4));
   const hx = w / 2 - r;
   const hy = h / 2 - r;
   for (let y = 0; y < h; y++) {

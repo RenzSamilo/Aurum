@@ -1,5 +1,5 @@
 import { type ComponentPropsWithoutRef, type ElementType, type ReactNode } from 'react';
-import type { MaterialLevel } from '../tokens/tokens';
+import type { MaterialLevel } from '../tokens/tokens.js';
 type Polymorphic<T extends ElementType, P> = P & {
     as?: T;
 } & Omit<ComponentPropsWithoutRef<T>, keyof P | 'as'>;

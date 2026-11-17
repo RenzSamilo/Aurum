@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef } from 'react';
-import { useSquircle } from '../squircle';
-import { GlassLens } from '../lens';
+import { useSquircle } from '../squircle.js';
+import { GlassLens } from '../lens.js';
 /**
  * A box with continuous corners in every browser. Set the radius with the
  * `radius` prop (a token name or any CSS length) or with CSS border-radius.

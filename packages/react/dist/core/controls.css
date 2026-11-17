@@ -1,0 +1,364 @@
+/* Aurum controls: Button, Switch, SegmentedControl. Imported by aurum.css. */
+
+/* ------------------------------------------------------------------ Button */
+
+.aurum-button {
+  --aurum-radius: var(--radius-sm);
+  --_bg: var(--color-accent);
+  --_fg: var(--color-on-accent);
+  --_height: var(--size-target);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  min-height: var(--_height);
+  padding: 0 var(--space-16);
+  border: 0;
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--font-family-ui);
+  font-size: var(--type-headline-size);
+  line-height: var(--type-headline-line-height);
+  font-weight: var(--type-headline-weight);
+  letter-spacing: var(--type-headline-tracking);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition:
+    transform var(--spring-control-duration) var(--spring-control-easing),
+    background-color var(--duration-hover) var(--ease-standard),
+    filter var(--duration-hover) var(--ease-standard),
+    opacity var(--duration-hover) var(--ease-standard);
+}
+/* Darken or lighten the fill without a second colour token. */
+.aurum-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  corner-shape: inherit;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-press) var(--ease-standard);
+}
+@media (hover: hover) {
+  .aurum-button:hover:not(:disabled)::after {
+    opacity: 0.06;
+  }
+}
+.aurum-button:active:not(:disabled) {
+  transform: scale(var(--press-scale-control));
+  transition-duration: var(--duration-press), var(--duration-hover), var(--duration-hover), var(--duration-hover);
+}
+.aurum-button:active:not(:disabled)::after {
+  opacity: 0.12;
+}
+.aurum-button:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.aurum-button[data-variant='tinted'] {
+  --_bg: color-mix(in oklch, var(--color-accent) 14%, transparent);
+  --_fg: var(--color-accent);
+}
+.aurum-button[data-variant='gray'] {
+  --_bg: var(--color-surface-inset);
+  --_fg: var(--color-accent);
+}
+.aurum-button[data-variant='plain'] {
+  --_bg: transparent;
+  --_fg: var(--color-accent);
+}
+.aurum-button[data-variant='glass'] {
+  --_fg: var(--color-text-primary);
+}
+.aurum-button[data-variant='glass'][data-destructive] {
+  --_fg: var(--color-danger);
+}
+.aurum-button[data-destructive][data-variant='filled'] {
+  --_bg: var(--color-danger);
+  --_fg: var(--color-on-accent);
+}
+.aurum-button[data-destructive]:not([data-variant='filled']) {
+  --_fg: var(--color-danger);
+}
+.aurum-button[data-destructive][data-variant='tinted'] {
+  --_bg: color-mix(in oklch, var(--color-danger) 14%, transparent);
+}
+
+.aurum-button[data-size='sm'] {
+  --_height: 32px;
+  padding-inline: var(--space-12);
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  font-weight: 600;
+}
+/* Small buttons keep a 44px hit area. */
+.aurum-button[data-size='sm']::before {
+  content: '';
+  position: absolute;
+  inset: -6px -2px;
+}
+.aurum-button[data-size='lg'] {
+  --aurum-radius: var(--radius-md);
+  --_height: var(--size-target-large);
+  padding-inline: var(--space-24);
+}
+.aurum-button[data-capsule] {
+  --aurum-radius: var(--radius-pill);
+}
+.aurum-button[data-full-width] {
+  display: flex;
+  width: 100%;
+}
+.aurum-button[data-icon-only] {
+  padding: 0;
+  width: var(--_height);
+}
+.aurum-button-icon {
+  display: inline-flex;
+  font-size: 1.25em;
+}
+.aurum-button-icon > svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* Windows High Contrast and forced colours. */
+@media (forced-colors: active) {
+  .aurum-button {
+    border: 1px solid ButtonText;
+  }
+}
+
+/* ------------------------------------------------------------------ Switch */
+
+.aurum-switch {
+  --_w: 52px;
+  --_h: 32px;
+  --_pad: 2px;
+  --_thumb: calc(var(--_h) - 2 * var(--_pad));
+  position: relative;
+  flex: none;
+  width: var(--_w);
+  height: var(--_h);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-border-control);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background-color var(--duration-feedback) var(--ease-standard);
+}
+/* 48px hit area around the 32px track. */
+.aurum-switch::before {
+  content: '';
+  position: absolute;
+  inset: -8px -4px;
+}
+.aurum-switch[aria-checked='true'] {
+  background: var(--color-accent);
+}
+.aurum-switch:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+.aurum-switch-thumb {
+  position: absolute;
+  top: var(--_pad);
+  left: var(--_pad);
+  width: var(--_thumb);
+  height: var(--_thumb);
+  border-radius: var(--radius-pill);
+  background: oklch(1 0 0);
+  box-shadow:
+    0 2px 6px rgb(0 0 0 / 0.16),
+    0 0 0 0.5px rgb(0 0 0 / 0.04);
+  transition:
+    transform var(--spring-control-duration) var(--spring-control-easing),
+    width var(--duration-press) var(--ease-standard);
+}
+.aurum-switch[aria-checked='true'] .aurum-switch-thumb {
+  transform: translateX(calc(var(--_w) - var(--_thumb) - 2 * var(--_pad)));
+}
+/* The thumb stretches while pressed, a cue that it can move. */
+.aurum-switch:active:not(:disabled) .aurum-switch-thumb {
+  width: calc(var(--_thumb) + 6px);
+}
+.aurum-switch[aria-checked='true']:active:not(:disabled) .aurum-switch-thumb {
+  transform: translateX(calc(var(--_w) - var(--_thumb) - 6px - 2 * var(--_pad)));
+}
+:root[data-motion='reduced'] .aurum-switch-thumb {
+  transition-duration: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='normal']) .aurum-switch-thumb {
+    transition-duration: 0s;
+  }
+}
+@media (forced-colors: active) {
+  .aurum-switch {
+    border: 1px solid ButtonText;
+  }
+  .aurum-switch[aria-checked='true'] {
+    background: Highlight;
+  }
+  .aurum-switch-thumb {
+    background: ButtonText;
+  }
+}
+
+.aurum-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  min-height: var(--size-target);
+}
+.aurum-switch-row[data-disabled] {
+  opacity: 0.4;
+}
+.aurum-switch-row[data-disabled] .aurum-switch:disabled {
+  opacity: 1;
+}
+.aurum-switch-text {
+  display: grid;
+}
+.aurum-switch-text label {
+  cursor: pointer;
+}
+.aurum-switch-description {
+  color: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------- Segmented control */
+
+.aurum-segmented {
+  --aurum-radius: var(--radius-sm);
+  --_pad: 2px;
+  --_height: 36px;
+  position: relative;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  padding: var(--_pad);
+  background: var(--color-surface-inset);
+  isolation: isolate;
+}
+.aurum-segmented[data-size='sm'] {
+  --_height: 28px;
+}
+.aurum-segmented[data-glass] {
+  --aurum-radius: var(--radius-pill);
+  --_pad: 4px;
+}
+.aurum-segmented[data-glass] .aurum-segment {
+  border-radius: var(--radius-pill);
+}
+.aurum-segmented-thumb {
+  --aurum-radius: calc(var(--radius-sm) - 2px);
+  position: absolute;
+  z-index: -1;
+  top: var(--_pad);
+  bottom: var(--_pad);
+  left: var(--_pad);
+  width: calc((100% - 2 * var(--_pad)) / var(--aurum-segments));
+  /* In dark mode the elevated surface is too close to the track; lift the thumb. */
+  background: light-dark(var(--color-surface-elevated), var(--color-border-decorative));
+  box-shadow:
+    0 2px 6px rgb(0 0 0 / 0.08),
+    0 0 0 0.5px rgb(0 0 0 / 0.04);
+  transform: translateX(calc(100% * var(--aurum-segment-index)));
+  transition: transform var(--spring-control-duration) var(--spring-control-easing);
+}
+/* Glass track: a frosted thumb with a bright hairline edge. */
+.aurum-segmented[data-glass] .aurum-segmented-thumb {
+  --aurum-radius: var(--radius-pill);
+  border-radius: var(--radius-pill);
+  background: light-dark(
+    color-mix(in oklch, var(--color-surface-elevated) 72%, transparent),
+    color-mix(in oklch, var(--color-text-primary) 18%, transparent)
+  );
+  box-shadow:
+    inset 0 0 0 1px var(--material-rim-high),
+    0 2px 6px rgb(0 0 0 / 0.08);
+}
+.aurum-segmented:dir(rtl) .aurum-segmented-thumb {
+  left: auto;
+  right: var(--_pad);
+  transform: translateX(calc(-100% * var(--aurum-segment-index)));
+}
+:root[data-motion='reduced'] .aurum-segmented-thumb {
+  transition-duration: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='normal']) .aurum-segmented-thumb {
+    transition-duration: 0s;
+  }
+}
+.aurum-segment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-width: 0;
+  min-height: var(--_height);
+  padding: 0 var(--space-12);
+  border: 0;
+  border-radius: calc(var(--radius-sm) - 2px);
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-ui);
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--spring-control-duration) var(--spring-control-easing),
+    font-weight var(--duration-press) var(--ease-standard);
+}
+/* Keep a 44px hit area on the 36px and 28px tracks. */
+.aurum-segment::before {
+  content: '';
+  position: absolute;
+  inset: calc((var(--_height) - 44px) / 2) 0;
+}
+/* Text clips on an inner span so the button's ::before hit area is not clipped. */
+.aurum-segment-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.aurum-segment[aria-checked='true'] {
+  font-weight: 600;
+}
+.aurum-segment:active:not(:disabled) {
+  transform: scale(var(--press-scale-control));
+}
+.aurum-segment:disabled {
+  cursor: default;
+  color: var(--color-text-tertiary);
+}
+.aurum-segment:focus-visible {
+  outline-offset: -2px;
+}
+@media (forced-colors: active) {
+  .aurum-segmented {
+    border: 1px solid ButtonText;
+  }
+  .aurum-segmented-thumb {
+    background: Highlight;
+  }
+  .aurum-segment[aria-checked='true'] {
+    color: HighlightText;
+  }
+}

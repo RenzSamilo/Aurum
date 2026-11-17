@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { playHaptic } from '../haptics';
-import { useTypeahead } from '../vendor/astryx/useTypeahead';
+import { playHaptic } from '../haptics.js';
+import { useTypeahead } from '../vendor/astryx/useTypeahead.js';
 /**
  * A button that opens a short list of actions.
  *

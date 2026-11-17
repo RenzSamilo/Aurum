@@ -1,5 +1,5 @@
 import { type ComponentPropsWithoutRef, type ReactNode, type Ref } from 'react';
-import { type MaterialLevel } from '../tokens/tokens';
+import { type MaterialLevel } from '../tokens/tokens.js';
 export interface CardProps extends ComponentPropsWithoutRef<'div'> {
     /** Makes the whole card one button. Put no other buttons inside it. */
     onPress?: () => void;

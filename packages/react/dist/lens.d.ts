@@ -4,7 +4,7 @@ export declare function supportsGlassLens(): boolean;
  * The displacement map for a w x h rounded rectangle with corner radius r: red is the
  * horizontal shift and green the vertical, 128 meaning none. Returns RGBA bytes.
  */
-export declare function lensMap(width: number, height: number, radius: number, bezel: number): Uint8ClampedArray;
+export declare function lensMap(width: number, height: number, radius: number, bezel: number): Uint8ClampedArray<ArrayBuffer>;
 export interface GlassLensProps {
     /** Width of the bending band along the edge, in px. */
     bezel?: number;

@@ -26,7 +26,7 @@ export function lensMap(width, height, radius, bezel) {
     const w = Math.max(1, Math.round(width));
     const h = Math.max(1, Math.round(height));
     const r = Math.min(radius, w / 2, h / 2);
-    const data = new Uint8ClampedArray(w * h * 4);
+    const data = new Uint8ClampedArray(new ArrayBuffer(w * h * 4));
     const hx = w / 2 - r;
     const hy = h / 2 - r;
     for (let y = 0; y < h; y++) {

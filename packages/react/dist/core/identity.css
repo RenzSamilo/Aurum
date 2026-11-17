@@ -1,0 +1,126 @@
+/* Aurum feedback and identity: ProgressRing, Avatar, Badge. Imported by aurum.css. */
+
+/* ----------------------------------------------------------- Progress ring */
+
+.aurum-progress-ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: var(--aurum-ring-size);
+  height: var(--aurum-ring-size);
+}
+.aurum-progress-ring > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.aurum-progress-ring circle {
+  fill: none;
+}
+.aurum-progress-ring-track {
+  stroke: var(--aurum-ring-track, color-mix(in oklch, var(--color-text-primary) 12%, transparent));
+}
+.aurum-progress-ring-value {
+  stroke: var(--aurum-ring-color, var(--color-accent));
+  stroke-linecap: round;
+  /* Start at 12 o'clock, fill clockwise. */
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset var(--spring-surface-duration) var(--spring-surface-easing);
+}
+.aurum-progress-ring-content {
+  position: relative;
+  font-variant-numeric: tabular-nums;
+}
+@media (forced-colors: active) {
+  .aurum-progress-ring-value {
+    stroke: Highlight;
+  }
+  .aurum-progress-ring-track {
+    stroke: GrayText;
+  }
+}
+
+/* ------------------------------------------------------------------ Avatar */
+
+.aurum-avatar {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  box-sizing: border-box;
+  width: var(--aurum-avatar-size);
+  height: var(--aurum-avatar-size);
+  overflow: hidden;
+  border-radius: 50%;
+  background: color-mix(in oklch, var(--color-accent) 16%, var(--color-surface-card));
+  color: var(--color-accent);
+  font-family: var(--font-family-ui);
+  font-size: calc(var(--aurum-avatar-size) * 0.4);
+  line-height: 1;
+  font-weight: var(--type-caption-weight);
+  user-select: none;
+}
+.aurum-avatar[data-type='headline'] {
+  font-weight: var(--type-headline-weight);
+}
+.aurum-avatar[data-type='section'] {
+  font-family: var(--font-family-display);
+  font-weight: var(--type-section-weight);
+}
+.aurum-avatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.aurum-avatar[data-ring='thin'] {
+  box-shadow: 0 0 0 2px var(--color-surface-card);
+}
+.aurum-avatar[data-ring='thick'] {
+  box-shadow: 0 0 0 4px var(--color-surface-card);
+}
+
+/* ------------------------------------------------------------------- Badge */
+
+.aurum-badge {
+  --_tone: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-8);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-family-ui);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line-height);
+  letter-spacing: var(--type-caption-tracking);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.aurum-badge[data-tone='secondary'] {
+  --_tone: var(--color-accent-secondary);
+}
+.aurum-badge[data-tone='neutral'] {
+  --_tone: var(--color-text-secondary);
+}
+.aurum-badge[data-tone='danger'] {
+  --_tone: var(--color-danger);
+}
+.aurum-badge[data-appearance='soft'] {
+  background: color-mix(in oklch, var(--_tone) 14%, var(--color-surface-card));
+  color: var(--_tone);
+}
+.aurum-badge[data-appearance='solid'] {
+  background: var(--_tone);
+  color: var(--color-on-accent);
+}
+.aurum-badge[data-appearance='outline'] {
+  background: transparent;
+  color: var(--color-text-primary);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--color-text-primary) 50%, transparent);
+}
+@media (forced-colors: active) {
+  .aurum-badge {
+    border: 1px solid CanvasText;
+  }
+}

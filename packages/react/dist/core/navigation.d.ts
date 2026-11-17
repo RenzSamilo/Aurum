@@ -1,6 +1,6 @@
 import { type ComponentPropsWithoutRef, type ReactNode, type Ref } from 'react';
-import type { MaterialLevel } from '../tokens/tokens';
-import { type ButtonProps } from './controls';
+import type { MaterialLevel } from '../tokens/tokens.js';
+import { type ButtonProps } from './controls.js';
 /** One destination in a TabBar. */
 export interface TabBarItem {
     label: string;
