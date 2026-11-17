@@ -28,6 +28,13 @@ export function dartColor(value) {
   return `Color(0x${hex.toUpperCase()})`;
 }
 
+/** #RRGGBB, or #RRGGBBAA when the colour is see-through. */
+export function hexColor(value) {
+  const [r, g, b, a] = toSrgb(value);
+  const byte = (x) => Math.round(x * 255).toString(16).padStart(2, '0');
+  return `#${[r, g, b].map(byte).join('')}${a < 1 ? byte(a) : ''}`.toUpperCase();
+}
+
 /** Adds an alpha to an oklch() string. */
 export const withAlpha = (oklch, alpha) => oklch.replace(/\)$/, ` / ${alpha})`);
 

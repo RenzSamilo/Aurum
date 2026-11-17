@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { after, test } from 'node:test';
 import { brandTokens, loadBrand } from './brand.mjs';
-import { contrast } from './color.mjs';
+import { contrast, hexColor } from './color.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const scratch = await mkdtemp(join(tmpdir(), 'aurum-success-test-'));
@@ -185,4 +185,23 @@ test('generation rejects success that fails contrast', async () => {
   assert.equal(result.status, 1, result.stderr);
   assert.match(result.stderr, /light: color-success on color-surface-.*needs 4.5:1/);
   assert.match(result.stderr, /contrastLight: color-success on color-surface-.*needs 4.5:1/);
+});
+
+test('hexColor writes #RRGGBB, and #RRGGBBAA only when see-through', () => {
+  assert.equal(hexColor('rgb(255 0 128)'), '#FF0080');
+  assert.equal(hexColor('oklch(1 0 0)'), '#FFFFFF');
+  assert.equal(hexColor('rgb(0 0 0 / 0.5)'), '#00000080');
+});
+
+test('--hex writes every colour token per mode as hex', async () => {
+  const path = await brandFile({ name: 'Hex test', accent: customAccent });
+  const result = spawnSync(process.execPath, ['tools/tokens/build.mjs', '--brand', path, '--hex', `${path}.hex.json`], { cwd: root, encoding: 'utf8' });
+  assert.equal(result.status, 0, result.stderr);
+  const { name, modes } = JSON.parse(await readFile(`${path}.hex.json`, 'utf8'));
+  assert.equal(name, 'Hex test');
+  assert.deepEqual(Object.keys(modes), ['light', 'dark', 'contrastLight', 'contrastDark']);
+  for (const colours of Object.values(modes)) {
+    assert.match(colours['color-accent'], /^#[0-9A-F]{6}$/);
+    for (const value of Object.values(colours)) assert.match(value, /^#[0-9A-F]{6}([0-9A-F]{2})?$/);
+  }
 });

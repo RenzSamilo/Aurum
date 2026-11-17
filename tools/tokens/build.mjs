@@ -14,6 +14,10 @@
 // App build, for an app's own brand:
 //   node tools/tokens/build.mjs --brand my.brand.json --css src/aurum-tokens.css --dart lib/my_brand.g.dart
 //
+// For tools outside code (an art pipeline, a design app), --hex writes every colour token
+// as #RRGGBB per mode:
+//   node tools/tokens/build.mjs --brand my.brand.json --hex brand-colors.json
+//
 // Every build fails if the brand breaks a contrast rule in any mode.
 
 import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises';
@@ -24,7 +28,7 @@ import { parseArgs } from 'node:util';
 import StyleDictionary from 'style-dictionary';
 
 import { brandTokens, loadBrand } from './brand.mjs';
-import { dartColor, withAlpha } from './color.mjs';
+import { dartColor, hexColor, withAlpha } from './color.mjs';
 import { deriveSpring } from './spring.mjs';
 import { contrastReport, validateContrast } from './validate.mjs';
 
@@ -36,10 +40,12 @@ const { values: args } = parseArgs({
     dart: { type: 'string' },
     // Writes a JSON receipt: key colours and the worst contrast pair per rule, per mode.
     report: { type: 'string' },
+    // Writes every colour token as #RRGGBB (#RRGGBBAA when see-through), per mode.
+    hex: { type: 'string' },
   },
 });
 const appBuild = Boolean(args.brand);
-if (appBuild && !args.css && !args.dart && !args.report) throw new Error('--brand needs --css, --dart and/or --report to say where to write.');
+if (appBuild && !args.css && !args.dart && !args.report && !args.hex) throw new Error('--brand needs --css, --dart, --report and/or --hex to say where to write.');
 
 const brandPath = resolve(args.brand ?? join(root, 'tokens/brand/aurum.json'));
 const brand = await loadBrand(brandPath);
@@ -521,6 +527,14 @@ if (args.report) {
   };
   for (const [m, checks] of Object.entries(contrastReport(sem))) report.modes[m].checks = checks;
   await write(resolve(args.report), `${JSON.stringify(report, null, 2)}\n`);
+}
+
+if (args.hex) {
+  const colours = (m) => Object.fromEntries(
+    Object.entries(sem[m]).filter(([k, v]) => k.startsWith('color-') && /^(oklch|rgb)\(/.test(v)).map(([k, v]) => [k, hexColor(v)]),
+  );
+  const out = { name: brand.name, note: HEADER, modes: Object.fromEntries(Object.keys(MODES).map((m) => [m, colours(m)])) };
+  await write(resolve(args.hex), `${JSON.stringify(out, null, 2)}\n`);
 }
 
 if (appBuild) {

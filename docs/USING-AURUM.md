@@ -77,6 +77,8 @@ node .aurum/tools/tokens/build.mjs --brand aurum.brand.json --dart lib/aurum_bra
 
 Commit the generated file. The build refuses a brand that fails WCAG contrast in any mode and prints the failing pair. Tip: add it as a script, `"aurum:tokens": "node .aurum/tools/tokens/build.mjs --brand aurum.brand.json --css src/aurum-tokens.css"`.
 
+Need the brand colours outside code (an art tool, a design file)? `--hex brand-colors.json` writes every colour token as `#RRGGBB`, per mode. KeizArt reads this file to keep its style-pack accents on-brand.
+
 ## 6. Import
 
 **React**, once at the app root, in this order:
