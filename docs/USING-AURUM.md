@@ -2,7 +2,7 @@
 
 For an app repo (React or Flutter) that wants Aurum's components and its own brand. Aurum lives in the public repo [`RenzSamilo/Aurum`](https://github.com/RenzSamilo/Aurum) and is released as git tags named `aurum-vX.Y.Z`. Always pin a tag, never `main`.
 
-Install pin: **`aurum-v0.1.1`**. What changed in each tag: [CHANGELOG.md](../CHANGELOG.md).
+Install pin: **`aurum-v0.2.0`**. What changed in each tag: [CHANGELOG.md](../CHANGELOG.md).
 
 ## 1. Get access
 
@@ -13,7 +13,7 @@ Nothing to set up: the repo is public, so any machine (laptop, CI, Vercel, Codem
 **React** (Vite, Next, react-three-fiber):
 
 ```sh
-pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.1&path:/packages/react"
+pnpm add "github:RenzSamilo/Aurum#aurum-v0.2.0&path:/packages/react"
 ```
 
 The package ships built JavaScript, type declarations and CSS, so there is no build step and no `transpilePackages`. It needs React 19.
@@ -26,7 +26,7 @@ dependencies:
     git:
       url: https://github.com/RenzSamilo/Aurum.git
       path: packages/flutter
-      ref: aurum-v0.1.1
+      ref: aurum-v0.2.0
 ```
 
 Then `flutter pub get`. Fonts (Inter, Fraunces) and icons come with the package.
@@ -36,7 +36,7 @@ Then `flutter pub get`. Fonts (Inter, Fraunces) and icons come with the package.
 The brand build and the `aurum` cheat sheet run from a checkout of the same tag. Keep it in the app folder, ignored by git:
 
 ```sh
-git clone --depth 1 --branch aurum-v0.1.1 https://github.com/RenzSamilo/Aurum.git .aurum
+git clone --depth 1 --branch aurum-v0.2.0 https://github.com/RenzSamilo/Aurum.git .aurum
 pnpm --dir .aurum install --frozen-lockfile --filter aurum   # only the token tools, a few seconds
 echo ".aurum/" >> .gitignore
 ```
