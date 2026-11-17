@@ -1,0 +1,49 @@
+{
+  "component": "Floating tab bar",
+  "react": {
+    "props": "FloatingTabBarProps"
+  },
+  "flutter": {
+    "symbol": "AurumFloatingTabBar"
+  },
+  "props": [
+    {
+      "name": "tabs",
+      "note": "2 to 5 tabs, same shape as Tab bar."
+    },
+    {
+      "name": "selectedIndex"
+    },
+    {
+      "name": "onSelected",
+      "react": "onSelectedChange",
+      "flutter": "onSelected"
+    },
+    {
+      "name": "action",
+      "note": "One round glass button beside the bar, for an action that is not a destination. React: { icon, label, onClick }. Flutter: AurumTabBarAction."
+    },
+    {
+      "name": "showLabels",
+      "flutter": null,
+      "todo": "Flutter shows icons only; add visible labels under the icons."
+    },
+    {
+      "name": "selection",
+      "values": ["glass", "filled"],
+      "flutter": null,
+      "todo": "Flutter only draws the glass bubble; add the filled accent pill."
+    },
+    {
+      "name": "landmarkLabel",
+      "react": "aria-label",
+      "flutter": null,
+      "why": "The web bar is a nav landmark and needs a name; Flutter has no landmarks, each tab reads \"Tab n of m\"."
+    },
+    {
+      "name": "solid",
+      "react": null,
+      "why": "On the web, solid surfaces follow setAurumPreferences({ transparency })."
+    }
+  ]
+}

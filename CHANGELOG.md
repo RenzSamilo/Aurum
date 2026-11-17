@@ -4,6 +4,14 @@ Aurum is released as git tags named `aurum-vX.Y.Z`. Apps pin a tag (see [docs/US
 
 Versions follow semver. Before 1.0, a minor bump (0.1 → 0.2) may change a public API; the entry says how to move.
 
+## Unreleased
+
+- **Floating tab bar on the web:** `FloatingTabBar`, the React twin of Flutter's `AurumFloatingTabBar`: a glass capsule inset from the screen edges, a bubble that slides to the selected tab, optional round glass `action`. Web extras: `showLabels` (default on) and `selection="filled"` for a solid accent pill. Content clears it with `padding-bottom: var(--aurum-floating-tab-bar-space)`.
+- **Continuous corners for app markup:** `autoSquircle()` gives every `.aurum-squircle` element continuous corners in Safari and Firefox (Chromium draws them natively). Call it once at startup.
+- **Capsules keep round ends:** in Chromium, capsule buttons, capsule text fields, glass segmented controls and `radius="pill"` glass were drawn as squared-off superellipses. They now have true semicircle ends, matching iOS and the Safari fallback. `Squircle` and `Glass` take `radius="pill"`.
+- **`pnpm aurum check <app folder>`:** lists plain `border-radius` corners, hand-built `<nav>` bars and raw colours in an app, with the fix for each. `--strict` exits with an error when it finds any.
+- **Rules:** `pnpm aurum rules` now says where glass goes (tab bar, toolbars, buttons over imagery) and how to get continuous corners on your own boxes.
+
 ## 0.1.1 (unreleased)
 
 - **Optional success colour:** brand files may set `success.hue`, `chroma`, `chromaDark`, `lightnessLight` and `lightnessDark` independently of the accent. Omitted or empty `success` preserves the existing accent-matched appearance, including dark chroma, across all four modes on React and Flutter.

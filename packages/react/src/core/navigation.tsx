@@ -1,4 +1,4 @@
-import { type ComponentPropsWithoutRef, type ReactNode, type Ref } from 'react';
+import { type ComponentPropsWithoutRef, type CSSProperties, type ReactNode, type Ref } from 'react';
 import { Glass } from './components';
 import { Button, type ButtonProps } from './controls';
 import { playHaptic } from '../haptics';
@@ -78,6 +78,108 @@ export function TabBar({
         })}
       </ul>
     </Glass>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Floating tab bar
+
+/** A round glass button beside a FloatingTabBar, for one action that is not a destination, such as search or add. */
+export interface FloatingTabBarAction {
+  icon: ReactNode;
+  /** Read by screen readers; the button shows the icon only. */
+  label: string;
+  onClick: () => void;
+}
+
+export interface FloatingTabBarProps extends Omit<ComponentPropsWithoutRef<'nav'>, 'onChange'> {
+  /** 2 to 5 top-level destinations. */
+  tabs: readonly TabBarItem[];
+  selectedIndex: number;
+  onSelectedChange: (index: number) => void;
+  /** Show each tab's label under its icon. Off keeps the labels for screen readers only. Default true. */
+  showLabels?: boolean;
+  /**
+   * How the selected tab is marked. glass (default): a lighter glass bubble and an accent icon.
+   * filled: a solid accent pill with on-accent text, for brands that want a bold selection.
+   */
+  selection?: 'glass' | 'filled';
+  action?: FloatingTabBarAction;
+  /** Names the navigation landmark. */
+  'aria-label'?: string;
+  ref?: Ref<HTMLElement>;
+}
+
+/**
+ * Bottom navigation that floats over content: a capsule of glass inset from
+ * the screen edges, with a bubble that slides to the selected tab. It is fixed
+ * to the bottom of the viewport and pads for the home indicator; give the
+ * scrolling content `padding-bottom: var(--aurum-floating-tab-bar-space)` so
+ * the last item can scroll clear of it. The React twin of Flutter's
+ * AurumFloatingTabBar.
+ */
+export function FloatingTabBar({
+  tabs,
+  selectedIndex,
+  onSelectedChange,
+  showLabels = true,
+  selection = 'glass',
+  action,
+  className,
+  style,
+  'aria-label': ariaLabel = 'Tabs',
+  ...rest
+}: FloatingTabBarProps) {
+  return (
+    <div
+      className={cx('aurum-floating-tab-bar', className)}
+      data-labels={showLabels ? undefined : 'hidden'}
+      data-selection={selection}
+      style={{ '--aurum-tab-count': tabs.length, '--aurum-tab-index': selectedIndex, ...style } as CSSProperties}
+    >
+      <div className="aurum-floating-tab-bar-pill">
+        <Glass as="nav" level="thin" radius="pill" className="aurum-floating-tab-bar-glass" aria-label={ariaLabel} {...rest}>
+          {selectedIndex >= 0 && selectedIndex < tabs.length && <span className="aurum-floating-tab-indicator" aria-hidden="true" />}
+          <ul className="aurum-tab-bar-list" role="list">
+            {tabs.map((tab, i) => {
+              const selected = i === selectedIndex;
+              const content = (
+                <>
+                  <span className="aurum-tab-icon" aria-hidden="true">
+                    {selected ? (tab.selectedIcon ?? tab.icon) : tab.icon}
+                  </span>
+                  <span className={cx('aurum-tab-label', !showLabels && 'aurum-visually-hidden')}>{tab.label}</span>
+                </>
+              );
+              const props = {
+                className: 'aurum-tab aurum-floating-tab',
+                'aria-current': selected ? ('page' as const) : undefined,
+                onClick: () => {
+                  if (!selected) playHaptic('selectionTick');
+                  onSelectedChange(i);
+                },
+              };
+              return (
+                <li key={tab.label}>
+                  {tab.href ? (
+                    <a href={tab.href} {...props}>
+                      {content}
+                    </a>
+                  ) : (
+                    <button type="button" {...props}>
+                      {content}
+                    </button>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </Glass>
+      </div>
+      {action && (
+        <Button variant="glass" capsule className="aurum-floating-tab-bar-action" icon={action.icon} aria-label={action.label} onClick={action.onClick} />
+      )}
+    </div>
   );
 }
 

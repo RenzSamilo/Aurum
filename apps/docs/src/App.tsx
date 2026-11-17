@@ -1,4 +1,4 @@
-import { type AurumPreferences, Avatar, BackButton, Badge, Button, Card, Glass, ListRow, ListSection, Menu, ProgressRing, Sheet, SegmentedControl, Switch, TabBar, TextField, TopBar, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
+import { type AurumPreferences, Avatar, BackButton, Badge, Button, Card, FloatingTabBar, Glass, ListRow, ListSection, Menu, ProgressRing, Sheet, SegmentedControl, Switch, TabBar, TextField, TopBar, type HapticIntent, haptic, material, playHaptic, radius, setAurumPreferences, spring, type, type SpringName } from '@aurum/react';
 import { Archive, Barbell, Bell, ChartBar, CopySimple, DotsThree, Gear, Globe, Heart, House, Lock, MagnifyingGlass, Moon, PaperPlaneRight, PencilSimple, Play, Plus, Sun, Trash, User, WifiHigh } from '@phosphor-icons/react';
 import { useEffect, useState } from 'react';
 
@@ -384,8 +384,43 @@ function AppParts() {
             />
           </div>
         </div>
+        <FloatingPhone />
       </div>
     </Section>
+  );
+}
+
+/* Floating glass tab bar over scrolling content. The tiles are plain divs with class
+   aurum-squircle: main.tsx calls autoSquircle() so they get continuous corners in Safari too. */
+function FloatingPhone() {
+  const [tab, setTab] = useState(0);
+  const tiles = ['Push', 'Pull', 'Legs', 'Core', 'Mobility', 'Cardio', 'Rest'];
+  return (
+    <div className="phone phone-floating aurum-squircle">
+      <div className="phone-scroll">
+        <TopBar title="Routines" />
+        <div className="phone-body floating-body">
+          {tiles.map((name, i) => (
+            <div key={name} className="floating-tile aurum-squircle" data-tone={i % 3}>
+              <span className="aurum-type-headline">{name}</span>
+              <span className="aurum-type-caption">{40 + i * 5} min</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <FloatingTabBar
+        aria-label="Main"
+        selectedIndex={tab}
+        onSelectedChange={setTab}
+        action={{ icon: <Plus weight="bold" />, label: 'New routine', onClick: () => {} }}
+        tabs={[
+          { label: 'Today', icon: <House />, selectedIcon: <House weight="fill" /> },
+          { label: 'Routines', icon: <Barbell />, selectedIcon: <Barbell weight="fill" /> },
+          { label: 'Progress', icon: <ChartBar />, selectedIcon: <ChartBar weight="fill" /> },
+          { label: 'Settings', icon: <Gear />, selectedIcon: <Gear weight="fill" /> },
+        ]}
+      />
+    </div>
   );
 }
 

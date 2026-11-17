@@ -2,7 +2,7 @@ import './css-vars';
 export * from './tokens/tokens';
 export { setAurumPreferences, type AurumPreferences } from './preferences';
 export { hapticsEnabled, playHaptic, setHapticsEnabled } from './haptics';
-export { squirclePath, supportsNativeSquircle, useSquircle } from './squircle';
+export { autoSquircle, squirclePath, supportsNativeSquircle, useSquircle } from './squircle';
 export { Glass, type GlassOwnProps, Squircle } from './core/components';
 export {
   Button,
@@ -30,6 +30,9 @@ export { TextField, type TextFieldProps } from './core/text-field';
 export {
   BackButton,
   type BackButtonProps,
+  FloatingTabBar,
+  type FloatingTabBarAction,
+  type FloatingTabBarProps,
   TabBar,
   type TabBarItem,
   type TabBarProps,

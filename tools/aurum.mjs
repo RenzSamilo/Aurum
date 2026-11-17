@@ -9,10 +9,12 @@
 //   pnpm aurum rules                                             the house rules, in one screen
 //   pnpm aurum eject <component> --to <dir> [--platform react|flutter] [--force]   copy its source into an app to own
 //   pnpm aurum ejected <dir>                                     what changed upstream since each eject
+//   pnpm aurum check <app dir> [--strict]                        where an app drifts: plain corners, hand-built nav bars, raw colours
 
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative, resolve } from 'node:path';
+import { checkApp } from './check/app.mjs';
 import { fileURLToPath } from 'node:url';
 
 const root = resolveRoot();
@@ -124,13 +126,19 @@ const commands = {
 2. Use tokens, never raw values: colours, spacing, radii, type, motion (pnpm aurum tokens).
 3. Every tap target is at least 48px. Every icon-only control has a label (aria-label / semanticLabel).
 4. Motion uses the springs; reduced motion falls back to a fade. Haptics are opt-in, by meaning.
-5. Glass only for controls floating over content, never on cards inside lists.
-6. No Apple assets: no SF fonts, SF Symbols or Apple.com colours (pnpm guard). Icons are Phosphor.
-7. New pieces start in the app. They join the library when a second app needs them (rule of two).
-8. A component on both platforms has a contract (catalog/contracts). Change React and Flutter together.
-9. Borrowed code (vendor/astryx) keeps its license and copyright line.
+5. Glass for controls floating over content: the tab bar (FloatingTabBar), toolbars, buttons over imagery (Button variant="glass").
+   Never on cards inside lists.
+6. Corners are continuous (G2), not circular. Aurum components do it for you. Your own rounded boxes:
+   class aurum-squircle + --aurum-radius: var(--radius-lg) in CSS, and call autoSquircle() once at startup.
+   Capsules and circles (--radius-pill) are fine as they are.
+7. No Apple assets: no SF fonts, SF Symbols or Apple.com colours (pnpm guard). Icons are Phosphor.
+8. New pieces start in the app. They join the library when a second app needs them (rule of two).
+9. A component on both platforms has a contract (catalog/contracts). Change React and Flutter together.
+10. Borrowed code (vendor/astryx) keeps its license and copyright line.
    Need one app to differ? pnpm aurum eject <component> --to <app folder>, instead of changing Aurum for everyone.
-10. After changing tokens or the catalog: pnpm tokens, pnpm catalog. CI runs the checks.`);
+11. After changing tokens or the catalog: pnpm tokens, pnpm catalog. CI runs the checks.
+
+In an app: pnpm aurum check <app folder> finds plain corners, hand-built nav bars and raw colours.`);
   },
 
   // Copy a component's source file into an app, rewired to import the rest of Aurum from
@@ -255,8 +263,22 @@ const commands = {
     }
   },
 
+  check() {
+    const dir = resolve(args.find((a) => !a.startsWith('--')) ?? '.');
+    const { files, findings } = checkApp(dir);
+    const kinds = { corners: 'Plain corners', nav: 'Hand-built navigation', colour: 'Raw colours', setup: 'Setup' };
+    for (const [kind, title] of Object.entries(kinds)) {
+      const group = findings.filter((f) => f.kind === kind);
+      if (!group.length) continue;
+      out(`\n${title} (${group.length})`);
+      for (const f of group) out(`  ${f.line ? `${f.path}:${f.line}` : f.path}  ${f.message}`);
+    }
+    out(`\nChecked ${files} files in ${relative(process.cwd(), dir) || '.'}: ${findings.length ? `${findings.length} places to look.` : 'nothing to fix.'}`);
+    if (findings.length && args.includes('--strict')) process.exitCode = 1;
+  },
+
   help() {
-    out(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(1, 11).map((l) => l.replace(/^\/\/ ?/, '')).join('\n'));
+    out(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').slice(1, 12).map((l) => l.replace(/^\/\/ ?/, '')).join('\n'));
   },
 };
 

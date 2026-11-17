@@ -2,7 +2,7 @@
 import { act, createElement, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { useSquircle } from '../src/squircle';
+import { autoSquircle, useSquircle } from '../src/squircle';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -39,5 +39,77 @@ describe('useSquircle fallback', () => {
     await act(async () => root.render(createElement(Box, { radius: '30px' })));
     expect(el.style.clipPath).not.toBe(first);
     root.unmount();
+  });
+});
+
+describe('autoSquircle', () => {
+  beforeEach(() => {
+    vi.spyOn(CSS, 'supports').mockReturnValue(false);
+    globalThis.ResizeObserver = class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    } as unknown as typeof ResizeObserver;
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', { configurable: true, get: () => 200 });
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', { configurable: true, get: () => 100 });
+    vi.spyOn(window, 'getComputedStyle').mockImplementation((el) => (el as HTMLElement).style);
+  });
+  afterEach(() => vi.restoreAllMocks());
+
+  const tile = () => {
+    const el = document.createElement('div');
+    el.className = 'aurum-squircle';
+    el.style.borderTopLeftRadius = '24px';
+    return el;
+  };
+  const flush = () => new Promise((r) => setTimeout(r, 0));
+
+  it('clips existing and newly added .aurum-squircle elements, and stops cleanly', async () => {
+    const host = document.createElement('div');
+    document.body.appendChild(host);
+    const first = tile();
+    host.appendChild(first);
+    const stop = autoSquircle(host);
+    expect(first.style.clipPath).toContain('path(');
+
+    const later = tile();
+    host.appendChild(later);
+    await flush();
+    expect(later.style.clipPath).toContain('path(');
+
+    const plain = document.createElement('div');
+    host.appendChild(plain);
+    plain.className = 'aurum-squircle';
+    plain.style.borderTopLeftRadius = '12px';
+    await flush();
+    expect(plain.style.clipPath).toContain('path(');
+
+    // A class change that swaps the radius without resizing re-clips.
+    const before = first.style.clipPath;
+    first.style.borderTopLeftRadius = '40px';
+    first.classList.add('big');
+    await flush();
+    expect(first.style.clipPath).not.toBe(before);
+
+    stop();
+    expect(first.style.clipPath).toBe('');
+    expect(later.style.clipPath).toBe('');
+    host.remove();
+  });
+
+  it('leaves elements to useSquircle when it already manages them, and does nothing where corners are native', async () => {
+    const host = document.createElement('div');
+    const managed = tile();
+    managed.setAttribute('data-squircle-hook', '');
+    host.appendChild(managed);
+    const stop = autoSquircle(host);
+    expect(managed.style.clipPath).toBe('');
+    stop();
+
+    vi.mocked(CSS.supports).mockReturnValue(true);
+    const native = tile();
+    host.appendChild(native);
+    autoSquircle(host)();
+    expect(native.style.clipPath).toBe('');
   });
 });

@@ -133,7 +133,7 @@
       "shelf": "core",
       "group": "navigation",
       "tags": ["any"],
-      "react": null,
+      "react": { "symbol": "FloatingTabBar", "file": "packages/react/src/core/navigation.tsx" },
       "flutter": { "symbol": "AurumFloatingTabBar", "file": "packages/flutter/lib/src/core/navigation/aurum_tab_bar.dart" }
     },
     {

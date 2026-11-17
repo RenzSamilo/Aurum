@@ -8,9 +8,9 @@ import { useSquircle } from '../squircle.js';
 export function Squircle({ as, radius = 'lg', className, style, ...rest }) {
     const Tag = as ?? 'div';
     const ref = useRef(null);
-    const value = ['sm', 'md', 'lg', 'xl'].includes(radius) ? `var(--radius-${radius})` : radius;
+    const value = ['sm', 'md', 'lg', 'xl', 'pill'].includes(radius) ? `var(--radius-${radius})` : radius;
     useSquircle(ref, undefined, value);
-    return (_jsx(Tag, { ref: ref, className: ['aurum-squircle', className].filter(Boolean).join(' '), style: { '--aurum-radius': value, ...style }, ...rest }));
+    return (_jsx(Tag, { ref: ref, "data-capsule": value === 'var(--radius-pill)' || undefined, className: ['aurum-squircle', className].filter(Boolean).join(' '), style: { '--aurum-radius': value, ...style }, ...rest }));
 }
 export function Glass({ level = 'regular', tint, rim = true, className, ...rest }) {
     // Generic props cannot be checked through a second polymorphic component; they are the same shape.

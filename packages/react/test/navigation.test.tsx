@@ -3,7 +3,7 @@ import axe from 'axe-core';
 import { act, createElement as h, useState } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { BackButton, TabBar, type TabBarItem, TopBar } from '../src/core/navigation';
+import { BackButton, FloatingTabBar, TabBar, type TabBarItem, TopBar } from '../src/core/navigation';
 import * as haptics from '../src/haptics';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -77,6 +77,63 @@ describe('TabBar', () => {
     expect(links[1]!.getAttribute('aria-current')).toBe('page');
     await act(async () => links[0]!.click());
     expect(onSelectedChange).toHaveBeenCalledWith(0);
+    await noAxeViolations();
+  });
+});
+
+describe('FloatingTabBar', () => {
+  it('is a glass capsule nav whose bubble follows the selected tab', async () => {
+    const play = vi.spyOn(haptics, 'playHaptic').mockReturnValue(true);
+    function Demo() {
+      const [i, setI] = useState(0);
+      return h(FloatingTabBar, { tabs, selectedIndex: i, onSelectedChange: setI, 'aria-label': 'Main' });
+    }
+    await render(h(Demo));
+    const bar = host.querySelector<HTMLElement>('.aurum-floating-tab-bar')!;
+    const nav = host.querySelector('nav')!;
+    expect(nav.getAttribute('aria-label')).toBe('Main');
+    expect(nav.classList.contains('aurum-glass')).toBe(true);
+    expect(nav.classList.contains('aurum-squircle')).toBe(true);
+    expect(nav.getAttribute('data-level')).toBe('thin');
+    // A capsule keeps round ends instead of the superellipse.
+    expect(nav.hasAttribute('data-capsule')).toBe(true);
+    expect(bar.style.getPropertyValue('--aurum-tab-count')).toBe('3');
+    expect(bar.style.getPropertyValue('--aurum-tab-index')).toBe('0');
+    expect(bar.getAttribute('data-selection')).toBe('glass');
+    expect(host.querySelector('.aurum-floating-tab-indicator')!.getAttribute('aria-hidden')).toBe('true');
+
+    const buttons = [...host.querySelectorAll('button')];
+    expect(buttons.map((b) => b.textContent)).toEqual(['Home', 'Search', 'Profile']);
+    await act(async () => buttons[2]!.click());
+    expect(buttons[2]!.getAttribute('aria-current')).toBe('page');
+    expect(bar.style.getPropertyValue('--aurum-tab-index')).toBe('2');
+    expect(play).toHaveBeenCalledWith('selectionTick');
+    await noAxeViolations();
+  });
+
+  it('can hide labels for screen readers only, fill the selection and add a glass action', async () => {
+    const onAction = vi.fn();
+    await render(
+      h(FloatingTabBar, {
+        tabs,
+        selectedIndex: 1,
+        onSelectedChange: () => {},
+        showLabels: false,
+        selection: 'filled',
+        action: { icon: icon('plus'), label: 'Add workout', onClick: onAction },
+      }),
+    );
+    const bar = host.querySelector('.aurum-floating-tab-bar')!;
+    expect(bar.getAttribute('data-labels')).toBe('hidden');
+    expect(bar.getAttribute('data-selection')).toBe('filled');
+    const labels = [...host.querySelectorAll('.aurum-tab-label')];
+    expect(labels.every((l) => l.classList.contains('aurum-visually-hidden'))).toBe(true);
+    const add = host.querySelector<HTMLButtonElement>('.aurum-floating-tab-bar-action')!;
+    expect(add.getAttribute('aria-label')).toBe('Add workout');
+    expect(add.getAttribute('data-variant')).toBe('glass');
+    expect(add.closest('nav')).toBeNull();
+    await act(async () => add.click());
+    expect(onAction).toHaveBeenCalledOnce();
     await noAxeViolations();
   });
 });
