@@ -38,7 +38,7 @@ Pin a release tag, never `main`. The full guide, including brand files and updat
 **React** (React 19; built JS, types and CSS ship in the package):
 
 ```sh
-pnpm add "github:RenzSamilo/Aurum#aurum-v0.1.1&path:/packages/react"
+pnpm add "github:RenzSamilo/Aurum#aurum-v0.2.0&path:/packages/react"
 ```
 
 ```tsx
@@ -57,7 +57,7 @@ dependencies:
     git:
       url: https://github.com/RenzSamilo/Aurum.git
       path: packages/flutter
-      ref: aurum-v0.1.1
+      ref: aurum-v0.2.0
 ```
 
 ```dart
