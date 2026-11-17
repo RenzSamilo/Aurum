@@ -1,4 +1,4 @@
-import { type HapticIntent } from './tokens/tokens.js';
+import { type HapticIntent } from './tokens/tokens';
 /** Turn every Aurum haptic on or off, for an in-app setting. */
 export declare function setHapticsEnabled(value: boolean): void;
 export declare function hapticsEnabled(): boolean;

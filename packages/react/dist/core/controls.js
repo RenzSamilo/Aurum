@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useId, useRef, } from 'react';
-import { playHaptic } from '../haptics.js';
+import { playHaptic } from '../haptics';
 const cx = (...parts) => parts.filter(Boolean).join(' ');
 /**
  * A button. Presses scale down slightly with the control spring; with reduced

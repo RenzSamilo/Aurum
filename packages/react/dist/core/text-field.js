@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useLayoutEffect, useRef, } from 'react';
-import { useSquircle } from '../squircle.js';
+import { useSquircle } from '../squircle';
 const cx = (...parts) => parts.filter(Boolean).join(' ');
 /**
  * A single or multi-line text input on an inset fill with continuous corners.

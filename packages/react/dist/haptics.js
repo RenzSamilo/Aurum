@@ -8,7 +8,7 @@
 //
 // Haptics are off when the user turned them off (setHapticsEnabled(false)) or
 // prefers reduced motion. Never make a haptic the only signal for anything.
-import { haptic as tokens } from './tokens/tokens.js';
+import { haptic as tokens } from './tokens/tokens';
 let enabled = true;
 const lastFired = new Map();
 let iosSwitch = null;

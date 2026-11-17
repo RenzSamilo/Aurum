@@ -1,8 +1,8 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useEffect, useId, useRef, useState, } from 'react';
-import { Squircle } from './components.js';
-import { playHaptic } from '../haptics.js';
-import { gesture } from '../tokens/tokens.js';
+import { Squircle } from './components';
+import { playHaptic } from '../haptics';
+import { gesture } from '../tokens/tokens';
 const cx = (...parts) => parts.filter(Boolean).join(' ');
 /**
  * A grouped surface with continuous corners. The shadow sits on a wrapper and

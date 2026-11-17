@@ -1,5 +1,5 @@
 import { type ComponentPropsWithoutRef, type ReactNode, type Ref } from 'react';
-import type { HapticIntent } from '../tokens/tokens.js';
+import type { HapticIntent } from '../tokens/tokens';
 export type ButtonVariant = 'filled' | 'tinted' | 'gray' | 'plain' | 'glass';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {

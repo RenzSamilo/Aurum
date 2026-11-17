@@ -1,8 +1,8 @@
 import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import {} from 'react';
-import { Glass } from './components.js';
-import { Button } from './controls.js';
-import { playHaptic } from '../haptics.js';
+import { Glass } from './components';
+import { Button } from './controls';
+import { playHaptic } from '../haptics';
 const cx = (...parts) => parts.filter(Boolean).join(' ');
 /**
  * Bottom navigation between 2 to 5 top-level screens, on a glass material.
@@ -33,8 +33,8 @@ export function TabBar({ tabs, selectedIndex, onSelectedChange, className, 'aria
  * the last item can scroll clear of it. The React twin of Flutter's
  * AurumFloatingTabBar.
  */
-export function FloatingTabBar({ tabs, selectedIndex, onSelectedChange, showLabels = true, selection = 'glass', level = 'thin', action, className, style, 'aria-label': ariaLabel = 'Tabs', ...rest }) {
-    return (_jsxs("div", { className: cx('aurum-floating-tab-bar', className), "data-labels": showLabels ? undefined : 'hidden', "data-selection": selection, style: { '--aurum-tab-count': tabs.length, '--aurum-tab-index': selectedIndex, ...style }, children: [_jsx("div", { className: "aurum-floating-tab-bar-pill", children: _jsxs(Glass, { as: "nav", level: level, radius: "pill", className: "aurum-floating-tab-bar-glass", "aria-label": ariaLabel, ...rest, children: [selectedIndex >= 0 && selectedIndex < tabs.length && _jsx("span", { className: "aurum-floating-tab-indicator", "aria-hidden": "true" }), _jsx("ul", { className: "aurum-tab-bar-list", role: "list", children: tabs.map((tab, i) => {
+export function FloatingTabBar({ tabs, selectedIndex, onSelectedChange, showLabels = true, selection = 'glass', level = 'thin', lens = false, action, className, style, 'aria-label': ariaLabel = 'Tabs', ...rest }) {
+    return (_jsxs("div", { className: cx('aurum-floating-tab-bar', className), "data-labels": showLabels ? undefined : 'hidden', "data-selection": selection, style: { '--aurum-tab-count': tabs.length, '--aurum-tab-index': selectedIndex, ...style }, children: [_jsx("div", { className: "aurum-floating-tab-bar-pill", children: _jsxs(Glass, { as: "nav", level: level, lens: lens, radius: "pill", className: "aurum-floating-tab-bar-glass", "aria-label": ariaLabel, ...rest, children: [selectedIndex >= 0 && selectedIndex < tabs.length && _jsx("span", { className: "aurum-floating-tab-indicator", "aria-hidden": "true" }), _jsx("ul", { className: "aurum-tab-bar-list", role: "list", children: tabs.map((tab, i) => {
                                 const selected = i === selectedIndex;
                                 const content = (_jsxs(_Fragment, { children: [_jsx("span", { className: "aurum-tab-icon", "aria-hidden": "true", children: selected ? (tab.selectedIcon ?? tab.icon) : tab.icon }), _jsx("span", { className: cx('aurum-tab-label', !showLabels && 'aurum-visually-hidden'), children: tab.label })] }));
                                 const props = {
